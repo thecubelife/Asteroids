@@ -169,42 +169,51 @@ class asteroids:
 
 
 	def move_asteroid(self):
-		#get starting position pass through if statement to make the asteroid go toward the middle of the screen
+		#get starting position pass through if statement to make the asteroid go 
+		#toward the middle of the screen
 
-		#the problem with this is i currently believe that moving an object doesn't update its coords
-		#will have to make my own move method using coords....and do the same for my ship as well
+		#Tkinter comes built in with a move() method but for some reason it doesn't 
+		#change the objects coords just their location on screen
 		if self.x0 <= 0:
 			self.dirx = self.dirx * -1
-			print("changed < 0x")
+			
 		elif self.x1 <= 0:
 			self.dirx = self.dirx * -1
-			print("changed < 0x")
+			
 
 		if self.x0 >= self.window_width:
 			self.dirx = self.dirx * -1
-			print("changed > window_x")
+			
 		elif self.x1 >= self.window_width:
 			self.dirx = self.dirx * -1
-			print("changed > window_x")
+			
 
 		if self.y0 <= 0:
 			self.diry = self.diry * -1
-			print("changed < 0y")
+
 		elif self.y1 <= 0:
 			self.diry = self.diry * -1
-			print("changed < 0y")
 
 		#in here is the problem
 		if self.y0 >= self.window_height:
 			self.diry = self.diry * -1
-			print("changed > window_y0")
+
 		elif self.y1 >= self.window_height:
 			self.diry = self.diry * -1
-			print("changed > window_y1")
+
 
 		
-		self.canvas.move(self.aster, self.dirx, self.diry)
+		self.move_it()
 		self.canvas.after(50, self.move_asteroid)
+
+
+	def move_it(self):
+		self.x0 = self.x0 + self.dirx
+		self.x1 = self.x1 + self.dirx
+		self.y0 = self.y0 + self.diry
+		self.y1 = self.y1 + self.diry
+
+		self.canvas.coords(self.aster, self.x0, self.y0, self.x1, self.y1)
 
 
 	def __init__(self, canvas, width, height, master = None):
