@@ -40,6 +40,7 @@ class ship:
 		#would have just said self.a, self.b,.....except it kept coming back as a string instead of a number
 		self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
 
+		self.check_ship()
 
 	def get_center(self):
 		x = 1 / 3 * (self.a[0] + self.b[0] + self.c[0] + self.d[0])
@@ -77,7 +78,12 @@ class ship:
 		self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
 
 
-	def check_ship(self, canvas, x, y, width, height):
+	def check_ship(self):
+		w = self.bound_width
+		h = self.bound_height
+
+		#check the point on screen
+
 		return self.a, self.b, self.c, self.d
 
 
@@ -90,6 +96,8 @@ class ship:
 		self.canvas = canvas
 		self.heading = -math.pi / 2
 		self.turnspeed = 10
+		self.bound_width = width
+		self.bound_heigth = height
 
 
 		self.oX = width / 2		#origin
