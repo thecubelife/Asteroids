@@ -19,8 +19,26 @@ class ship:
 
 
 	def move_ship(master, self, canvas, x, y):
-		#actually moves it, once it gets the player object tag or ID
-		self.canvas.move(self.player_ship, x, y)
+		#actually moves it
+		#will have to replace with my own move...
+		self.move_it(x, y)
+		
+
+	def move_it(self, x, y):
+		self.a[0] = int(self.a[0] + x)
+		self.a[1] = int(self.a[1] + y)
+		
+		self.b[0] = int(self.b[0] + x)
+		self.b[1] = int(self.b[1] + y)
+		
+		self.c[0] = int(self.c[0] + x)
+		self.c[1] = int(self.c[1] + y)
+		
+		self.d[0] = int(self.d[0] + x)
+		self.d[1] = int(self.d[1] + y)
+
+		#would have just said self.a, self.b,.....except it kept coming back as a string instead of a number
+		self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
 
 
 	def get_center(self):
@@ -29,7 +47,8 @@ class ship:
 		return x, y
 		
 
-
+	#problem doesn't rotate in place...rotates around some distance away from ship
+	#until ship is off screen
 	#Based on another persons code
 	def rotate_ship(self, direction, event = None):
 		tspeed = direction * self.turnspeed * math.pi / 180
@@ -54,7 +73,8 @@ class ship:
 
 	#based on another persons code
 	def change_coords(self):
-		self.canvas.coords(self.player_ship, self.a, self.b, self.c, self.d)
+		#would have just said self.a, self.b,.....except it keeps coming back as a string instead of a number
+		self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
 
 
 	def check_ship(self, canvas, x, y, width, height):
