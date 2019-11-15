@@ -13,6 +13,7 @@ from functools import partial
 
 from ship import ship
 from asteroids_class import asteroids
+from projectile import Projectile
 
 
 
@@ -62,6 +63,17 @@ class Window(tk.Frame):
 		self.a5 = asteroids(self.canvas, self.width, self.height, self.player)
 		self.a6 = asteroids(self.canvas, self.width, self.height, self.player)
 
+		self.pro1 = None
+		self.pro2 = None
+		self.pro3 = None
+		self.pro4 = None
+		self.pro5 = None
+		self.pro6 = None
+		self.pro7 = None
+		self.pro8 = None
+		self.pro9 = None
+		self.pro10 = None
+
 		self.asteroids = []
 		self.asteroids.append(self.a1)
 		self.asteroids.append(self.a2)
@@ -74,6 +86,7 @@ class Window(tk.Frame):
 		self.root.bind('<Down>', self.movedown)
 		self.root.bind('<Left>', self.rotateleft)
 		self.root.bind('<Right>', self.rotateright)
+		self.root.bind('<space>', self.fire_projectile)
 
 		self.a1.hold(self.a1)
 		self.a2.hold(self.a2)
@@ -104,6 +117,31 @@ class Window(tk.Frame):
 		a = 0
 		d = -1 		#the direction
 		self.player.rotate_ship(direction = d)
+
+
+	def fire_projectile(self, event):
+		if self.pro1 == None:
+			self.pro1 = Projectile(self.player, self.canvas, self.width, self.height) #also have to get x, y direction
+		elif self.pro2 == None:
+			self.pro2 = Projectile(self.player, self.canvas, self.width, self.height) #also have to get x, y direction
+		elif self.pro3 == None:
+			self.pro3 = Projectile(self.player, self.canvas, self.width, self.height) #also have to get x, y direction
+		elif self.pro4 == None:
+			self.pro4 = Projectile(self.player, self.canvas, self.width, self.height) #also have to get x, y direction
+		elif self.pro5 == None:
+			self.pro5 = Projectile(self.player, self.canvas, self.width, self.height) #also have to get x, y direction
+		elif self.pro6 == None:
+			self.pro6 = Projectile(self.player, self.canvas, self.width, self.height) #also have to get x, y direction
+		elif self.pro7 == None:
+			self.pro7 = Projectile(self.player, self.canvas, self.width, self.height) #also have to get x, y direction
+		elif self.pro8 == None:
+			self.pro8 = Projectile(self.player, self.canvas, self.width, self.height) #also have to get x, y direction
+		elif self.pro9 == None:
+			self.pro9 = Projectile(self.player, self.canvas, self.width, self.height) #also have to get x, y direction
+		elif self.pro10 == None:
+			self.pro10 = Projectile(self.player, self.canvas, self.width, self.height) #also have to get x, y direction
+		
+			
 
 
 
