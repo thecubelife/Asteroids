@@ -1,7 +1,10 @@
 #ship.py
 #ship class
 
-import tkinter as tk
+try:
+	import tkinter as tk
+except ImportError:
+	import Tkinter as tk
 import time
 import math
 import random
