@@ -1,7 +1,6 @@
 #asteroids.py
 #asteroids game
 
-
 try:
 	import tkinter as tk
 except ImportError:

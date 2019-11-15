@@ -85,10 +85,35 @@ class ship:
 		w = self.bound_width
 		h = self.bound_height
 
-		#check the point on screen
+		ax = self.a[0]
+		ay = self.a[1]
+		bx = self.b[0]
+		by = self.b[1]
+		cx = self.c[0]
+		cy = self.c[1]
+		dx = self.d[0]
+		dy = self.d[1]
 
-		return self.a, self.b, self.c, self.d
+		#height check
+		if ay < 0 and by < 0 and cy < 0 and dy < 0:
+			self.a[1] = h + abs(ay) + 1
+			self.b[1] = h + abs(by) + 1
+			self.c[1] = h + abs(cy) + 1
+			self.d[1] = h + abs(dy) + 1
+			self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
+		elif ay > h and by > h and cy > h and dy > h:
+			#problem here
+			self.a[1] = -15
+			self.d[1] = -10
+			self.c[1] = -30
+			self.d[1] = -10
+			self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
 
+
+
+	def destroy_me(self):
+		#will destroy ship
+		print("Destroy ship")
 
 
 	#Note to self parameters for classes are passed through __init__ not the class name
@@ -100,7 +125,7 @@ class ship:
 		self.heading = -math.pi / 2
 		self.turnspeed = 10
 		self.bound_width = width
-		self.bound_heigth = height
+		self.bound_height = height
 
 
 		self.oX = width / 2		#origin

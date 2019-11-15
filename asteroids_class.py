@@ -144,6 +144,7 @@ class asteroids:
 			self.dirx = -1 * self.get_random_x(5)
 			self.diry = -1 * self.get_random_y(5)
 			#move to outside of view within quadrant
+
 			
 
 		self.aster = self.canvas.create_oval(self.x0, self.y0, self.x1, self.y1, outline = "#FFFFFF")
@@ -207,6 +208,7 @@ class asteroids:
 
 		
 		self.move_it()
+		self.check_asteroid()
 		self.canvas.after(50, self.move_asteroid)
 
 
@@ -219,11 +221,29 @@ class asteroids:
 		self.canvas.coords(self.aster, self.x0, self.y0, self.x1, self.y1)
 
 
-	def __init__(self, canvas, width, height, master = None):
+	def check_asteroid(self):
+		#check for collision
+
+		if (self.ship.a[0] > self.x0 and self.ship.a[0] < self.x1) and (self.ship.a[1] > self.y0 and self.ship.a[1] < self.y1):
+			self.ship.destroy_me()
+		if (self.ship.b[0] > self.x0 and self.ship.b[0] < self.x1) and (self.ship.b[1] > self.y0 and self.ship.b[1] < self.y1):
+			self.ship.destroy_me()
+		if (self.ship.c[0] > self.x0 and self.ship.c[0] < self.x1) and (self.ship.c[1] > self.y0 and self.ship.c[1] < self.y1):
+			self.ship.destroy_me()
+		if (self.ship.d[0] > self.x0 and self.ship.d[0] < self.x1) and (self.ship.d[1] > self.y0 and self.ship.d[1] < self.y1):
+			self.ship.destroy_me()
+
+
+
+
+
+	def __init__(self, canvas, width, height, ship = None):
 		super(asteroids, self).__init__()
 
 		self.canvas = canvas
 		self.window_width = width
 		self.window_height = height
+
+		self.ship = ship
 
 		self.draw_asteroid(self.canvas, width, height)

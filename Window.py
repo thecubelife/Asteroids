@@ -55,12 +55,12 @@ class Window(tk.Frame):
 	def start_of_game(self):
 
 		self.player = ship(self.canvas, self.width, self.height)
-		self.a1 = asteroids(self.canvas, self.width, self.height)
-		self.a2 = asteroids(self.canvas, self.width, self.height)
-		self.a3 = asteroids(self.canvas, self.width, self.height)
-		self.a4 = asteroids(self.canvas, self.width, self.height)
-		self.a5 = asteroids(self.canvas, self.width, self.height)
-		self.a6 = asteroids(self.canvas, self.width, self.height)
+		self.a1 = asteroids(self.canvas, self.width, self.height, self.player)
+		self.a2 = asteroids(self.canvas, self.width, self.height, self.player)
+		self.a3 = asteroids(self.canvas, self.width, self.height, self.player)
+		self.a4 = asteroids(self.canvas, self.width, self.height, self.player)
+		self.a5 = asteroids(self.canvas, self.width, self.height, self.player)
+		self.a6 = asteroids(self.canvas, self.width, self.height, self.player)
 
 		self.asteroids = []
 		self.asteroids.append(self.a1)
