@@ -44,9 +44,11 @@ class Projectile:
 		if self.a[0] >= self.width and self.c[0] >= self.width:
 			print("destroy fire with x right")
 		if self.a[1] <= 0 and self.c[1] <= 0:
-			print("destroy fire with y up")
+			#destroy it
+			p = 0
 		if self.a[1] >= self.height and self.c[1] >= self.height:
-			print("destroy fire with y down")
+			#destroy it
+			p = 0
 
 
 	def __init__(self, player, canvas, width, height):
