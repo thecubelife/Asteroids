@@ -18,7 +18,5 @@ app.root.mainloop()
 
 
 
-#how to get mouse motion
-"""root.bind('<Motion>', motion)
-		def motion(event):
-"""
+#bug....can't rotate and go forward at the same time
+#when trying to do above sometime the ship rapidly changes position by rotating and moving forward in an instance

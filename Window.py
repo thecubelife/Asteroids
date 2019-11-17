@@ -99,12 +99,12 @@ class Window(tk.Frame):
 
 	def moveup(self, event):
 		x = 0
-		y = -3
+		y = -1
 		self.player.move_ship(self.player, self.canvas, x, y)
 
 	def movedown(self, event):
 		x = 0
-		y = 3
+		y = 1
 		self.player.move_ship(self.player, self.canvas, x, y)
 
 	def rotateleft(self, event):

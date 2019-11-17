@@ -28,17 +28,17 @@ class ship:
 		
 
 	def move_it(self, x, y):
-		self.a[0] = int(self.a[0] + x)
-		self.a[1] = int(self.a[1] + y)
+		self.a[0] = int(self.a[0] + math.cos(self.heading))
+		self.a[1] = int(self.a[1] + math.sin(self.heading))
 		
-		self.b[0] = int(self.b[0] + x)
-		self.b[1] = int(self.b[1] + y)
+		self.b[0] = int(self.b[0] + math.cos(self.heading))
+		self.b[1] = int(self.b[1] + math.sin(self.heading))
 		
-		self.c[0] = int(self.c[0] + x)
-		self.c[1] = int(self.c[1] + y)
+		self.c[0] = int(self.c[0] + math.cos(self.heading))
+		self.c[1] = int(self.c[1] + math.sin(self.heading))
 		
-		self.d[0] = int(self.d[0] + x)
-		self.d[1] = int(self.d[1] + y)
+		self.d[0] = int(self.d[0] + math.cos(self.heading))
+		self.d[1] = int(self.d[1] + math.sin(self.heading))
 
 		#would have just said self.a, self.b,.....except it kept coming back as a string instead of a number
 		self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
