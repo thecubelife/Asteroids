@@ -40,9 +40,11 @@ class Projectile:
 
 	def check_it(self):
 		if self.a[0] <= 0 and self.c[0] <= 0:
-			print("destroy fire x left")
+			p = 0
+			
 		if self.a[0] >= self.width and self.c[0] >= self.width:
-			print("destroy fire with x right")
+			p = 0
+			
 		if self.a[1] <= 0 and self.c[1] <= 0:
 			#destroy it
 			p = 0

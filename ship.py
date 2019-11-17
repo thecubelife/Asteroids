@@ -46,8 +46,8 @@ class ship:
 		self.check_ship()
 
 	def get_center(self):
-		x = 1 / 3 * (self.a[0] + self.b[0] + self.c[0] + self.d[0])
-		y = 1 / 3 * (self.a[1] + self.b[1] + self.c[1] + self.d[1])
+		x = 1 / 4 * (self.a[0] + self.b[0] + self.c[0] + self.d[0])
+		y = 1 / 4 * (self.a[1] + self.b[1] + self.c[1] + self.d[1])
 		return x, y
 		
 
@@ -113,7 +113,8 @@ class ship:
 
 	def destroy_me(self):
 		#will destroy ship
-		print("Destroy ship")
+		d = 0
+		
 
 
 	#Note to self parameters for classes are passed through __init__ not the class name
