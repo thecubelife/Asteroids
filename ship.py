@@ -138,8 +138,16 @@ class ship:
 
 
 	def destroy_me(self):
-		#will destroy ship
 		d = 0
+		'''if not self.canvas: return
+		if not self.canvas.isClosed():
+			self.canvas.delete(self.id)
+			self.canvas.delItem(self)
+			if self.canvas.autoflush:
+				app.root.update()
+		self.canvas = None
+		self.id = None
+		'''
 		
 
 

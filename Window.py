@@ -17,7 +17,7 @@ from projectile import Projectile
 
 
 
-class Window(tk.Frame):
+class Window:
 
 	def config_window(self):
 		self.root.title("Asteroids")
@@ -99,12 +99,12 @@ class Window(tk.Frame):
 
 	def moveup(self, event):
 		x = 0
-		y = -1
+		y = -3
 		self.player.move_ship(self.player, self.canvas, x, y)
 
 	def movedown(self, event):
 		x = 0
-		y = 1
+		y = 3
 		self.player.move_ship(self.player, self.canvas, x, y)
 
 	def rotateleft(self, event):
@@ -152,7 +152,8 @@ class Window(tk.Frame):
 			return
 			
 
-
+	def isClosed(self):
+		return self.closed
 
 
 	def __init__(self, master = None):
@@ -167,3 +168,5 @@ class Window(tk.Frame):
 		self.canvas.pack()
 
 		self.idleGame()
+
+
