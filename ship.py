@@ -28,22 +28,48 @@ class ship:
 		
 
 	def move_it(self, x, y):
-		self.a[0] = int(self.a[0] + math.cos(self.heading))
-		self.a[1] = int(self.a[1] + math.sin(self.heading))
+		#figure out how to reset speed and keep it moving until the ship stops
+		'''if self.speed < 10:
+			self.speed += 1 * (x + y)'''
+
+
+		#self.a[0] = int(self.a[0] + (self.speed * math.cos(self.heading)))
+		self.a[0] = int(self.a[0] + (math.cos(self.heading)))
+
+		#self.a[1] = int(self.a[1] + (self.speed * math.sin(self.heading)))
+		self.a[1] = int(self.a[1] + (math.sin(self.heading)))
+
+		#self.b[0] = int(self.b[0] + (self.speed * math.cos(self.heading)))
+		self.b[0] = int(self.b[0] + (math.cos(self.heading)))
+
+		#self.b[1] = int(self.b[1] + (self.speed * math.sin(self.heading)))
+		self.b[1] = int(self.b[1] + (math.sin(self.heading)))
 		
-		self.b[0] = int(self.b[0] + math.cos(self.heading))
-		self.b[1] = int(self.b[1] + math.sin(self.heading))
+		#self.c[0] = int(self.c[0] + (self.speed * math.cos(self.heading)))
+		self.c[0] = int(self.c[0] + (math.cos(self.heading)))
+
+		#self.c[1] = int(self.c[1] + (self.speed * math.sin(self.heading)))
+		self.c[1] = int(self.c[1] + (math.sin(self.heading)))
 		
-		self.c[0] = int(self.c[0] + math.cos(self.heading))
-		self.c[1] = int(self.c[1] + math.sin(self.heading))
-		
-		self.d[0] = int(self.d[0] + math.cos(self.heading))
-		self.d[1] = int(self.d[1] + math.sin(self.heading))
+		#self.d[0] = int(self.d[0] + (self.speed * math.cos(self.heading)))
+		self.d[0] = int(self.d[0] + (math.cos(self.heading)))
+
+		#self.d[1] = int(self.d[1] + (self.speed * math.sin(self.heading)))
+		self.d[1] = int(self.d[1] + (math.sin(self.heading)))
 
 		#would have just said self.a, self.b,.....except it kept coming back as a string instead of a number
 		self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
 
 		self.check_ship()
+
+		#must check for event first
+		'''if self.speed != 0:
+			if self.speed < 0:
+				self.speed += 1
+				self.after(50, self.move_it)
+			else:
+				self.speed -= 1
+				self.after(50, self.move_it)'''
 
 	def get_center(self):
 		x = 1 / 4 * (self.a[0] + self.b[0] + self.c[0] + self.d[0])
@@ -124,6 +150,7 @@ class ship:
 		#this sets the canvas the ship is on, the heading or bearing, and the turnspeed of the ship
 		self.canvas = canvas
 		self.heading = -math.pi / 2
+		self.speed = 0
 		self.turnspeed = 10
 		self.bound_width = width
 		self.bound_height = height
