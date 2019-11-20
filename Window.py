@@ -37,6 +37,7 @@ class Window:
 		self.startgame.place(relx = 0.5, rely = 0.5)
 	
 	def restart_of_game(self):
+		#self.Text    delete it
 		self.startgame.config(text = "Start Game", width = 10, command = partial(self.startGame))
 		self.startgame.place(relx = 0.5, rely = 0.5)
 
@@ -161,13 +162,13 @@ class Window:
 		self.restart_of_game()
 
 	def gameOver(self):
-		text = tk.Text(self.root, height = 1)
-		text.config(borderwidth = 0, background = "#000000", font = ("Helvetica", 48))
-		text.insert(tk.INSERT, "GAME OVER")
-		text.place(relx = 0.39, rely = 0.4)
+		self.text = tk.Text(self.root, height = 1)
+		self.text.config(borderwidth = 0, background = "#000000", font = ("Helvetica", 48))
+		self.text.insert(tk.INSERT, "GAME OVER")
+		self.text.place(relx = 0.39, rely = 0.4)
 
-		text.tag_add("game_over", "1.0", "1.9")
-		text.tag_config("game_over", background = "#000000", foreground = "red")
+		self.text.tag_add("game_over", "1.0", "1.9")
+		self.text.tag_config("game_over", background = "#000000", foreground = "red")
 
 
 	def __init__(self, master = None):

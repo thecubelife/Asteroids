@@ -234,12 +234,7 @@ class asteroids:
 			self.ship.destroy_me()
 
 	def undraw(self):
-		self.canvas.delete(self.id)
-		self.canvas.delItem(self)
-		if self.canvas.autoflush:
-			app.root.update()
-		self.canvas = None
-		self.id = None
+		self.canvas.delete()
 
 
 

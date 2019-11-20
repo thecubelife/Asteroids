@@ -142,6 +142,7 @@ class ship:
 	def destroy_me(self):
 		self.canvas.delete('ship')
 		self.canvas.delete('asteroid')
+		self.canvas.delete('projectile')
 		self.master.restart()
 
 	#Note to self parameters for classes are passed through __init__ not the class name
