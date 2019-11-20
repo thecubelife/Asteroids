@@ -28,3 +28,4 @@ app.root.mainloop()
 
 
 #bug once ship is destroyed it "restarts" the game....but it ends shorty afterward
+#bug game over stays after restart of game
