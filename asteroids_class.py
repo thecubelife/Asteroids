@@ -67,7 +67,7 @@ class asteroids:
 
 
 
-		self.aster = self.canvas.create_oval(self.x0, self.y0, self.x1, self.y1, outline = "#FFFFFF")
+		self.aster = self.canvas.create_oval(self.x0, self.y0, self.x1, self.y1, outline = "#FFFFFF", tags = 'asteroid')
 		
 
 	def medium(self, width, height, x, y):
@@ -107,7 +107,7 @@ class asteroids:
 			
 
 
-		self.aster = self.canvas.create_oval(self.x0, self.y0, self.x1, self.y1, outline = "#FFFFFF")
+		self.aster = self.canvas.create_oval(self.x0, self.y0, self.x1, self.y1, outline = "#FFFFFF", tags = 'asteroid')
 		
 
 	def large(self, width, height, x, y):
@@ -147,7 +147,7 @@ class asteroids:
 
 			
 
-		self.aster = self.canvas.create_oval(self.x0, self.y0, self.x1, self.y1, outline = "#FFFFFF")
+		self.aster = self.canvas.create_oval(self.x0, self.y0, self.x1, self.y1, outline = "#FFFFFF", tags = 'asteroid')
 		
 
 	def get_random_x(self, width):
@@ -233,24 +233,23 @@ class asteroids:
 		if (self.ship.d[0] > self.x0 and self.ship.d[0] < self.x1) and (self.ship.d[1] > self.y0 and self.ship.d[1] < self.y1):
 			self.ship.destroy_me()
 
-	'''def undraw(self):
-		if not self.canvas: return
-		if not self.canvas.isClosed():
-			self.canvas.delete(self.id)
-			self.canvas.delItem(self)
-			if self.canvas.autoflush:
-				app.root.update()
+	def undraw(self):
+		self.canvas.delete(self.id)
+		self.canvas.delItem(self)
+		if self.canvas.autoflush:
+			app.root.update()
 		self.canvas = None
 		self.id = None
-'''
 
 
 
 
 
-	def __init__(self, canvas, width, height, ship = None):
+
+	def __init__(self, master, canvas, width, height, ship = None):
 		super(asteroids, self).__init__()
 
+		self.master = master
 		self.canvas = canvas
 		self.window_width = width
 		self.window_height = height

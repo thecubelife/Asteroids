@@ -24,3 +24,7 @@ app.root.mainloop()
 
 #bug....can't go forwards...once ship is rotated 180 degrees
 #bug....can't go backwards
+#bug when going outside of screen
+
+
+#bug once ship is destroyed it "restarts" the game....but it ends shorty afterward

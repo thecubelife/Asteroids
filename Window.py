@@ -35,7 +35,10 @@ class Window:
 		self.startgame = tk.Button(self.root, text = "StartGame", height = 2, width = 8)
 		self.startgame.config(bg = "#FFFFFF", command = partial(self.startGame))
 		self.startgame.place(relx = 0.5, rely = 0.5)
-		
+	
+	def restart_of_game(self):
+		self.startgame.config(text = "Start Game", width = 10, command = partial(self.startGame))
+		self.startgame.place(relx = 0.5, rely = 0.5)
 
 	def startGame(self):
 		self.startgame.config(text = "Pause Game", width = 10,  command = partial(self.pause))
@@ -55,13 +58,13 @@ class Window:
 
 	def start_of_game(self):
 
-		self.player = ship(self.canvas, self.width, self.height)
-		self.a1 = asteroids(self.canvas, self.width, self.height, self.player)
-		self.a2 = asteroids(self.canvas, self.width, self.height, self.player)
-		self.a3 = asteroids(self.canvas, self.width, self.height, self.player)
-		self.a4 = asteroids(self.canvas, self.width, self.height, self.player)
-		self.a5 = asteroids(self.canvas, self.width, self.height, self.player)
-		self.a6 = asteroids(self.canvas, self.width, self.height, self.player)
+		self.player = ship(self.canvas, self.width, self.height, master = self)
+		self.a1 = asteroids(self, self.canvas, self.width, self.height, self.player)
+		self.a2 = asteroids(self, self.canvas, self.width, self.height, self.player)
+		self.a3 = asteroids(self, self.canvas, self.width, self.height, self.player)
+		self.a4 = asteroids(self, self.canvas, self.width, self.height, self.player)
+		self.a5 = asteroids(self, self.canvas, self.width, self.height, self.player)
+		self.a6 = asteroids(self, self.canvas, self.width, self.height, self.player)
 
 		self.pro1 = None
 		self.pro2 = None
@@ -152,8 +155,19 @@ class Window:
 			return
 			
 
-	def isClosed(self):
-		return self.closed
+	def restart(self):
+		#reset everything
+		self.gameOver()
+		self.restart_of_game()
+
+	def gameOver(self):
+		text = tk.Text(self.root, height = 1)
+		text.config(borderwidth = 0, background = "#000000", font = ("Helvetica", 48))
+		text.insert(tk.INSERT, "GAME OVER")
+		text.place(relx = 0.39, rely = 0.4)
+
+		text.tag_add("game_over", "1.0", "1.9")
+		text.tag_config("game_over", background = "#000000", foreground = "red")
 
 
 	def __init__(self, master = None):

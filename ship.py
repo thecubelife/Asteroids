@@ -18,7 +18,7 @@ class ship:
 		
 		self.points = self.a, self.b, self.c, self.d
 		#this does actually create a triangle
-		self.player_ship = canvas.create_polygon(self.points, fill = "#FFFFFF")
+		self.player_ship = canvas.create_polygon(self.points, fill = "#FFFFFF", tags = 'ship')
 
 
 	def move_ship(master, self, canvas, x, y):
@@ -106,6 +106,8 @@ class ship:
 		#would have just said self.a, self.b,.....except it keeps coming back as a string instead of a number
 		self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
 
+		#bug in here
+	
 
 	def check_ship(self):
 		w = self.bound_width
@@ -122,40 +124,32 @@ class ship:
 
 		#height check
 		if ay < 0 and by < 0 and cy < 0 and dy < 0:
-			self.a[1] = h + abs(ay) + 1
-			self.b[1] = h + abs(by) + 1
-			self.c[1] = h + abs(cy) + 1
-			self.d[1] = h + abs(dy) + 1
+			self.a[1] = h + abs(ay) - 1
+			self.b[1] = h + abs(by) - 1
+			self.c[1] = h + abs(cy) - 1
+			self.d[1] = h + abs(dy) - 1
 			self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
 		elif ay > h and by > h and cy > h and dy > h:
 			#problem here
-			self.a[1] = -15
-			self.d[1] = -10
-			self.c[1] = -30
-			self.d[1] = -10
+			self.a[1] = h - ay
+			self.d[1] = h - by
+			self.c[1] = h - cy
+			self.d[1] = h - dy
 			self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
 
 
 
 	def destroy_me(self):
-		d = 0
-		'''if not self.canvas: return
-		if not self.canvas.isClosed():
-			self.canvas.delete(self.id)
-			self.canvas.delItem(self)
-			if self.canvas.autoflush:
-				app.root.update()
-		self.canvas = None
-		self.id = None
-		'''
-		
-
+		self.canvas.delete('ship')
+		self.canvas.delete('asteroid')
+		self.master.restart()
 
 	#Note to self parameters for classes are passed through __init__ not the class name
 	def __init__(self, canvas, width, height, master = None):
 		super(ship, self).__init__()
 
 		#this sets the canvas the ship is on, the heading or bearing, and the turnspeed of the ship
+		self.master = master
 		self.canvas = canvas
 		self.heading = -math.pi / 2
 		self.speed = 0
