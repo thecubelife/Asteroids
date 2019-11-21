@@ -26,6 +26,8 @@ app.root.mainloop()
 #bug....can't go backwards
 #bug when going outside of screen
 
+#bug can't shoot and move ship....doesn't delete projectile properly and can't rotate or move ship after shooting
+#this may be causing the problem of not firing more than once
 
 
 #bug deletes game over and then glitches and ends the game again
