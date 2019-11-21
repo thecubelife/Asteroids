@@ -32,3 +32,4 @@ app.root.mainloop()
 
 #bug deletes game over and then glitches and ends the game again
 #during this the section that holds the text is still on the screen
+#may be fixed....unsure...it's not but for some reason it worked once
