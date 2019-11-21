@@ -27,5 +27,6 @@ app.root.mainloop()
 #bug when going outside of screen
 
 
-#bug once ship is destroyed it "restarts" the game....but it ends shorty afterward
-#bug game over stays after restart of game
+
+#bug deletes game over and then glitches and ends the game again
+#during this the section that holds the text is still on the screen

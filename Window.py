@@ -38,8 +38,26 @@ class Window:
 	
 	def restart_of_game(self):
 		#self.Text    delete it
-		self.startgame.config(text = "Start Game", width = 10, command = partial(self.startGame))
+		self.startgame.config(text = "Start Game", width = 10, command = partial(self.hold))
 		self.startgame.place(relx = 0.5, rely = 0.5)
+
+	def hold(self):
+		self.text.config(state = tk.NORMAL)
+		self.text.destroy()
+		
+
+		self.player = None
+		self.a1 = None
+		self.a2 = None
+		self.a3 = None
+		self.a4 = None
+		self.a5 = None
+		self.a6 = None
+
+		self.startGame()
+
+
+
 
 	def startGame(self):
 		self.startgame.config(text = "Pause Game", width = 10,  command = partial(self.pause))
@@ -169,6 +187,7 @@ class Window:
 
 		self.text.tag_add("game_over", "1.0", "1.9")
 		self.text.tag_config("game_over", background = "#000000", foreground = "red")
+		self.text.config(state = tk.DISABLED)
 
 
 	def __init__(self, master = None):
