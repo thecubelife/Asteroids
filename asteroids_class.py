@@ -235,9 +235,11 @@ class asteroids:
 
 	def undraw(self, asteroids = None):
 		self.canvas.delete(self.aster)
+
+		#self.master.asteroids.remove(i)
+
 		self = None
 
-		#self.asteroids.remove(i)
 
 
 
