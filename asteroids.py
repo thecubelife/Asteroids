@@ -31,7 +31,7 @@ app.root.mainloop()
 #bug when going outside of screen...specifically through the bottom
 
 #bug can't fire more than 10 times
-#isn't deleting and making projectiles None after they go off screen
+#removes projectiles and asteroids from the screen, but doesn't remove them from the game...ie..ship still dies
 
 
 

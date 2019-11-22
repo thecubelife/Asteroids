@@ -54,20 +54,18 @@ class Projectile:
 	def check_pos(self):
 		for i in self.asteroids:
 			x0, y0, x1, y1 = i.get_coords()
-			if (self.ax < x0 and self.ax < x1) and (self.ay < y0 and self.ay < y1):
+			if (self.ax > x0 and self.ax < x1) and (self.ay > y0 and self.ay < y1):
 				#destroy asteroid and projectile
 				self.destroy_me()
-				self.asteroids.remove(i)
 				i.undraw()
-			if (self.cx < x0 and self.cx < x1) and (self.cy < y0 and self.ay < y1):
+			if (self.cx > x0 and self.cx < x1) and (self.cy > y0 and self.ay < y1):
 				#destroy asteroid and projectile
 				self.destroy_me()
-				self.asteroids.remove(i)
-				i.undraw()
+				i.undraw(self.asteroids)
 
 
 	def destroy_me(self):
-		self.canvas.delete(self)
+		self.canvas.delete(self.tile)
 		self = None
 		
 

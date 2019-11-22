@@ -233,9 +233,12 @@ class asteroids:
 		if (self.ship.d[0] > self.x0 and self.ship.d[0] < self.x1) and (self.ship.d[1] > self.y0 and self.ship.d[1] < self.y1):
 			self.ship.destroy_me()
 
-	def undraw(self):
-		self.canvas.delete(self)
+	def undraw(self, asteroids = None):
+		self.canvas.delete(self.aster)
 		self = None
+
+		#self.asteroids.remove(i)
+
 
 
 

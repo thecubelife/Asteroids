@@ -105,9 +105,8 @@ class ship:
 		#would have just said self.a, self.b,.....except it keeps coming back as a string instead of a number
 		self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
 
-		#bug in here
 	
-
+		#bug in here
 	def check_ship(self):
 		w = self.bound_width
 		h = self.bound_height
