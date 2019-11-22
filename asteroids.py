@@ -17,6 +17,8 @@ app = Window()
 app.root.mainloop()
 
 
+#bug some asteroids still start off screen and bounc against wall
+
 
 #bug....can't rotate and go forward at the same time
 #when trying to do above sometime the ship rapidly changes position by rotating and moving forward in an instance
