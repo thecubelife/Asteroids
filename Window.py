@@ -143,34 +143,34 @@ class Window:
 
 	def fire_projectile(self, event):
 		if self.pro1 == None:
-			self.pro1 = Projectile(self.player, self.canvas, self.width, self.height) #also have to get x, y direction
+			self.pro1 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids) #also have to get x, y direction
 			return
 		elif self.pro2 == None:
-			self.pro2 = Projectile(self.player, self.canvas, self.width, self.height) #also have to get x, y direction
+			self.pro2 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids) #also have to get x, y direction
 			return
 		elif self.pro3 == None:
-			self.pro3 = Projectile(self.player, self.canvas, self.width, self.height) #also have to get x, y direction
+			self.pro3 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids) #also have to get x, y direction
 			return
 		elif self.pro4 == None:
-			self.pro4 = Projectile(self.player, self.canvas, self.width, self.height) #also have to get x, y direction
+			self.pro4 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids) #also have to get x, y direction
 			return
 		elif self.pro5 == None:
-			self.pro5 = Projectile(self.player, self.canvas, self.width, self.height) #also have to get x, y direction
+			self.pro5 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids) #also have to get x, y direction
 			return
 		elif self.pro6 == None:
-			self.pro6 = Projectile(self.player, self.canvas, self.width, self.height) #also have to get x, y direction
+			self.pro6 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids) #also have to get x, y direction
 			return
 		elif self.pro7 == None:
-			self.pro7 = Projectile(self.player, self.canvas, self.width, self.height) #also have to get x, y direction
+			self.pro7 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids) #also have to get x, y direction
 			return
 		elif self.pro8 == None:
-			self.pro8 = Projectile(self.player, self.canvas, self.width, self.height) #also have to get x, y direction
+			self.pro8 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids) #also have to get x, y direction
 			return
 		elif self.pro9 == None:
-			self.pro9 = Projectile(self.player, self.canvas, self.width, self.height) #also have to get x, y direction
+			self.pro9 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids) #also have to get x, y direction
 			return
 		elif self.pro10 == None:
-			self.pro10 = Projectile(self.player, self.canvas, self.width, self.height) #also have to get x, y direction
+			self.pro10 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids) #also have to get x, y direction
 			return
 			
 

@@ -234,8 +234,8 @@ class asteroids:
 			self.ship.destroy_me()
 
 	def undraw(self):
-		self.canvas.delete()
-
+		self.canvas.delete(self)
+		self = None
 
 
 

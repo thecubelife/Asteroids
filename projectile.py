@@ -36,6 +36,8 @@ class Projectile:
 
 		self.check_it()
 
+		self.check_pos()
+
 	#to check if it has gone off screen if so then delete it
 	def check_it(self):
 		if self.ax <= 0 and self.cx <= 0:
@@ -49,17 +51,33 @@ class Projectile:
 		else:
 			self.canvas.after(50, self.move_it)
 
+	def check_pos(self):
+		for i in self.asteroids:
+			x0, y0, x1, y1 = i.get_coords()
+			if (self.ax < x0 and self.ax < x1) and (self.ay < y0 and self.ay < y1):
+				#destroy asteroid and projectile
+				self.destroy_me()
+				self.asteroids.remove(i)
+				i.undraw()
+			if (self.cx < x0 and self.cx < x1) and (self.cy < y0 and self.ay < y1):
+				#destroy asteroid and projectile
+				self.destroy_me()
+				self.asteroids.remove(i)
+				i.undraw()
+
+
 	def destroy_me(self):
-		self.canvas.delete()
+		self.canvas.delete(self)
 		self = None
 		
 
-	def __init__(self, player, canvas, width, height):
+	def __init__(self, player, canvas, width, height, asteroids):
 		super(Projectile, self).__init__()
 		self.ship = player
 		self.canvas = canvas
 		self.width = width
 		self.height = height
+		self.asteroids = asteroids
 		self.ax = self.ship.a[0]
 		self.ay = self.ship.a[1]
 		self.bx = self.ship.b[0]
