@@ -22,13 +22,12 @@ class ship:
 
 
 	def move_ship(master, self, canvas, x, y):
-		#actually moves it
-		#will have to replace with my own move...
 		self.move_it(x, y)
 		
 
 	def move_it(self, x, y):
 		#figure out how to reset speed and keep it moving until the ship stops
+		#acceleration
 		'''if self.speed < 10:
 			self.speed += 1 * (x + y)'''
 
@@ -63,6 +62,8 @@ class ship:
 		self.check_ship()
 
 		#must check for event first
+		#maybe check by creating a button release event
+		#deceleration
 		'''if self.speed != 0:
 			if self.speed < 0:
 				self.speed += 1
@@ -77,9 +78,7 @@ class ship:
 		return x, y
 		
 
-	#problem doesn't rotate in place...rotates around some distance away from ship
-	#until ship is off screen
-	#Based on another persons code
+	#Based on another person's code
 	def rotate_ship(self, direction, event = None):
 		tspeed = direction * self.turnspeed * math.pi / 180
 		self.heading -= tspeed
@@ -101,7 +100,7 @@ class ship:
 		self.x, self.y = self.get_center()
 		self.change_coords()
 
-	#based on another persons code
+	#based on another person's code
 	def change_coords(self):
 		#would have just said self.a, self.b,.....except it keeps coming back as a string instead of a number
 		self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
