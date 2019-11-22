@@ -22,9 +22,11 @@ app.root.mainloop()
 #when trying to do above sometime the ship rapidly changes position by rotating and moving forward in an instance
 
 
-#bug....can't go forwards...once ship is rotated 180 degrees
+#bug....can't go forwards...once ship is rotated 90 degrees to the left or right
+
 #bug....can't go backwards
-#bug when going outside of screen
+
+#bug when going outside of screen...specifically through the bottom
 
 #bug can't fire more than 10 times
 #isn't deleting and making projectiles None after they go off screen
@@ -32,5 +34,10 @@ app.root.mainloop()
 
 
 #bug deletes game over and then glitches and ends the game again
-#during this the section that holds the text is still on the screen
+#game over stays on the screen
 #may be fixed....unsure...it's not but for some reason it worked once
+
+
+
+#movement after ship rotation
+#getting rid of text of game over
