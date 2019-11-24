@@ -120,14 +120,12 @@ class Window:
 
 
 	def moveup(self, event):
-		x = 0
-		y = -3
-		self.player.move_ship(self.player, self.canvas, x, y)
+		d = 1
+		self.player.move_ship(self.player, self.canvas, d)
 
 	def movedown(self, event):
-		x = 0
-		y = 3
-		self.player.move_ship(self.player, self.canvas, x, y)
+		d = -1
+		self.player.move_ship(self.player, self.canvas, d)
 
 	def rotateleft(self, event):
 		a = 0

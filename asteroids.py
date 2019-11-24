@@ -21,12 +21,10 @@ app.root.mainloop()
 
 
 #bug....can't rotate and go forward at the same time
-#when trying to do above sometime the ship rapidly changes position by rotating and moving forward in an instance
 
 
-#bug....can't go forwards...once ship is rotated 90 degrees to the left or right
 
-#bug....can't go backwards
+#bug....backwards is sort of buggy
 
 #bug when going outside of screen...specifically through the bottom
 
@@ -37,9 +35,4 @@ app.root.mainloop()
 
 #bug deletes game over and then glitches and ends the game again
 #game over stays on the screen
-#may be fixed....unsure...it's not but for some reason it worked once
-
-
-
-#movement after ship rotation
-#getting rid of text of game over
+#may be fixed....unsure...it's not, but for some reason it worked once

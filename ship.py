@@ -21,42 +21,31 @@ class ship:
 		self.player_ship = canvas.create_polygon(self.points, fill = "#FFFFFF", tags = 'ship')
 
 
-	def move_ship(master, self, canvas, x, y):
-		self.move_it(x, y)
+	def move_ship(master, self, canvas, d):
+		self.move_it(d)
 		
 
-	def move_it(self, x, y):
+	def move_it(self, d):
 		#figure out how to reset speed and keep it moving until the ship stops
 		#acceleration
-		'''if self.speed < 10:
-			self.speed += 1 * (x + y)'''
+		if self.speed < 10:
+			self.speed += self.acceleration * (d)
 
 
-		#self.a[0] = int(self.a[0] + (self.speed * math.cos(self.heading)))
-		self.a[0] = int(self.a[0] + math.cos(self.heading))
+		#based off someone else's code...since i don't understand trigonomotry
+		self.a[0] += self.speed * math.cos(self.heading)
+		self.b[0] += self.speed * math.cos(self.heading)
+		self.c[0] += self.speed * math.cos(self.heading)
+		self.d[0] += self.speed * math.cos(self.heading)
 
-		#self.a[1] = int(self.a[1] + (self.speed * math.sin(self.heading)))
-		self.a[1] = int(self.a[1] + math.sin(self.heading))
-
-		#self.b[0] = int(self.b[0] + (self.speed * math.cos(self.heading)))
-		self.b[0] = int(self.b[0] + math.cos(self.heading))
-
-		#self.b[1] = int(self.b[1] + (self.speed * math.sin(self.heading)))
-		self.b[1] = int(self.b[1] + math.sin(self.heading))
+		self.a[1] += self.speed * math.sin(self.heading)
+		self.b[1] += self.speed * math.sin(self.heading)
+		self.c[1] += self.speed * math.sin(self.heading)
+		self.d[1] += self.speed * math.sin(self.heading)
 		
-		#self.c[0] = int(self.c[0] + (self.speed * math.cos(self.heading)))
-		self.c[0] = int(self.c[0] + math.cos(self.heading))
+		self.x, self.y = self.get_center()
 
-		#self.c[1] = int(self.c[1] + (self.speed * math.sin(self.heading)))
-		self.c[1] = int(self.c[1] + math.sin(self.heading))
-		
-		#self.d[0] = int(self.d[0] + (self.speed * math.cos(self.heading)))
-		self.d[0] = int(self.d[0] + math.cos(self.heading))
 
-		#self.d[1] = int(self.d[1] + (self.speed * math.sin(self.heading)))
-		self.d[1] = int(self.d[1] + math.sin(self.heading))
-
-		#would have just said self.a, self.b,.....except it kept coming back as a string instead of a number
 		self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
 
 		self.check_ship()
@@ -152,6 +141,7 @@ class ship:
 		self.canvas = canvas
 		self.heading = -math.pi / 2
 		self.speed = 0
+		self.acceleration = 1
 		self.turnspeed = 10
 		self.bound_width = width
 		self.bound_height = height
