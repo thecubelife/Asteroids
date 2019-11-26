@@ -239,6 +239,12 @@ class asteroids:
 	def undraw(self, asteroids = None):
 		self.freeze = True
 
+		self.x0 = self.x0 - self.window_width - 200
+		self.y0 = self.y0 - self.window_height - 200
+		self.x1 = self.x1 - self.window_width - 200
+		self.y1 = self.y1 - self.window_height - 200
+
+
 		self.canvas.coords(self.aster, self.x0 - self.window_width - 200, self.y0 - self.window_height - 200, self.x1 - self.window_width - 200, self.y1 - self.window_height - 200)
 
 

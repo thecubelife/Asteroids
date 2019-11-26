@@ -28,9 +28,7 @@ app.root.mainloop()
 
 #bug when going outside of screen...specifically through the bottom
 
-#projectile problem..once it disappears if you try to shoot in 
-#the same spot the new shot will disappear where the old one did
-#some fire faster than others
+#projectile problem..some fire faster than others
 
 
 

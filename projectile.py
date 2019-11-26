@@ -20,9 +20,6 @@ class Projectile:
 		a = self.width + 200, self.height + 200
 		c = self.width + 200, self.height + 200
 
-		self.dirx = -1 * (a[0] - c[0])
-		self.diry = -1 * (a[1] - c[1])
-
 		self.tile = self.canvas.create_line(a, c, fill = "#FFFFFF", tags = 'projectile')
 
 
@@ -42,13 +39,13 @@ class Projectile:
 	#to check if it has gone off screen if so then delete it
 	def check_it(self):
 		if self.ax <= 0 and self.cx <= 0:
-			self.destroy_me()
+			self.freeze_me()
 		elif self.ax >= self.width and self.cx >= self.width:
-			self.destroy_me()
+			self.freeze_me()
 		elif self.ay <= 0 and self.cy <= 0:
-			self.destroy_me()
+			self.freeze_me()
 		elif self.ay >= self.height and self.cy >= self.height:
-			self.destroy_me()
+			self.freeze_me()
 		else:
 			self.canvas.after(50, self.move_it)
 
@@ -57,11 +54,11 @@ class Projectile:
 			x0, y0, x1, y1 = i.get_coords()
 			if (self.ax > x0 and self.ax < x1) and (self.ay > y0 and self.ay < y1):
 				#move asteroid and projectile
-				self.destroy_me()
+				self.freeze_me()
 				i.undraw(self.asteroids)
 			if (self.cx > x0 and self.cx < x1) and (self.cy > y0 and self.ay < y1):
 				#move asteroid and projectile
-				self.destroy_me()
+				self.freeze_me()
 				i.undraw(self.asteroids)
 
 	def ship_start(self):
@@ -76,12 +73,12 @@ class Projectile:
 		self.dirx = -1 * (a[0] - c[0])
 		self.diry = -1 * (a[1] - c[1])
 
-		self.tile = self.canvas.create_line(a, c, fill = "#FFFFFF", tags = 'projectile')
-		#self.canvas.coords(self.tile, self.ax, self.ay, self.cx, self.cy)
+		
+		self.canvas.coords(self.tile, self.ax, self.ay, self.cx, self.cy)
 
 		self.move_it()
 
-	def destroy_me(self):
+	def freeze_me(self):
 		self.freeze = True
 		#move off screen
 		self.canvas.coords(self.tile, self.ax + self.width + 200, self.ay + self.height + 200, self.cx + self.width + 200, self.cy + self.height + 200)
