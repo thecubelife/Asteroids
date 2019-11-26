@@ -128,10 +128,10 @@ class ship:
 		elif ay > h + ih and by > h + ih and cy > h + ih and dy > h + ih:
 			#problem here
 			#down check
-			self.a[1] = self.a[1] - ay - h - ih
-			self.d[1] = self.b[1] - by - h - ih
-			self.c[1] = self.c[1] - cy - h - ih
-			self.d[1] = self.d[1] - dy - h - ih
+			#self.a[1] = 
+			#self.d[1] = 
+			#self.c[1] = 
+			#self.d[1] = 
 			self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
 
 		#width check
@@ -143,8 +143,15 @@ class ship:
 			self.d[0] = w + iw - abs(dx - iw) + (14/6 * iw)
 			self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
 
-		#problem here
-		#right check
+		elif ax > w + iw and bx > w + iw and cx > w + iw and dx > w + iw:
+			#problem here
+			#right check
+			#self.a[0] = 
+			#self.d[0] = 
+			#self.c[0] = 
+			#self.d[0] = 
+			self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
+
 
 	def destroy_me(self):
 		self.canvas.delete('ship')
