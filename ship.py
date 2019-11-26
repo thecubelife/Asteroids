@@ -117,15 +117,13 @@ class ship:
 		dy = self.d[1]
 
 		#height check
+		#works correctly
 		if ay < -ih and by < -ih and cy < -ih and dy < -ih:
-			print(self.a[1], self.b[1], self.c[1], self.d[1])
-			self.a[1] = h + ih - abs(ay - ih)
-			self.b[1] = h + ih - abs(by - ih)
-			self.c[1] = h + ih - abs(cy - ih)
-			self.d[1] = h + ih - abs(dy - ih)
+			self.a[1] = h + ih - abs(ay - ih) + (14/6 * ih)
+			self.b[1] = h + ih - abs(by - ih) + (14/6 * ih)
+			self.c[1] = h + ih - abs(cy - ih) + (14/6 * ih)
+			self.d[1] = h + ih - abs(dy - ih) + (14/6 * ih)
 			self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
-			print(self.a[1], self.b[1], self.c[1], self.d[1])
-			print(h)
 		elif ay > h + ih and by > h + ih and cy > h + ih and dy > h + ih:
 			#problem here
 			self.a[1] = self.a[1] - ay - h - ih
@@ -140,13 +138,12 @@ class ship:
 		#width check
 		if ax < -iw and bx < -iw and cx < -iw and dx < -iw:
 			print(self.a[1], self.b[1], self.c[1], self.d[1])
-			self.a[0] = w + iw - abs(ax - iw)
-			self.b[0] = w + iw - abs(bx - iw)
-			self.c[0] = w + iw - abs(cx - iw)
-			self.d[0] = w + iw - abs(dx - iw)
+			self.a[0] = w + iw - abs(ax - iw) + (14/6 * iw)
+			self.b[0] = w + iw - abs(bx - iw) + (14/6 * iw)
+			self.c[0] = w + iw - abs(cx - iw) + (14/6 * iw)
+			self.d[0] = w + iw - abs(dx - iw) + (14/6 * iw)
+			
 			self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
-			print(self.a[1], self.b[1], self.c[1], self.d[1])
-			print(h)
 
 
 
