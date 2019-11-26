@@ -169,56 +169,59 @@ class asteroids:
 		return self.x0, self.y0, self.x1, self.y1
 
 	def hold(master, self):
-		self.move_asteroid()
+		if self.freeze == False:
+			self.move_asteroid()
 
 
 	def move_asteroid(self):
 		#get starting position pass through if statement to make the asteroid go 
 		#toward the middle of the screen
+		if self.freeze == False:
+			if self.count == 1:
+				if self.x0 <= 0:
+					self.dirx = self.dirx * -1
+					
+				elif self.x1 <= 0:
+					self.dirx = self.dirx * -1
+					
 
-		#Tkinter comes built in with a move() method but for some reason it doesn't 
-		#change the objects coords just their location on screen
-		if self.x0 <= 0:
-			self.dirx = self.dirx * -1
-			
-		elif self.x1 <= 0:
-			self.dirx = self.dirx * -1
-			
+				if self.x0 >= self.window_width:
+					self.dirx = self.dirx * -1
+					
+				elif self.x1 >= self.window_width:
+					self.dirx = self.dirx * -1
+					
 
-		if self.x0 >= self.window_width:
-			self.dirx = self.dirx * -1
-			
-		elif self.x1 >= self.window_width:
-			self.dirx = self.dirx * -1
-			
+				if self.y0 <= 0:
+					self.diry = self.diry * -1
 
-		if self.y0 <= 0:
-			self.diry = self.diry * -1
+				elif self.y1 <= 0:
+					self.diry = self.diry * -1
 
-		elif self.y1 <= 0:
-			self.diry = self.diry * -1
+				#in here is the problem
+				if self.y0 >= self.window_height:
+					self.diry = self.diry * -1
 
-		#in here is the problem
-		if self.y0 >= self.window_height:
-			self.diry = self.diry * -1
-
-		elif self.y1 >= self.window_height:
-			self.diry = self.diry * -1
-
+				elif self.y1 >= self.window_height:
+					self.diry = self.diry * -1
+			else:
+				self.count += 1
 
 		
 		self.move_it()
 		self.check_asteroid()
 		self.canvas.after(50, self.move_asteroid)
+	
 
 
 	def move_it(self):
-		self.x0 = self.x0 + self.dirx
-		self.x1 = self.x1 + self.dirx
-		self.y0 = self.y0 + self.diry
-		self.y1 = self.y1 + self.diry
+		if self.freeze == False:
+			self.x0 = self.x0 + self.dirx
+			self.x1 = self.x1 + self.dirx
+			self.y0 = self.y0 + self.diry
+			self.y1 = self.y1 + self.diry
 
-		self.canvas.coords(self.aster, self.x0, self.y0, self.x1, self.y1)
+			self.canvas.coords(self.aster, self.x0, self.y0, self.x1, self.y1)
 
 
 	def check_asteroid(self):
@@ -234,11 +237,9 @@ class asteroids:
 			self.ship.destroy_me()
 
 	def undraw(self, asteroids = None):
-		self.canvas.delete(self.aster)
+		self.freeze = True
 
-		#self.master.asteroids.remove(i)
-
-		self = None
+		self.canvas.coords(self.aster, self.x0 - self.window_width - 200, self.y0 - self.window_height - 200, self.x1 - self.window_width - 200, self.y1 - self.window_height - 200)
 
 
 
@@ -255,5 +256,9 @@ class asteroids:
 		self.window_height = height
 
 		self.ship = ship
+
+		self.freeze = False
+
+		self.count = 0
 
 		self.draw_asteroid(self.canvas, width, height)

@@ -22,7 +22,8 @@ class ship:
 
 
 	def move_ship(master, self, canvas, d):
-		self.move_it(d)
+		if self.freeze == False:
+			self.move_it(d)
 		
 
 	def move_it(self, d):
@@ -69,25 +70,26 @@ class ship:
 
 	#Based on another person's code
 	def rotate_ship(self, direction, event = None):
-		tspeed = direction * self.turnspeed * math.pi / 180
-		self.heading -= tspeed
+		if self.freeze == False:
+			tspeed = direction * self.turnspeed * math.pi / 180
+			self.heading -= tspeed
 
-		def _rotatec(x, y):
-			x -= self.x			#center of the ship
-			y -= self.y			#center of the ship
+			def _rotatec(x, y):
+				x -= self.x			#center of the ship
+				y -= self.y			#center of the ship
 
-			newx = x * math.cos(tspeed) + y * math.sin(tspeed)
-			newy = -x * math.sin(tspeed) + y * math.cos(tspeed)
-			return newx + self.x, newy + self.y
-		
-		self.a[0], self.a[1] = _rotatec(self.a[0], self.a[1])
-		self.b[0], self.b[1] = _rotatec(self.b[0], self.b[1])
-		self.c[0], self.c[1] = _rotatec(self.c[0], self.c[1])
-		self.d[0], self.d[1] = _rotatec(self.d[0], self.d[1])
+				newx = x * math.cos(tspeed) + y * math.sin(tspeed)
+				newy = -x * math.sin(tspeed) + y * math.cos(tspeed)
+				return newx + self.x, newy + self.y
+			
+			self.a[0], self.a[1] = _rotatec(self.a[0], self.a[1])
+			self.b[0], self.b[1] = _rotatec(self.b[0], self.b[1])
+			self.c[0], self.c[1] = _rotatec(self.c[0], self.c[1])
+			self.d[0], self.d[1] = _rotatec(self.d[0], self.d[1])
 
 
-		self.x, self.y = self.get_center()
-		self.change_coords()
+			self.x, self.y = self.get_center()
+			self.change_coords()
 
 	#based on another person's code
 	def change_coords(self):
@@ -96,6 +98,7 @@ class ship:
 
 	
 		#bug in here
+	
 	def check_ship(self):
 		w = self.bound_width
 		h = self.bound_height
@@ -130,6 +133,11 @@ class ship:
 		self.canvas.delete('ship')
 		self.canvas.delete('asteroid')
 		self.canvas.delete('projectile')
+
+
+		#put them off screen		
+
+
 		self.master.restart()
 
 	#Note to self parameters for classes are passed through __init__ not the class name
@@ -145,6 +153,8 @@ class ship:
 		self.turnspeed = 10
 		self.bound_width = width
 		self.bound_height = height
+
+		self.freeze = False
 
 
 		self.oX = width / 2		#origin
