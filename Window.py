@@ -29,7 +29,6 @@ class Window:
 		self.height = self.root.winfo_screenheight() - (margin * 8)
 		self.root.geometry("{0}x{1}+{2}+{3}".format(self.width, self.height, int(startx), int(starty)))
 
-
 	def config_text(self):
 		self.text = tk.Text(self.root, height = 1)
 		self.text.config(borderwidth = 0, background = "#000000", font = ("Helvetica", 48))
@@ -38,7 +37,6 @@ class Window:
 		self.text.tag_add("game_over", "1.0", "1.9")
 		self.text.tag_config("game_over", background = "#000000", foreground = "red")
 		self.text.config(state = tk.DISABLED)
-
 
 	def idleGame(self):
 
@@ -67,20 +65,15 @@ class Window:
 
 		self.startGame()
 
-
-
-
 	def startGame(self):
 		self.startgame.config(text = "Pause Game", width = 10,  command = partial(self.pause))
 		self.startgame.place(relx = 0.5, rely = 0.0035)
 		self.start_of_game()
 
-
 	def idleRunning(self):
 		self.startgame.config(text = "Pause Game", width = 10, command = partial(self.pause))
 		self.startgame.place(relx = 0.5, rely = 0.0035)
 		self.unfreeze_all()
-
 
 	def pause(self):
 		self.startgame.config(text = "Resume", width = 8, command = partial(self.idleRunning))
@@ -108,8 +101,6 @@ class Window:
 
 		self.freeze = True
 
-
-
 	def unfreeze_all(self):
 		self.player.freeze = False
 		self.a1.freeze = False
@@ -120,13 +111,6 @@ class Window:
 		self.a6.freeze = False
 
 		self.freeze = False
-
-
-
-
-
-
-
 
 	def start_of_game(self):
 		#want 5 total asteroids for each of the 6...large....medium & small....small & small
@@ -186,8 +170,6 @@ class Window:
 		self.a5.hold(self.a5)
 		self.a6.hold(self.a6)
 
-
-
 	def moveup(self, event):
 		d = 1
 		self.player.move_ship(self.player, self.canvas, d)
@@ -207,7 +189,6 @@ class Window:
 		d = -1 		#the direction
 		self.player.rotate_ship(direction = d)
 
-
 	def fire_projectile(self, event):
 		#check if they are frozen if so then use...otherwise don't and check next
 		for i in self.projectiles:
@@ -216,8 +197,6 @@ class Window:
 					i.freeze = False
 					i.ship_start()
 					break
-
-			
 
 	def restart(self):
 		#reset everything
@@ -228,6 +207,7 @@ class Window:
 		self.text.config(state = tk.NORMAL)
 		self.text.insert(tk.INSERT, "GAME OVER")
 		self.text.config(state = tk.DISABLED)
+
 
 
 	def __init__(self, master = None):
@@ -246,5 +226,3 @@ class Window:
 		self.canvas.pack()
 
 		self.idleGame()
-
-

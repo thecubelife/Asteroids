@@ -76,7 +76,8 @@ class Projectile:
 		self.dirx = -1 * (a[0] - c[0])
 		self.diry = -1 * (a[1] - c[1])
 
-		self.canvas.coords(self.tile, self.ax, self.ay, self.cx, self.cy)
+		self.tile = self.canvas.create_line(a, c, fill = "#FFFFFF", tags = 'projectile')
+		#self.canvas.coords(self.tile, self.ax, self.ay, self.cx, self.cy)
 
 		self.move_it()
 

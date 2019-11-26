@@ -177,7 +177,7 @@ class asteroids:
 		#get starting position pass through if statement to make the asteroid go 
 		#toward the middle of the screen
 		if self.freeze == False:
-			if self.count == 1:
+			if self.count == 10:
 				if self.x0 <= 0:
 					self.dirx = self.dirx * -1
 					

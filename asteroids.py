@@ -22,13 +22,14 @@ app.root.mainloop()
 
 #bug....can't rotate and go forward at the same time
 
-
+#some asteroids still starting off screen
 
 #bug....backwards is sort of buggy
 
 #bug when going outside of screen...specifically through the bottom
 
-#projectile problem
+#projectile problem..doesn't shoot correctly and once it disappears if you try to shoot in 
+#the same spot the new shot will disappear where the old one did
 
 
 
