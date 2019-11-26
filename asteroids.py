@@ -28,7 +28,6 @@ app.root.mainloop()
 
 #bug when going outside of screen...specifically through the bottom
 
-#projectile problem..some fire faster than others
 
 
 

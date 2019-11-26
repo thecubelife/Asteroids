@@ -70,8 +70,8 @@ class Projectile:
 		a = self.ship.a[0], self.ship.a[1]
 		c = self.ship.c[0], self.ship.c[1]
 
-		self.dirx = -1 * (a[0] - c[0])
-		self.diry = -1 * (a[1] - c[1])
+		self.dirx = -2 * (a[0] - c[0])
+		self.diry = -2 * (a[1] - c[1])
 
 		
 		self.canvas.coords(self.tile, self.ax, self.ay, self.cx, self.cy)
@@ -82,7 +82,8 @@ class Projectile:
 		self.freeze = True
 		#move off screen
 		self.canvas.coords(self.tile, self.ax + self.width + 200, self.ay + self.height + 200, self.cx + self.width + 200, self.cy + self.height + 200)
-		
+		self.dirx = 0
+		self.diry = 0
 
 	def __init__(self, player, canvas, width, height, asteroids):
 		super(Projectile, self).__init__()
