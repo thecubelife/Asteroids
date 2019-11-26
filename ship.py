@@ -117,16 +117,15 @@ class ship:
 		dy = self.d[1]
 
 		#height check
-		#works correctly
-		#up check
 		if ay < -ih and by < -ih and cy < -ih and dy < -ih:
+			#up check
 			self.a[1] = h + ih - abs(ay - ih) + (14/6 * ih)
 			self.b[1] = h + ih - abs(by - ih) + (14/6 * ih)
 			self.c[1] = h + ih - abs(cy - ih) + (14/6 * ih)
 			self.d[1] = h + ih - abs(dy - ih) + (14/6 * ih)
 			self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
 		elif ay > h + ih and by > h + ih and cy > h + ih and dy > h + ih:
-			#problem here
+			#problem here..ship warps
 			#down check
 
 			if (ay > by) and (ay > cy) and (ay > dy):
@@ -135,7 +134,6 @@ class ship:
 				self.c[1] = cy - ay - (1/2 * ih)
 				self.d[1] = dy - ay - (1/2 * ih)
 
-				#c and d are not changing for some reason
 			elif (by > ay) and (by > cy):
 				self.a[1] = ay - by - (1/2 * ih)
 				self.b[1] = by - by - (1/2 * ih)
@@ -153,7 +151,7 @@ class ship:
 				self.b[1] = by - dy - (1/2 * ih)
 				self.c[1] = cy - dy - (1/2 * ih)
 				self.d[1] = dy - dy - (1/2 * ih)
-				print(self.a[1], self.b[1], self.c[1], self.d[1])
+
 
 
 			self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
@@ -168,12 +166,34 @@ class ship:
 			self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
 
 		elif ax > w + iw and bx > w + iw and cx > w + iw and dx > w + iw:
-			#problem here
+			#problem here...ship warps
 			#right check
-			#self.a[0] = 
-			#self.b[0] = 
-			#self.c[0] = 
-			#self.d[0] = 
+
+			if (ax > bx) and (ax > cx) and (ax > dx):
+				self.a[0] = ax - ax - (1/2 * iw)
+				self.b[0] = bx - ax - (1/2 * iw)
+				self.c[0] = cx - ax - (1/2 * iw)
+				self.d[0] = dx - ax - (1/2 * iw)
+
+			elif (bx > ax) and (bx > cx):
+				self.a[0] = ax - bx - (1/2 * iw)
+				self.b[0] = bx - bx - (1/2 * iw)
+				self.c[0] = cx - bx - (1/2 * iw)
+				self.d[0] = dx - bx - (1/2 * iw)
+				
+			elif (cx > ax) and (cx > bx) and (cx > dx):
+				self.a[0] = ax - cx - (1/2 * iw)
+				self.b[0] = dx - cx - (1/2 * iw)
+				self.c[0] = dx - cx - (1/2 * iw)
+				self.d[0] = dx - cx - (1/2 * iw)
+
+			elif (dx > ax) and (dx > cx):
+				self.a[0] = cx - dx - (1/2 * iw)
+				self.b[0] = bx - dx - (1/2 * iw)
+				self.c[0] = cx - dx - (1/2 * iw)
+				self.d[0] = dx - dx - (1/2 * iw)
+
+
 			self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
 
 
