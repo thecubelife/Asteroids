@@ -31,6 +31,6 @@ app.root.mainloop()
 #side and up work....a little weird because ship just appears
 
 
-
+#restart is still buggy
 
 #game over is below the canvas and you cannot see it

@@ -1,7 +1,6 @@
 #projectile.py
 #projectile class
 
-
 try:
 	import tkinter as tk
 except ImportError:

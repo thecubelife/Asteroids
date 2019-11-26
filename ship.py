@@ -128,10 +128,34 @@ class ship:
 		elif ay > h + ih and by > h + ih and cy > h + ih and dy > h + ih:
 			#problem here
 			#down check
-			#self.a[1] = 
-			#self.d[1] = 
-			#self.c[1] = 
-			#self.d[1] = 
+
+			if (ay > by) and (ay > cy) and (ay > dy):
+				self.a[1] = ay - ay - (1/2 * ih)
+				self.b[1] = by - ay - (1/2 * ih)
+				self.c[1] = cy - ay - (1/2 * ih)
+				self.d[1] = dy - ay - (1/2 * ih)
+
+				#c and d are not changing for some reason
+			elif (by > ay) and (by > cy):
+				self.a[1] = ay - by - (1/2 * ih)
+				self.b[1] = by - by - (1/2 * ih)
+				self.c[1] = cy - by - (1/2 * ih)
+				self.d[1] = dy - by - (1/2 * ih)
+				
+			elif (cy > ay) and (cy > by) and (cy > dy):
+				self.a[1] = ay - cy - (1/2 * ih)
+				self.b[1] = dy - cy - (1/2 * ih)
+				self.c[1] = dy - cy - (1/2 * ih)
+				self.d[1] = dy - cy - (1/2 * ih)
+
+			elif (dy > ay) and (dy > cy):
+				self.a[1] = cy - dy - (1/2 * ih)
+				self.b[1] = by - dy - (1/2 * ih)
+				self.c[1] = cy - dy - (1/2 * ih)
+				self.d[1] = dy - dy - (1/2 * ih)
+				print(self.a[1], self.b[1], self.c[1], self.d[1])
+
+
 			self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
 
 		#width check
@@ -147,7 +171,7 @@ class ship:
 			#problem here
 			#right check
 			#self.a[0] = 
-			#self.d[0] = 
+			#self.b[0] = 
 			#self.c[0] = 
 			#self.d[0] = 
 			self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
