@@ -131,9 +131,6 @@ class ship:
 			self.c[1] = self.c[1] - cy - h - ih
 			self.d[1] = self.d[1] - dy - h - ih
 			self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
-			print(self.a[1], self.b[1], self.c[1], self.d[1])
-			print(h)
-
 
 		#width check
 		if ax < -iw and bx < -iw and cx < -iw and dx < -iw:
