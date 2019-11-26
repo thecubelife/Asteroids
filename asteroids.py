@@ -23,10 +23,12 @@ app.root.mainloop()
 #bug....can't rotate and go forward at the same time
 
 #some asteroids still starting off screen
+#possibly fixed
 
 #bug....backwards is sort of buggy
 
 #bug when going outside of screen...specifically through the bottom
+#side and up work....a little weird because ship just appears
 
 
 

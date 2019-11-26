@@ -100,8 +100,12 @@ class ship:
 		#bug in here
 	
 	def check_ship(self):
+		#check if ship is off screen
 		w = self.bound_width
 		h = self.bound_height
+
+		ih = self.invhei
+		iw = self.invwid
 
 		ax = self.a[0]
 		ay = self.a[1]
@@ -113,19 +117,36 @@ class ship:
 		dy = self.d[1]
 
 		#height check
-		if ay < 0 and by < 0 and cy < 0 and dy < 0:
-			self.a[1] = h + abs(ay) - 1
-			self.b[1] = h + abs(by) - 1
-			self.c[1] = h + abs(cy) - 1
-			self.d[1] = h + abs(dy) - 1
+		if ay < -ih and by < -ih and cy < -ih and dy < -ih:
+			print(self.a[1], self.b[1], self.c[1], self.d[1])
+			self.a[1] = h + ih - abs(ay - ih)
+			self.b[1] = h + ih - abs(by - ih)
+			self.c[1] = h + ih - abs(cy - ih)
+			self.d[1] = h + ih - abs(dy - ih)
 			self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
-		elif ay > h and by > h and cy > h and dy > h:
+			print(self.a[1], self.b[1], self.c[1], self.d[1])
+			print(h)
+		elif ay > h + ih and by > h + ih and cy > h + ih and dy > h + ih:
 			#problem here
-			self.a[1] = h - ay
-			self.d[1] = h - by
-			self.c[1] = h - cy
-			self.d[1] = h - dy
+			self.a[1] = self.a[1] - ay - h - ih
+			self.d[1] = self.b[1] - by - h - ih
+			self.c[1] = self.c[1] - cy - h - ih
+			self.d[1] = self.d[1] - dy - h - ih
 			self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
+			print(self.a[1], self.b[1], self.c[1], self.d[1])
+			print(h)
+
+
+		#width check
+		if ax < -iw and bx < -iw and cx < -iw and dx < -iw:
+			print(self.a[1], self.b[1], self.c[1], self.d[1])
+			self.a[0] = w + iw - abs(ax - iw)
+			self.b[0] = w + iw - abs(bx - iw)
+			self.c[0] = w + iw - abs(cx - iw)
+			self.d[0] = w + iw - abs(dx - iw)
+			self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
+			print(self.a[1], self.b[1], self.c[1], self.d[1])
+			print(h)
 
 
 
@@ -155,6 +176,9 @@ class ship:
 		self.bound_height = height
 
 		self.freeze = False
+
+		self.invwid = 30
+		self.invhei = 30
 
 
 		self.oX = width / 2		#origin

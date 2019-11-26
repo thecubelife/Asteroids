@@ -152,11 +152,19 @@ class asteroids:
 
 	def get_random_x(self, width):
 		x  = random.randint(1, width)
+		if x < 40:
+			x = x + 40
+		if x > width - 40:
+			x = x - 40
 		return x
 
 
 	def get_random_y(self, height):
 		y = random.randint(1, height)
+		if y < 40:
+			y = y + 40
+		if y > height - 40:
+			y = y - 40
 		return y
 
 
