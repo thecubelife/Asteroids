@@ -69,7 +69,7 @@ class Projectile:
 		self.ax = self.ship.a[0]
 		self.cx = self.ship.c[0]
 		self.ay = self.ship.a[1]
-		self.cy = self.ship.a[1]
+		self.cy = self.ship.c[1]
 		a = self.ship.a[0], self.ship.a[1]
 		c = self.ship.c[0], self.ship.c[1]
 
