@@ -156,8 +156,10 @@ class Window:
 		self.projectiles.append(self.pro10)
 
 
-
 		self.root.bind('<Up>', self.moveup)
+		#self.root.bind('<KeyPress-Up>', self.moveup)
+		#self.root.bind('<KeyRelease-Up>', self.moveup)
+
 		self.root.bind('<Left>', self.rotateleft)
 		self.root.bind('<Right>', self.rotateright)
 		self.root.bind('<space>', self.fire_projectile)
@@ -209,6 +211,8 @@ class Window:
 		super(Window, self).__init__()
 
 		self.freeze = False
+
+		self.keyboard = False
 
 		self.root = tk.Tk()
 
