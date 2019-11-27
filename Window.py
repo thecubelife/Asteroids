@@ -156,6 +156,16 @@ class Window:
 		self.projectiles.append(self.pro10)
 
 
+		self.setup_bindings()
+
+		self.a1.hold(self.a1)
+		self.a2.hold(self.a2)
+		self.a3.hold(self.a3)
+		self.a4.hold(self.a4)
+		self.a5.hold(self.a5)
+		self.a6.hold(self.a6)
+
+	def setup_bindings(self):
 		self.root.bind('<Up>', self.moveup)
 		#self.root.bind('<KeyPress-Up>', self.moveup)
 		#self.root.bind('<KeyRelease-Up>', self.moveup)
@@ -164,12 +174,6 @@ class Window:
 		self.root.bind('<Right>', self.rotateright)
 		self.root.bind('<space>', self.fire_projectile)
 
-		self.a1.hold(self.a1)
-		self.a2.hold(self.a2)
-		self.a3.hold(self.a3)
-		self.a4.hold(self.a4)
-		self.a5.hold(self.a5)
-		self.a6.hold(self.a6)
 
 	def moveup(self, event):
 		d = 1
