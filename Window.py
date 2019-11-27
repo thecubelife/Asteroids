@@ -158,7 +158,6 @@ class Window:
 
 
 		self.root.bind('<Up>', self.moveup)
-		self.root.bind('<Down>', self.movedown)
 		self.root.bind('<Left>', self.rotateleft)
 		self.root.bind('<Right>', self.rotateright)
 		self.root.bind('<space>', self.fire_projectile)
@@ -172,10 +171,6 @@ class Window:
 
 	def moveup(self, event):
 		d = 1
-		self.player.move_ship(self.player, self.canvas, d)
-
-	def movedown(self, event):
-		d = -1
 		self.player.move_ship(self.player, self.canvas, d)
 
 	def rotateleft(self, event):
