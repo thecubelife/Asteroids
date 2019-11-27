@@ -24,9 +24,6 @@ app.root.mainloop()
 
 #bug....backwards is sort of buggy
 
-#bug when going outside of screen...specifically through the bottom and right side... ship warps
-#left side and up work
-
 
 #restart is still buggy
 

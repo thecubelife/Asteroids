@@ -32,7 +32,6 @@ class ship:
 		if self.speed < 10:
 			self.speed += self.acceleration * (d)
 
-
 		#based off someone else's code...since i don't understand trigonomotry
 		self.a[0] += self.speed * math.cos(self.heading)
 		self.b[0] += self.speed * math.cos(self.heading)
@@ -142,17 +141,16 @@ class ship:
 				
 			elif (cy > ay) and (cy > by) and (cy > dy):
 				self.a[1] = ay - cy - (1/2 * ih)
-				self.b[1] = dy - cy - (1/2 * ih)
-				self.c[1] = dy - cy - (1/2 * ih)
+				self.b[1] = by - cy - (1/2 * ih)
+				self.c[1] = cy - cy - (1/2 * ih)
 				self.d[1] = dy - cy - (1/2 * ih)
 
+
 			elif (dy > ay) and (dy > cy):
-				self.a[1] = cy - dy - (1/2 * ih)
+				self.a[1] = ay - dy - (1/2 * ih)
 				self.b[1] = by - dy - (1/2 * ih)
 				self.c[1] = cy - dy - (1/2 * ih)
 				self.d[1] = dy - dy - (1/2 * ih)
-
-
 
 			self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
 
@@ -183,12 +181,12 @@ class ship:
 				
 			elif (cx > ax) and (cx > bx) and (cx > dx):
 				self.a[0] = ax - cx - (1/2 * iw)
-				self.b[0] = dx - cx - (1/2 * iw)
-				self.c[0] = dx - cx - (1/2 * iw)
+				self.b[0] = bx - cx - (1/2 * iw)
+				self.c[0] = cx - cx - (1/2 * iw)
 				self.d[0] = dx - cx - (1/2 * iw)
 
 			elif (dx > ax) and (dx > cx):
-				self.a[0] = cx - dx - (1/2 * iw)
+				self.a[0] = ax - dx - (1/2 * iw)
 				self.b[0] = bx - dx - (1/2 * iw)
 				self.c[0] = cx - dx - (1/2 * iw)
 				self.d[0] = dx - dx - (1/2 * iw)
