@@ -20,9 +20,7 @@ app = Window()
 app.root.mainloop()
 
 
-#bug....can't rotate and go forward at the same time
-
-#bug....backwards is sort of buggy
+#bug....can't rotate and go forward and fire at the same time
 
 
 #restart is still buggy
