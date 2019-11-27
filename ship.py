@@ -21,14 +21,19 @@ class ship:
 		self.player_ship = canvas.create_polygon(self.points, fill = "#FFFFFF", tags = 'ship')
 
 
-	def move_ship(master, self, canvas, d):
+	def move_ship(master, self, canvas, mystate, d):
 		if self.freeze == False:
-			self.move_it(d)
+			if mystate == True:
+				self.move_it(d)
+			else:
+				self.decel(d)
+			
 		
 
 	def move_it(self, d):
 		#figure out how to reset speed and keep it moving until the ship stops
 		#acceleration
+		
 		if self.speed < 10:
 			self.speed += self.acceleration * (d)
 
@@ -50,16 +55,32 @@ class ship:
 
 		self.check_ship()
 
-		#must check for event first
-		#maybe check by creating a button release event
-		#deceleration
-		'''if self.speed != 0:
-			if self.speed < 0:
-				self.speed += 1
-				self.after(50, self.move_it)
-			else:
-				self.speed -= 1
-				self.after(50, self.move_it)'''
+
+	
+	def decel(self, d):
+		if self.speed > 0:
+			#based off someone else's code...since i don't understand trigonomotry
+			self.a[0] += self.speed * math.cos(self.heading)
+			self.b[0] += self.speed * math.cos(self.heading)
+			self.c[0] += self.speed * math.cos(self.heading)
+			self.d[0] += self.speed * math.cos(self.heading)
+
+			self.a[1] += self.speed * math.sin(self.heading)
+			self.b[1] += self.speed * math.sin(self.heading)
+			self.c[1] += self.speed * math.sin(self.heading)
+			self.d[1] += self.speed * math.sin(self.heading)
+			
+			self.x, self.y = self.get_center()
+
+
+			self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
+
+			self.check_ship()
+
+			if self.speed != 0:
+				self.speed -= (1/2 * self.acceleration * (d))
+				self.canvas.after(50, self.decel, d)
+
 
 	def get_center(self):
 		x = 1 / 4 * (self.a[0] + self.b[0] + self.c[0] + self.d[0])

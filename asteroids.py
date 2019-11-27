@@ -26,3 +26,6 @@ app.root.mainloop()
 #restart is still buggy
 
 #game over is below the canvas and you cannot see it
+
+
+#trying to create deceleration but it causes the prgram to stall a little...and the ship doesn't slow down it just moves to the new position

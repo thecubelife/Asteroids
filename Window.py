@@ -166,38 +166,46 @@ class Window:
 		self.a6.hold(self.a6)
 
 	def setup_bindings(self):
-		self.root.bind('<Up>', self.moveup)
-		#self.root.bind('<KeyPress-Up>', self.moveup)
-		#self.root.bind('<KeyRelease-Up>', self.moveup)
+		self.root.bind('<KeyPress-Up>', partial(self.moveup, True))
+		self.root.bind('<KeyRelease-Up>', partial(self.moveup, False))
 
-		self.root.bind('<Left>', self.rotateleft)
-		self.root.bind('<Right>', self.rotateright)
-		self.root.bind('<space>', self.fire_projectile)
+		self.root.bind('<KeyPress-Left>', partial(self.rotateleft, True))
+		self.root.bind('<KeyRelease-Left>', partial(self.rotateleft, False))
+
+		self.root.bind('<KeyPress-Right>', partial(self.rotateright, True))
+		self.root.bind('<KeyRelease-Right>', partial(self.rotateright, False))
+
+		self.root.bind('<KeyPress-space>', partial(self.fire_projectile, True))
+		self.root.bind('<KeyRelease-space>', partial(self.fire_projectile, False))
 
 
-	def moveup(self, event):
+	def moveup(self, mystate, event):
 		d = 1
-		self.player.move_ship(self.player, self.canvas, d)
+		self.player.move_ship(self.player, self.canvas, mystate, d)
 
-	def rotateleft(self, event):
+
+	def rotateleft(self, mystate, event):
 		a = 0
 		d = 1		#the direction
 		self.player.rotate_ship(direction = d)
 		#player canvas d
 
-	def rotateright(self, event):
+	def rotateright(self, mystate, event):
 		a = 0
 		d = -1 		#the direction
 		self.player.rotate_ship(direction = d)
 
-	def fire_projectile(self, event):
+	def fire_projectile(self, mystate, event):
 		#check if they are frozen if so then use...otherwise don't and check next
-		for i in self.projectiles:
-			if self.freeze == False:
-				if i.freeze == True:
-					i.freeze = False
-					i.ship_start()
-					break
+		if mystate:
+			for i in self.projectiles:
+				if self.freeze == False:
+					if i.freeze == True:
+						i.freeze = False
+						i.ship_start()
+						break
+		else:
+			count = 0
 
 	def restart(self):
 		#reset everything
@@ -215,8 +223,6 @@ class Window:
 		super(Window, self).__init__()
 
 		self.freeze = False
-
-		self.keyboard = False
 
 		self.root = tk.Tk()
 
