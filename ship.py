@@ -37,7 +37,7 @@ class ship:
 		#figure out how to reset speed and keep it moving until the ship stops
 		#acceleration
 		if self.freeze == False:
-			if self.speed < 1:
+			if self.speed < 1.5:
 				self.speed += (self.acceleration * 1/10) * (d)
 
 			#based off someone else's code...since i don't understand trigonomotry
