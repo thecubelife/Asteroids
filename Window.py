@@ -51,12 +51,6 @@ class Window:
 		self.startgame.config(text = "Start Game", width = 10, command = partial(self.hold))
 		self.startgame.place(relx = 0.5, rely = 0.5)
 
-	def win_restart(self):
-		#self.win 		delete it
-		self.startgame.config(text = "Start Game", width = 10, command = partial(self.hold2))
-		self.startgame.place(relx = 0.5, rely = 0.5)
-
-
 	def hold(self):
 		
 		self.text.config(state = tk.NORMAL)
@@ -64,15 +58,6 @@ class Window:
 		self.text.config(state = tk.DISABLED)		
 
 		self.start_Game2()
-
-	def hold2(self):
-		#it got here...but doesn't move the YOU WIN
-		self.win.config(state = tk.NORMAL)
-		self.win.place(relx = 3.0, rely = 3.0)
-		self.win.config(state = tk.DISABLED)
-
-		self.start_Game2()
-
 
 	def start_Game2(self):
 		self.startgame.config(text = "Pause Game", width = 10,  command = partial(self.pause))
@@ -246,27 +231,34 @@ class Window:
 
 	def restart2(self):
 		self.win_game()
-		self.win_restart()
+		self.restart_of_game()
 
-	def gameOver(self):
+	def make_text(self):
 		self.text = tk.Text(self.root, height = 1)
 		self.text.config(borderwidth = 0, background = "#000000", font = ("Helvetica", 48))
+		self.text.config(foreground = "red")
+		self.text.place(relx = 2.0, rely = 2.0)
+		self.text.config(state = tk.NORMAL)
+
+	def gameOver(self):
+		self.freeze = True
+		self.text.config(state = tk.NORMAL)
+
+		self.text.delete("1.0", tk.END)
 		self.text.insert(tk.INSERT, "GAME OVER")
 		self.text.place(relx = 0.39, rely = 0.4)
 
-		self.text.tag_add("game_over", "1.0", "1.9")
-		self.text.tag_config("game_over", background = "#000000", foreground = "red")
 		self.text.config(state = tk.DISABLED)
 
 	def win_game(self):
-		self.win = tk.Text(self.root, height = 1)
-		self.win.config(borderwidth = 0, background = "#000000", font = ("Helvetica", 48))
-		self.win.insert(tk.INSERT, "YOU WIN")
-		self.win.place(relx = 0.44, rely = 0.4)
+		self.freeze = True
+		self.text.config(state = tk.NORMAL)
 
-		self.win.tag_add("game_win", "1.0", "1.7")
-		self.win.tag_config("game_win", background = "#000000", foreground = "red")
-		self.win.config(state = tk.DISABLED)
+		self.text.delete("1.0", tk.END)
+		self.text.insert(tk.INSERT, "YOU WIN")
+		self.text.place(relx = 0.43, rely = 0.4)
+
+		self.text.config(state = tk.DISABLED)
 
 	def __init__(self, master = None):
 		super(Window, self).__init__()
@@ -284,5 +276,7 @@ class Window:
 		self.canvas = tk.Canvas(self.root, height = self.height, width = self.width, bg = "#000000")
 
 		self.canvas.pack()
+
+		self.make_text()
 
 		self.idleGame()
