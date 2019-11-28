@@ -94,6 +94,11 @@ class Projectile:
 		self.height = height
 		self.asteroids = asteroids
 
+		self.ax = 0
+		self.ay = 0
+		self.cx = 0
+		self.cy = 0
+
 		self.freeze = True
 
 		self.draw_projectile()

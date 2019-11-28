@@ -36,38 +36,10 @@ class ship:
 	def move_it(self, d):
 		#figure out how to reset speed and keep it moving until the ship stops
 		#acceleration
-		if self.speed < 1:
-			self.speed += (self.acceleration * 1/10) * (d)
+		if self.freeze == False:
+			if self.speed < 1:
+				self.speed += (self.acceleration * 1/10) * (d)
 
-		#based off someone else's code...since i don't understand trigonomotry
-		self.a[0] += self.speed * math.cos(self.heading)
-		self.b[0] += self.speed * math.cos(self.heading)
-		self.c[0] += self.speed * math.cos(self.heading)
-		self.d[0] += self.speed * math.cos(self.heading)
-
-		self.a[1] += self.speed * math.sin(self.heading)
-		self.b[1] += self.speed * math.sin(self.heading)
-		self.c[1] += self.speed * math.sin(self.heading)
-		self.d[1] += self.speed * math.sin(self.heading)
-		
-		self.x, self.y = self.get_center()
-
-
-		self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
-
-		self.check_ship()
-
-		
-		if self.upcount != 0:
-			#change this to the amount between repeating keys at the moment it is too fast
-			self.canvas.after(100, self.move_it, d)
-
-
-	
-	def decel(self, d):
-		self.upcount = 0
-
-		if self.speed > 0:
 			#based off someone else's code...since i don't understand trigonomotry
 			self.a[0] += self.speed * math.cos(self.heading)
 			self.b[0] += self.speed * math.cos(self.heading)
@@ -86,9 +58,38 @@ class ship:
 
 			self.check_ship()
 
-			if self.speed != 0:
-				self.speed -= (1/40 * self.acceleration *1/10 * (d))
-				self.canvas.after(50, self.decel, d)
+			
+			if self.upcount != 0:
+				#change this to the amount between repeating keys at the moment it is too fast
+				self.canvas.after(100, self.move_it, d)
+
+
+	
+	def decel(self, d):
+		self.upcount = 0
+		if self.freeze == False:
+			if self.speed > 0:
+				#based off someone else's code...since i don't understand trigonomotry
+				self.a[0] += self.speed * math.cos(self.heading)
+				self.b[0] += self.speed * math.cos(self.heading)
+				self.c[0] += self.speed * math.cos(self.heading)
+				self.d[0] += self.speed * math.cos(self.heading)
+
+				self.a[1] += self.speed * math.sin(self.heading)
+				self.b[1] += self.speed * math.sin(self.heading)
+				self.c[1] += self.speed * math.sin(self.heading)
+				self.d[1] += self.speed * math.sin(self.heading)
+				
+				self.x, self.y = self.get_center()
+
+
+				self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
+
+				self.check_ship()
+
+				if self.speed != 0:
+					self.speed -= (1/40 * self.acceleration *1/10 * (d))
+					self.canvas.after(50, self.decel, d)
 
 
 	def get_center(self):
@@ -162,96 +163,127 @@ class ship:
 		dx = self.d[0]
 		dy = self.d[1]
 
+		if self.freeze == False:
 		#height check
-		if ay < -ih and by < -ih and cy < -ih and dy < -ih:
-			#up check
-			self.a[1] = h + ih - abs(ay - ih) + (14/6 * ih)
-			self.b[1] = h + ih - abs(by - ih) + (14/6 * ih)
-			self.c[1] = h + ih - abs(cy - ih) + (14/6 * ih)
-			self.d[1] = h + ih - abs(dy - ih) + (14/6 * ih)
-			self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
-		elif ay > h + ih and by > h + ih and cy > h + ih and dy > h + ih:
-			#problem here..ship warps
-			#down check
+			if ay < -ih and by < -ih and cy < -ih and dy < -ih:
+				#up check
+				self.a[1] = h + ih - abs(ay - ih) + (14/6 * ih)
+				self.b[1] = h + ih - abs(by - ih) + (14/6 * ih)
+				self.c[1] = h + ih - abs(cy - ih) + (14/6 * ih)
+				self.d[1] = h + ih - abs(dy - ih) + (14/6 * ih)
+				self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
+			elif ay > h + ih and by > h + ih and cy > h + ih and dy > h + ih:
+				#problem here..ship warps
+				#down check
 
-			if (ay > by) and (ay > cy) and (ay > dy):
-				self.a[1] = ay - ay - (1/2 * ih)
-				self.b[1] = by - ay - (1/2 * ih)
-				self.c[1] = cy - ay - (1/2 * ih)
-				self.d[1] = dy - ay - (1/2 * ih)
+				if (ay > by) and (ay > cy) and (ay > dy):
+					self.a[1] = ay - ay - (1/2 * ih)
+					self.b[1] = by - ay - (1/2 * ih)
+					self.c[1] = cy - ay - (1/2 * ih)
+					self.d[1] = dy - ay - (1/2 * ih)
 
-			elif (by > ay) and (by > cy):
-				self.a[1] = ay - by - (1/2 * ih)
-				self.b[1] = by - by - (1/2 * ih)
-				self.c[1] = cy - by - (1/2 * ih)
-				self.d[1] = dy - by - (1/2 * ih)
-				
-			elif (cy > ay) and (cy > by) and (cy > dy):
-				self.a[1] = ay - cy - (1/2 * ih)
-				self.b[1] = by - cy - (1/2 * ih)
-				self.c[1] = cy - cy - (1/2 * ih)
-				self.d[1] = dy - cy - (1/2 * ih)
-
-
-			elif (dy > ay) and (dy > cy):
-				self.a[1] = ay - dy - (1/2 * ih)
-				self.b[1] = by - dy - (1/2 * ih)
-				self.c[1] = cy - dy - (1/2 * ih)
-				self.d[1] = dy - dy - (1/2 * ih)
-
-			self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
-
-		#width check
-		if ax < -iw and bx < -iw and cx < -iw and dx < -iw:
-			#left check
-			self.a[0] = w + iw - abs(ax - iw) + (14/6 * iw)
-			self.b[0] = w + iw - abs(bx - iw) + (14/6 * iw)
-			self.c[0] = w + iw - abs(cx - iw) + (14/6 * iw)
-			self.d[0] = w + iw - abs(dx - iw) + (14/6 * iw)
-			self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
-
-		elif ax > w + iw and bx > w + iw and cx > w + iw and dx > w + iw:
-			#problem here...ship warps
-			#right check
-
-			if (ax > bx) and (ax > cx) and (ax > dx):
-				self.a[0] = ax - ax - (1/2 * iw)
-				self.b[0] = bx - ax - (1/2 * iw)
-				self.c[0] = cx - ax - (1/2 * iw)
-				self.d[0] = dx - ax - (1/2 * iw)
-
-			elif (bx > ax) and (bx > cx):
-				self.a[0] = ax - bx - (1/2 * iw)
-				self.b[0] = bx - bx - (1/2 * iw)
-				self.c[0] = cx - bx - (1/2 * iw)
-				self.d[0] = dx - bx - (1/2 * iw)
-				
-			elif (cx > ax) and (cx > bx) and (cx > dx):
-				self.a[0] = ax - cx - (1/2 * iw)
-				self.b[0] = bx - cx - (1/2 * iw)
-				self.c[0] = cx - cx - (1/2 * iw)
-				self.d[0] = dx - cx - (1/2 * iw)
-
-			elif (dx > ax) and (dx > cx):
-				self.a[0] = ax - dx - (1/2 * iw)
-				self.b[0] = bx - dx - (1/2 * iw)
-				self.c[0] = cx - dx - (1/2 * iw)
-				self.d[0] = dx - dx - (1/2 * iw)
+				elif (by > ay) and (by > cy):
+					self.a[1] = ay - by - (1/2 * ih)
+					self.b[1] = by - by - (1/2 * ih)
+					self.c[1] = cy - by - (1/2 * ih)
+					self.d[1] = dy - by - (1/2 * ih)
+					
+				elif (cy > ay) and (cy > by) and (cy > dy):
+					self.a[1] = ay - cy - (1/2 * ih)
+					self.b[1] = by - cy - (1/2 * ih)
+					self.c[1] = cy - cy - (1/2 * ih)
+					self.d[1] = dy - cy - (1/2 * ih)
 
 
-			self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
+				elif (dy > ay) and (dy > cy):
+					self.a[1] = ay - dy - (1/2 * ih)
+					self.b[1] = by - dy - (1/2 * ih)
+					self.c[1] = cy - dy - (1/2 * ih)
+					self.d[1] = dy - dy - (1/2 * ih)
+
+				self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
+
+			#width check
+			if ax < -iw and bx < -iw and cx < -iw and dx < -iw:
+				#left check
+				self.a[0] = w + iw - abs(ax - iw) + (14/6 * iw)
+				self.b[0] = w + iw - abs(bx - iw) + (14/6 * iw)
+				self.c[0] = w + iw - abs(cx - iw) + (14/6 * iw)
+				self.d[0] = w + iw - abs(dx - iw) + (14/6 * iw)
+				self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
+
+			elif ax > w + iw and bx > w + iw and cx > w + iw and dx > w + iw:
+				#problem here...ship warps
+				#right check
+
+				if (ax > bx) and (ax > cx) and (ax > dx):
+					self.a[0] = ax - ax - (1/2 * iw)
+					self.b[0] = bx - ax - (1/2 * iw)
+					self.c[0] = cx - ax - (1/2 * iw)
+					self.d[0] = dx - ax - (1/2 * iw)
+
+				elif (bx > ax) and (bx > cx):
+					self.a[0] = ax - bx - (1/2 * iw)
+					self.b[0] = bx - bx - (1/2 * iw)
+					self.c[0] = cx - bx - (1/2 * iw)
+					self.d[0] = dx - bx - (1/2 * iw)
+					
+				elif (cx > ax) and (cx > bx) and (cx > dx):
+					self.a[0] = ax - cx - (1/2 * iw)
+					self.b[0] = bx - cx - (1/2 * iw)
+					self.c[0] = cx - cx - (1/2 * iw)
+					self.d[0] = dx - cx - (1/2 * iw)
+
+				elif (dx > ax) and (dx > cx):
+					self.a[0] = ax - dx - (1/2 * iw)
+					self.b[0] = bx - dx - (1/2 * iw)
+					self.c[0] = cx - dx - (1/2 * iw)
+					self.d[0] = dx - dx - (1/2 * iw)
+
+
+				self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
+
+	def offscreen(self):
+		self.a[0] = self.a[0] + self.bound_width + 400
+		self.b[0] = self.b[0] + self.bound_width + 400
+		self.c[0] = self.c[0] + self.bound_width + 400
+		self.d[0] = self.d[0] + self.bound_width + 400
+
+		self.a[1] = self.a[1] + self.bound_width + 400
+		self.b[1] = self.b[1] + self.bound_width + 400
+		self.c[1] = self.c[1] + self.bound_width + 400
+		self.d[1] = self.d[1] + self.bound_width + 400
+
+		self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
 
 
 	def destroy_me(self):
-		self.canvas.delete('ship')
-		self.canvas.delete('asteroid')
-		self.canvas.delete('projectile')
 
+		self.freeze = True
+		for i in self.master.asteroids:
+			i.undraw()
+		for i in self.master.projectiles:
+			i.freeze_me()
+		self.offscreen()
 
 		#put them off screen		
 
 
 		self.master.restart()
+
+	def restart_ship(self):
+		self.heading = -math.pi / 2
+		self.freeze = False
+
+		self.a = [self.oX, self.oY - 15]
+		self.b = [self.oX + 10, self.oY - 10]
+		self.c = [self.oX, self.oY - 30]		#this is the nose of the ship at start
+		self.d = [self.oX - 10, self.oY - 10]
+
+		self.x, self.y = self.get_center()
+
+		self.draw_ship(self.canvas, self.bound_width, self.bound_height)
+
 
 	#Note to self parameters for classes are passed through __init__ not the class name
 	def __init__(self, canvas, width, height, master = None):

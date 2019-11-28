@@ -28,7 +28,22 @@ class asteroids:
 		else:
 			self.large(width, height, self.x, self.y)
 
-	
+	def redraw_asteroid(self):
+		self.freeze = False
+		ranx = self.get_random_x(self.window_width)
+		rany = self.get_random_y(self.window_height)
+		self.x = ranx
+		self.y = rany
+		rans = self.get_random_size()
+		#rans = 3
+		if rans == 1:
+			self.small(self.window_width, self.window_height, self.x, self.y)
+		elif rans == 2:
+			self.medium(self.window_width, self.window_height, self.x, self.y)
+		else:
+			self.large(self.window_width, self.window_height, self.x, self.y)
+
+
 	def small(self, width, height, x, y):
 		self.size = 3
 		center_x =  width / 2

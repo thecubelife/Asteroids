@@ -25,6 +25,4 @@ app.root.mainloop()
 
 
 
-#restart is still buggy
-
 #game over is below the canvas and you cannot see it

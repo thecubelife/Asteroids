@@ -55,15 +55,12 @@ class Window:
 		self.text.config(state = tk.DISABLED)
 		
 
-		self.player = None
-		self.a1 = None
-		self.a2 = None
-		self.a3 = None
-		self.a4 = None
-		self.a5 = None
-		self.a6 = None
+		self.start_Game2()
 
-		self.startGame()
+	def start_Game2(self):
+		self.startgame.config(text = "Pause Game", width = 10,  command = partial(self.pause))
+		self.startgame.place(relx = 0.5, rely = 0.0035)
+		self.restarting_of_game()
 
 	def startGame(self):
 		self.startgame.config(text = "Pause Game", width = 10,  command = partial(self.pause))
@@ -109,6 +106,17 @@ class Window:
 		self.a4.freeze = False
 		self.a5.freeze = False
 		self.a6.freeze = False
+
+		self.pro1.freeze = False
+		self.pro2.freeze = False
+		self.pro3.freeze = False
+		self.pro4.freeze = False
+		self.pro5.freeze = False
+		self.pro6.freeze = False
+		self.pro7.freeze = False
+		self.pro8.freeze = False
+		self.pro9.freeze = False
+		self.pro10.freeze = False
 
 		self.freeze = False
 
@@ -165,6 +173,15 @@ class Window:
 		self.a5.hold(self.a5)
 		self.a6.hold(self.a6)
 
+	def restarting_of_game(self):
+		self.freeze = False
+		self.player.restart_ship()
+
+		for i in self.asteroids:
+			i.redraw_asteroid()
+
+		#add asteroids unfreezing
+
 	def setup_bindings(self):
 		self.root.bind('<KeyPress-Up>', partial(self.moveup, True))
 		self.root.bind('<KeyRelease-Up>', partial(self.moveup, False))
@@ -204,7 +221,7 @@ class Window:
 					break
 
 
-
+	#called after removing the objects from the screen
 	def restart(self):
 		#reset everything
 		self.gameOver()
