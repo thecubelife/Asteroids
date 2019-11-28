@@ -29,7 +29,7 @@ class Window:
 		self.height = self.root.winfo_screenheight() - (margin * 8)
 		self.root.geometry("{0}x{1}+{2}+{3}".format(self.width, self.height, int(startx), int(starty)))
 
-	def config_text(self):
+	def freeze_text(self):
 		self.text = tk.Text(self.root, height = 1)
 		self.text.config(borderwidth = 0, background = "#000000", font = ("Helvetica", 48))
 		self.text.place(relx = 0.39, rely = 0.4)
@@ -51,7 +51,7 @@ class Window:
 
 	def hold(self):
 		self.text.config(state = tk.NORMAL)
-		self.text.insert(tk.INSERT, "")
+		self.text.place(relx = 2.0, rely = 2.0)
 		self.text.config(state = tk.DISABLED)
 		
 
@@ -228,8 +228,13 @@ class Window:
 		self.restart_of_game()
 
 	def gameOver(self):
-		self.text.config(state = tk.NORMAL)
+		self.text = tk.Text(self.root, height = 1)
+		self.text.config(borderwidth = 0, background = "#000000", font = ("Helvetica", 48))
 		self.text.insert(tk.INSERT, "GAME OVER")
+		self.text.place(relx = 0.39, rely = 0.4)
+
+		self.text.tag_add("game_over", "1.0", "1.9")
+		self.text.tag_config("game_over", background = "#000000", foreground = "red")
 		self.text.config(state = tk.DISABLED)
 
 
@@ -246,8 +251,6 @@ class Window:
 		self.firecount = 0
 
 		self.config_window()
-
-		self.config_text()
 
 		self.canvas = tk.Canvas(self.root, height = self.height, width = self.width, bg = "#000000")
 
