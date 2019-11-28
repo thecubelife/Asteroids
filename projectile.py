@@ -23,19 +23,20 @@ class Projectile:
 
 
 	def move_it(self):
-		if self.freeze == False:
-			self.ax = self.ax + self.dirx
-			self.ay = self.ay + self.diry
-			self.cx = self.cx + self.dirx
-			self.cy = self.cy + self.diry
+		
+		self.ax = self.ax + self.dirx
+		self.ay = self.ay + self.diry
+		self.cx = self.cx + self.dirx
+		self.cy = self.cy + self.diry
 
-			self.canvas.coords(self.tile, self.ax, self.ay, self.cx, self.cy)
+		self.canvas.coords(self.tile, self.ax, self.ay, self.cx, self.cy)
 
 		self.check_it()
 
 		self.check_pos()
 
-	#to check if it has gone off screen if so then delete it
+
+	#to check if it has gone off screen if so then freeze it
 	def check_it(self):
 		if self.ax <= 0 and self.cx <= 0:
 			self.freeze_me()
@@ -61,21 +62,22 @@ class Projectile:
 				i.undraw(self.asteroids)
 
 	def ship_start(self):
-		#move it to ships start
-		self.ax = self.ship.a[0]
-		self.cx = self.ship.c[0]
-		self.ay = self.ship.a[1]
-		self.cy = self.ship.c[1]
-		a = self.ship.a[0], self.ship.a[1]
-		c = self.ship.c[0], self.ship.c[1]
+		if self.freeze == False:
+			self.ax = self.ship.a[0]
+			self.cx = self.ship.c[0]
+			self.ay = self.ship.a[1]
+			self.cy = self.ship.c[1]
+			a = self.ship.a[0], self.ship.a[1]
+			c = self.ship.c[0], self.ship.c[1]
 
-		self.dirx = -2 * (a[0] - c[0])
-		self.diry = -2 * (a[1] - c[1])
+			self.dirx = -2 * (a[0] - c[0])
+			self.diry = -2 * (a[1] - c[1])
 
-		
-		self.canvas.coords(self.tile, self.ax, self.ay, self.cx, self.cy)
+			
+			self.canvas.coords(self.tile, self.ax, self.ay, self.cx, self.cy)
 
-		self.move_it()
+			self.move_it()
+
 
 	def freeze_me(self):
 		self.freeze = True

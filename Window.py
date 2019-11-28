@@ -175,37 +175,35 @@ class Window:
 		self.root.bind('<KeyPress-Right>', partial(self.rotateright, True))
 		self.root.bind('<KeyRelease-Right>', partial(self.rotateright, False))
 
-		self.root.bind('<KeyPress-space>', partial(self.fire_projectile, True))
-		self.root.bind('<KeyRelease-space>', partial(self.fire_projectile, False))
+		self.root.bind('<space>', self.fire_projectile)
 
 
 	def moveup(self, mystate, event):
 		d = 1
-		self.player.move_ship(self.player, self.canvas, mystate, d)
+		self.player.move_ship(self.player, self.canvas, mystate, self.upcount, d)
 
 
-	def rotateleft(self, mystate, event):
+	def rotateleft(self, turnstate, event):
 		a = 0
 		d = 1		#the direction
-		self.player.rotate_ship(direction = d)
+		self.player.rotate_ship(turnstate, self.turncount, direction = d)
 		#player canvas d
 
-	def rotateright(self, mystate, event):
+	def rotateright(self, turnstate, event):
 		a = 0
 		d = -1 		#the direction
-		self.player.rotate_ship(direction = d)
+		self.player.rotate_ship(turnstate, self.turncount, direction = d)
 
-	def fire_projectile(self, mystate, event):
+	def fire_projectile(self, event):
 		#check if they are frozen if so then use...otherwise don't and check next
-		if mystate:
-			for i in self.projectiles:
-				if self.freeze == False:
-					if i.freeze == True:
-						i.freeze = False
-						i.ship_start()
-						break
-		else:
-			count = 0
+		for i in self.projectiles:
+			if self.freeze == False:
+				if i.freeze == True:
+					i.freeze = False
+					i.ship_start()
+					break
+
+
 
 	def restart(self):
 		#reset everything
@@ -225,6 +223,10 @@ class Window:
 		self.freeze = False
 
 		self.root = tk.Tk()
+
+		self.upcount = 0
+		self.turncount = 0
+		self.firecount = 0
 
 		self.config_window()
 

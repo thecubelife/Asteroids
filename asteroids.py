@@ -20,12 +20,15 @@ app = Window()
 app.root.mainloop()
 
 
-#bug....can't rotate and go forward and fire at the same time
+#bug....can do all three inputs at once....but works best when you hold down the forward key 
+#the whole time and add other keys
+
+
+#bug....projectile stays on screen after destroying an asteroid until you fire again
+
+
 
 
 #restart is still buggy
 
 #game over is below the canvas and you cannot see it
-
-
-#trying to create deceleration but it causes the prgram to stall a little...and the ship doesn't slow down it just moves to the new position

@@ -21,10 +21,13 @@ class ship:
 		self.player_ship = canvas.create_polygon(self.points, fill = "#FFFFFF", tags = 'ship')
 
 
-	def move_ship(master, self, canvas, mystate, d):
+	def move_ship(master, self, canvas, mystate, upcount, d):
+		self.upcount = upcount
 		if self.freeze == False:
 			if mystate == True:
-				self.move_it(d)
+				if self.upcount == 0:
+					self.upcount += 1
+					self.move_it(d)
 			else:
 				self.decel(d)
 			
@@ -33,9 +36,8 @@ class ship:
 	def move_it(self, d):
 		#figure out how to reset speed and keep it moving until the ship stops
 		#acceleration
-		
-		if self.speed < 10:
-			self.speed += self.acceleration * (d)
+		if self.speed < 1:
+			self.speed += (self.acceleration * 1/10) * (d)
 
 		#based off someone else's code...since i don't understand trigonomotry
 		self.a[0] += self.speed * math.cos(self.heading)
@@ -55,9 +57,16 @@ class ship:
 
 		self.check_ship()
 
+		
+		if self.upcount != 0:
+			#change this to the amount between repeating keys at the moment it is too fast
+			self.canvas.after(100, self.move_it, d)
+
 
 	
 	def decel(self, d):
+		self.upcount = 0
+
 		if self.speed > 0:
 			#based off someone else's code...since i don't understand trigonomotry
 			self.a[0] += self.speed * math.cos(self.heading)
@@ -78,7 +87,7 @@ class ship:
 			self.check_ship()
 
 			if self.speed != 0:
-				self.speed -= (1/2 * self.acceleration * (d))
+				self.speed -= (1/40 * self.acceleration *1/10 * (d))
 				self.canvas.after(50, self.decel, d)
 
 
@@ -89,7 +98,20 @@ class ship:
 		
 
 	#Based on another person's code
-	def rotate_ship(self, direction, event = None):
+	def rotate_ship(self, turnstate, turncount, direction, event = None):
+		self.turncount = turncount
+		if self.freeze == False:
+			if turnstate == True:
+				if self.turncount == 0:
+					self.turncount += 1
+					self.rotate(direction)
+			else:
+				self.stop_turning()
+
+	def stop_turning(self):
+		self.turncount = 0
+
+	def rotate(self, direction, event = None):
 		if self.freeze == False:
 			tspeed = direction * self.turnspeed * math.pi / 180
 			self.heading -= tspeed
@@ -110,6 +132,10 @@ class ship:
 
 			self.x, self.y = self.get_center()
 			self.change_coords()
+
+			if self.turncount != 0:
+				self.canvas.after(100, self.rotate, direction)
+
 
 	#based on another person's code
 	def change_coords(self):
