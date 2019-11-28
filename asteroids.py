@@ -24,10 +24,6 @@ app.root.mainloop()
 #the whole time and add other keys
 
 
-#bug....projectile stays on screen after destroying an asteroid until you fire again
-
-
-
 
 #restart is still buggy
 

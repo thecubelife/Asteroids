@@ -23,17 +23,17 @@ class Projectile:
 
 
 	def move_it(self):
-		
-		self.ax = self.ax + self.dirx
-		self.ay = self.ay + self.diry
-		self.cx = self.cx + self.dirx
-		self.cy = self.cy + self.diry
+		if self.freeze == False:
+			self.ax = self.ax + self.dirx
+			self.ay = self.ay + self.diry
+			self.cx = self.cx + self.dirx
+			self.cy = self.cy + self.diry
 
-		self.canvas.coords(self.tile, self.ax, self.ay, self.cx, self.cy)
+			self.canvas.coords(self.tile, self.ax, self.ay, self.cx, self.cy)
 
-		self.check_it()
+			self.check_it()
 
-		self.check_pos()
+			self.check_pos()
 
 
 	#to check if it has gone off screen if so then freeze it
