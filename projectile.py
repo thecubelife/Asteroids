@@ -90,7 +90,7 @@ class Projectile:
 			if i.freeze == True:
 				if self.asteroids.index(i) + 1 == x:
 					self.master.player.offscreen()
-					self.master.win_game()
+					self.master.restart2()
 			else:
 				break
 

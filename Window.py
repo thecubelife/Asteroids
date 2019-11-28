@@ -66,8 +66,9 @@ class Window:
 		self.start_Game2()
 
 	def hold2(self):
+		#it got here...but doesn't move the YOU WIN
 		self.win.config(state = tk.NORMAL)
-		self.win.place(relx = 2.0, rely = 2.0)
+		self.win.place(relx = 3.0, rely = 3.0)
 		self.win.config(state = tk.DISABLED)
 
 		self.start_Game2()
@@ -243,6 +244,9 @@ class Window:
 		self.gameOver()
 		self.restart_of_game()
 
+	def restart2(self):
+		self.win_game()
+		self.win_restart()
 
 	def gameOver(self):
 		self.text = tk.Text(self.root, height = 1)
@@ -256,15 +260,13 @@ class Window:
 
 	def win_game(self):
 		self.win = tk.Text(self.root, height = 1)
-		self.win.config(borderwidth = 0, background = '#000000', font =("Helvetica", 48))
-		self.win.insert(tk.INSERT, "You Win")
+		self.win.config(borderwidth = 0, background = "#000000", font = ("Helvetica", 48))
+		self.win.insert(tk.INSERT, "YOU WIN")
 		self.win.place(relx = 0.44, rely = 0.4)
 
-		self.win.tag_add("game_win", "1.0", "1.9")
+		self.win.tag_add("game_win", "1.0", "1.7")
 		self.win.tag_config("game_win", background = "#000000", foreground = "red")
 		self.win.config(state = tk.DISABLED)
-
-		self.win_restart()
 
 	def __init__(self, master = None):
 		super(Window, self).__init__()
