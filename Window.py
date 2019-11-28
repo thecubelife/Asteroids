@@ -51,13 +51,27 @@ class Window:
 		self.startgame.config(text = "Start Game", width = 10, command = partial(self.hold))
 		self.startgame.place(relx = 0.5, rely = 0.5)
 
+	def win_restart(self):
+		#self.win 		delete it
+		self.startgame.config(text = "Start Game", width = 10, command = partial(self.hold2))
+		self.startgame.place(relx = 0.5, rely = 0.5)
+
+
 	def hold(self):
+		
 		self.text.config(state = tk.NORMAL)
 		self.text.place(relx = 2.0, rely = 2.0)
-		self.text.config(state = tk.DISABLED)
-		
+		self.text.config(state = tk.DISABLED)		
 
 		self.start_Game2()
+
+	def hold2(self):
+		self.win.config(state = tk.NORMAL)
+		self.win.place(relx = 2.0, rely = 2.0)
+		self.win.config(state = tk.DISABLED)
+
+		self.start_Game2()
+
 
 	def start_Game2(self):
 		self.startgame.config(text = "Pause Game", width = 10,  command = partial(self.pause))
@@ -250,7 +264,7 @@ class Window:
 		self.win.tag_config("game_win", background = "#000000", foreground = "red")
 		self.win.config(state = tk.DISABLED)
 
-		self.restart_of_game()
+		self.win_restart()
 
 	def __init__(self, master = None):
 		super(Window, self).__init__()
