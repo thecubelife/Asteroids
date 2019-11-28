@@ -38,6 +38,8 @@ class Window:
 		self.text.tag_config("game_over", background = "#000000", foreground = "red")
 		self.text.config(state = tk.DISABLED)
 
+		
+
 	def idleGame(self):
 
 		self.startgame = tk.Button(self.root, text = "StartGame", height = 2, width = 8)
@@ -139,16 +141,16 @@ class Window:
 		self.asteroids.append(self.a5)
 		self.asteroids.append(self.a6)
 
-		self.pro1 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids)
-		self.pro2 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids)
-		self.pro3 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids)
-		self.pro4 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids)
-		self.pro5 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids)
-		self.pro6 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids)
-		self.pro7 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids)
-		self.pro8 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids)
-		self.pro9 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids)
-		self.pro10 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids)
+		self.pro1 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids, self)
+		self.pro2 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids, self)
+		self.pro3 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids, self)
+		self.pro4 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids, self)
+		self.pro5 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids, self)
+		self.pro6 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids, self)
+		self.pro7 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids, self)
+		self.pro8 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids, self)
+		self.pro9 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids, self)
+		self.pro10 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids, self)
 
 
 		self.projectiles = []
@@ -237,7 +239,15 @@ class Window:
 		self.text.tag_config("game_over", background = "#000000", foreground = "red")
 		self.text.config(state = tk.DISABLED)
 
+	def win_game(self):
+		self.win = tk.Text(self.root, height = 1)
+		self.win.config(borderwidth = 0, background = '#000000', font =("Helvetica", 48))
+		self.win.insert(tk.INSERT, "You Win")
+		self.win.place(relx = 0.39, rely = 0.4)
 
+		self.win.tag_add("game_win", "1.0", "1.9")
+		self.win.tag_config("game_win", background = "#000000", foreground = "red")
+		self.win.config(state = tk.DISABLED)
 
 	def __init__(self, master = None):
 		super(Window, self).__init__()

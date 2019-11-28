@@ -85,14 +85,22 @@ class Projectile:
 		self.canvas.coords(self.tile, self.ax + self.width + 200, self.ay + self.height + 200, self.cx + self.width + 200, self.cy + self.height + 200)
 		self.dirx = 0
 		self.diry = 0
+		x = len(self.asteroids)
+		for i in self.asteroids:
+			if i.freeze == True:
+				if int(i) + 1 == x:
+					master.win_game()
+			else:
+				break
 
-	def __init__(self, player, canvas, width, height, asteroids):
+	def __init__(self, player, canvas, width, height, asteroids, master = None):
 		super(Projectile, self).__init__()
 		self.ship = player
 		self.canvas = canvas
 		self.width = width
 		self.height = height
 		self.asteroids = asteroids
+		self.master = master
 
 		self.ax = 0
 		self.ay = 0

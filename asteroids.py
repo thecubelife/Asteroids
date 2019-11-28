@@ -14,7 +14,6 @@ from Window import Window
 
 
 
-#put loop in here for restarting it over and over again
 app = Window()
 
 app.root.mainloop()
