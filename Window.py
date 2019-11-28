@@ -125,21 +125,8 @@ class Window:
 	def start_of_game(self):
 		#want 5 total asteroids for each of the 6...large....medium & small....small & small
 		self.player = ship(self.canvas, self.width, self.height, master = self)
-		self.a1 = asteroids(self, self.canvas, self.width, self.height, self.player)
-		self.a2 = asteroids(self, self.canvas, self.width, self.height, self.player)
-		self.a3 = asteroids(self, self.canvas, self.width, self.height, self.player)
-		self.a4 = asteroids(self, self.canvas, self.width, self.height, self.player)
-		self.a5 = asteroids(self, self.canvas, self.width, self.height, self.player)
-		self.a6 = asteroids(self, self.canvas, self.width, self.height, self.player)
-
-
-		self.asteroids = []
-		self.asteroids.append(self.a1)
-		self.asteroids.append(self.a2)
-		self.asteroids.append(self.a3)
-		self.asteroids.append(self.a4)
-		self.asteroids.append(self.a5)
-		self.asteroids.append(self.a6)
+		
+		self.make_asteroids()
 
 		self.pro1 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids, self)
 		self.pro2 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids, self)
@@ -174,6 +161,24 @@ class Window:
 		self.a4.hold(self.a4)
 		self.a5.hold(self.a5)
 		self.a6.hold(self.a6)
+
+	def make_asteroids(self):
+		self.a1 = asteroids(self, self.canvas, self.width, self.height, self.player)
+		self.a2 = asteroids(self, self.canvas, self.width, self.height, self.player)
+		self.a3 = asteroids(self, self.canvas, self.width, self.height, self.player)
+		self.a4 = asteroids(self, self.canvas, self.width, self.height, self.player)
+		self.a5 = asteroids(self, self.canvas, self.width, self.height, self.player)
+		self.a6 = asteroids(self, self.canvas, self.width, self.height, self.player)
+
+
+		self.asteroids = []
+		self.asteroids.append(self.a1)
+		self.asteroids.append(self.a2)
+		self.asteroids.append(self.a3)
+		self.asteroids.append(self.a4)
+		self.asteroids.append(self.a5)
+		self.asteroids.append(self.a6)
+
 
 	def restarting_of_game(self):
 		self.freeze = False
