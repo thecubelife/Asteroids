@@ -88,8 +88,9 @@ class Projectile:
 		x = len(self.asteroids)
 		for i in self.asteroids:
 			if i.freeze == True:
-				if int(i) + 1 == x:
-					master.win_game()
+				if self.asteroids.index(i) + 1 == x:
+					self.master.player.offscreen()
+					self.master.win_game()
 			else:
 				break
 

@@ -229,6 +229,7 @@ class Window:
 		self.gameOver()
 		self.restart_of_game()
 
+
 	def gameOver(self):
 		self.text = tk.Text(self.root, height = 1)
 		self.text.config(borderwidth = 0, background = "#000000", font = ("Helvetica", 48))
@@ -243,11 +244,13 @@ class Window:
 		self.win = tk.Text(self.root, height = 1)
 		self.win.config(borderwidth = 0, background = '#000000', font =("Helvetica", 48))
 		self.win.insert(tk.INSERT, "You Win")
-		self.win.place(relx = 0.39, rely = 0.4)
+		self.win.place(relx = 0.44, rely = 0.4)
 
 		self.win.tag_add("game_win", "1.0", "1.9")
 		self.win.tag_config("game_win", background = "#000000", foreground = "red")
 		self.win.config(state = tk.DISABLED)
+
+		self.restart_of_game()
 
 	def __init__(self, master = None):
 		super(Window, self).__init__()

@@ -244,6 +244,8 @@ class ship:
 				self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
 
 	def offscreen(self):
+
+		self.freeze = True
 		self.a[0] = self.a[0] + self.bound_width + 400
 		self.b[0] = self.b[0] + self.bound_width + 400
 		self.c[0] = self.c[0] + self.bound_width + 400
@@ -260,10 +262,10 @@ class ship:
 	def destroy_me(self):
 
 		self.freeze = True
-		for i in self.master.asteroids:
-			i.undraw()
 		for i in self.master.projectiles:
 			i.freeze_me()
+		for i in self.master.asteroids:
+			i.undraw()
 		self.offscreen()
 
 		#put them off screen		
