@@ -54,12 +54,12 @@ class Projectile:
 			x0, y0, x1, y1 = i.get_coords()
 			if (self.ax > x0 and self.ax < x1) and (self.ay > y0 and self.ay < y1):
 				#move asteroid and projectile
-				self.freeze_me()
 				i.undraw(self.asteroids)
+				self.freeze_me()
 			if (self.cx > x0 and self.cx < x1) and (self.cy > y0 and self.ay < y1):
 				#move asteroid and projectile
-				self.freeze_me()
 				i.undraw(self.asteroids)
+				self.freeze_me()
 
 	def ship_start(self):
 		if self.freeze == False:
@@ -85,12 +85,16 @@ class Projectile:
 		self.canvas.coords(self.tile, self.ax + self.width + 200, self.ay + self.height + 200, self.cx + self.width + 200, self.cy + self.height + 200)
 		self.dirx = 0
 		self.diry = 0
-		x = len(self.asteroids)
-		for i in self.asteroids:
+		x = len(self.master.asteroids)
+		for i in self.master.asteroids:
+			i.check_onscreen()
 			if i.freeze == True:
-				if self.asteroids.index(i) + 1 == x:
+				if self.master.asteroids.index(i) + 1 == x:
 					self.master.player.offscreen()
 					self.master.restart2()
+				else:
+					pass
+
 			else:
 				break
 

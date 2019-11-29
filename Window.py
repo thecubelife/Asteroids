@@ -81,12 +81,13 @@ class Window:
 
 	def freeze_all(self):
 		self.player.freeze = True
-		self.a1.freeze = True
-		self.a2.freeze = True
-		self.a3.freeze = True
-		self.a4.freeze = True
-		self.a5.freeze = True
-		self.a6.freeze = True
+
+		for i in self.asteroids:
+			x0, y0, x1, y1 = i.get_coords()
+			if (x0 >= 0 and x0 <= self.width) or (x1 >= 0 and x1 <= self.width):
+				i.freeze = True
+
+
 		self.pro1.freeze = True
 		self.pro2.freeze = True
 		self.pro3.freeze = True
@@ -102,12 +103,12 @@ class Window:
 
 	def unfreeze_all(self):
 		self.player.freeze = False
-		self.a1.freeze = False
-		self.a2.freeze = False
-		self.a3.freeze = False
-		self.a4.freeze = False
-		self.a5.freeze = False
-		self.a6.freeze = False
+
+		for i in self.asteroids:
+			x0, y0, x1, y1 = i.get_coords()
+			if (x0 >= 0 and x0 <= self.width) or (x1 >= 0 and x1 <= self.width):
+				i.freeze = False
+				i.hold()
 
 		self.freeze = False
 
@@ -116,6 +117,30 @@ class Window:
 		self.player = ship(self.canvas, self.width, self.height, master = self)
 		
 		self.make_asteroids()
+
+		#get random number which decides which 6 asteroids to start with
+		#loop through a list of different sized asteroids
+		for i in range(6):
+			x = self.get_random_size()
+			if x == 1:
+				for i in self.small_asteroids:
+					if i.freeze == True:
+						i.freeze = False
+						break
+
+			elif x == 2:
+				for i in self.medium_asteroids:
+					if i.freeze == True:
+						i.freeze = False
+						break
+
+			else:
+				for i in self.large_asteroids:
+					if i.freeze == True:
+						i.freeze = False
+						break
+
+
 
 		self.pro1 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids, self)
 		self.pro2 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids, self)
@@ -144,39 +169,145 @@ class Window:
 
 		self.setup_bindings()
 
-		self.a1.hold(self.a1)
-		self.a2.hold(self.a2)
-		self.a3.hold(self.a3)
-		self.a4.hold(self.a4)
-		self.a5.hold(self.a5)
-		self.a6.hold(self.a6)
+
+		for i in self.asteroids:
+			i.hold()
 
 	def make_asteroids(self):
-		self.a1 = asteroids(self, self.canvas, self.width, self.height, self.player)
-		self.a2 = asteroids(self, self.canvas, self.width, self.height, self.player)
-		self.a3 = asteroids(self, self.canvas, self.width, self.height, self.player)
-		self.a4 = asteroids(self, self.canvas, self.width, self.height, self.player)
-		self.a5 = asteroids(self, self.canvas, self.width, self.height, self.player)
-		self.a6 = asteroids(self, self.canvas, self.width, self.height, self.player)
+		#get random number....random numbers choose the starting asteroids
 
 
+		#5 large asteroids
+		self.L1 = asteroids(self, self.canvas, self.width, self.height, size = 3, ship = self.player)
+		self.L2 = asteroids(self, self.canvas, self.width, self.height, size = 3, ship = self.player)
+		self.L3 = asteroids(self, self.canvas, self.width, self.height, size = 3, ship = self.player)
+		self.L4 = asteroids(self, self.canvas, self.width, self.height, size = 3, ship = self.player)
+		self.L5 = asteroids(self, self.canvas, self.width, self.height, size = 3, ship = self.player)
+
+
+		self.large_asteroids = []
+		self.large_asteroids.append(self.L1)
+		self.large_asteroids.append(self.L2)
+		self.large_asteroids.append(self.L3)
+		self.large_asteroids.append(self.L4)
+		self.large_asteroids.append(self.L5)
+
+		#10 medium asteroids
+		self.m1 = asteroids(self, self.canvas, self.width, self.height, size = 2, ship = self.player)
+		self.m2 = asteroids(self, self.canvas, self.width, self.height, size = 2, ship = self.player)
+		self.m3 = asteroids(self, self.canvas, self.width, self.height, size = 2, ship = self.player)
+		self.m4 = asteroids(self, self.canvas, self.width, self.height, size = 2, ship = self.player)
+		self.m5 = asteroids(self, self.canvas, self.width, self.height, size = 2, ship = self.player)
+		self.m6 = asteroids(self, self.canvas, self.width, self.height, size = 2, ship = self.player)
+		self.m7 = asteroids(self, self.canvas, self.width, self.height, size = 2, ship = self.player)
+		self.m8 = asteroids(self, self.canvas, self.width, self.height, size = 2, ship = self.player)
+		self.m9 = asteroids(self, self.canvas, self.width, self.height, size = 2, ship = self.player)
+		self.m10 = asteroids(self, self.canvas, self.width, self.height, size = 2, ship = self.player)
+
+
+		self.medium_asteroids = []
+		self.medium_asteroids.append(self.m1)
+		self.medium_asteroids.append(self.m2)
+		self.medium_asteroids.append(self.m3)
+		self.medium_asteroids.append(self.m4)
+		self.medium_asteroids.append(self.m5)
+		self.medium_asteroids.append(self.m6)
+		self.medium_asteroids.append(self.m7)
+		self.medium_asteroids.append(self.m8)
+		self.medium_asteroids.append(self.m9)
+		self.medium_asteroids.append(self.m10)
+
+
+		#20 small asteroids
+		self.s1 = asteroids(self, self.canvas, self.width, self.height, size = 1, ship = self.player)
+		self.s2 = asteroids(self, self.canvas, self.width, self.height, size = 1, ship = self.player)
+		self.s3 = asteroids(self, self.canvas, self.width, self.height, size = 1, ship = self.player)
+		self.s4 = asteroids(self, self.canvas, self.width, self.height, size = 1, ship = self.player)
+		self.s5 = asteroids(self, self.canvas, self.width, self.height, size = 1, ship = self.player)
+		self.s6 = asteroids(self, self.canvas, self.width, self.height, size = 1, ship = self.player)
+		self.s7 = asteroids(self, self.canvas, self.width, self.height, size = 1, ship = self.player)
+		self.s8 = asteroids(self, self.canvas, self.width, self.height, size = 1, ship = self.player)
+		self.s9 = asteroids(self, self.canvas, self.width, self.height, size = 1, ship = self.player)
+		self.s10 = asteroids(self, self.canvas, self.width, self.height, size = 1, ship = self.player)
+		self.s11 = asteroids(self, self.canvas, self.width, self.height, size = 1, ship = self.player)
+		self.s12 = asteroids(self, self.canvas, self.width, self.height, size = 1, ship = self.player)
+		self.s13 = asteroids(self, self.canvas, self.width, self.height, size = 1, ship = self.player)
+		self.s14 = asteroids(self, self.canvas, self.width, self.height, size = 1, ship = self.player)
+		self.s15 = asteroids(self, self.canvas, self.width, self.height, size = 1, ship = self.player)
+		self.s16 = asteroids(self, self.canvas, self.width, self.height, size = 1, ship = self.player)
+		self.s17 = asteroids(self, self.canvas, self.width, self.height, size = 1, ship = self.player)
+		self.s18 = asteroids(self, self.canvas, self.width, self.height, size = 1, ship = self.player)
+		self.s19 = asteroids(self, self.canvas, self.width, self.height, size = 1, ship = self.player)
+		self.s20 = asteroids(self, self.canvas, self.width, self.height, size = 1, ship = self.player)
+
+
+		self.small_asteroids = []
+		self.small_asteroids.append(self.s1)
+		self.small_asteroids.append(self.s2)
+		self.small_asteroids.append(self.s3)
+		self.small_asteroids.append(self.s4)
+		self.small_asteroids.append(self.s5)
+		self.small_asteroids.append(self.s6)
+		self.small_asteroids.append(self.s7)
+		self.small_asteroids.append(self.s8)
+		self.small_asteroids.append(self.s9)
+		self.small_asteroids.append(self.s10)
+		self.small_asteroids.append(self.s11)
+		self.small_asteroids.append(self.s12)
+		self.small_asteroids.append(self.s13)
+		self.small_asteroids.append(self.s14)
+		self.small_asteroids.append(self.s15)
+		self.small_asteroids.append(self.s16)
+		self.small_asteroids.append(self.s17)
+		self.small_asteroids.append(self.s18)
+		self.small_asteroids.append(self.s19)
+		self.small_asteroids.append(self.s20)
+
+		#35 total asteroids
 		self.asteroids = []
-		self.asteroids.append(self.a1)
-		self.asteroids.append(self.a2)
-		self.asteroids.append(self.a3)
-		self.asteroids.append(self.a4)
-		self.asteroids.append(self.a5)
-		self.asteroids.append(self.a6)
+		for i  in self.large_asteroids:
+			self.asteroids.append(i)
+		for i in self.medium_asteroids:
+			self.asteroids.append(i)
+		for i in self.small_asteroids:
+			self.asteroids.append(i)
 
 
 	def restarting_of_game(self):
 		self.freeze = False
 		self.player.restart_ship()
 
+		#get random number which decides which 6 asteroids to start with
+		#loop through a list of different sized asteroids
+		for i in range(6):
+			x = self.get_random_size()
+			if x == 1:
+				for i in self.small_asteroids:
+					if i.freeze == True:
+						i.freeze = False
+						break
+
+			elif x == 2:
+				for i in self.medium_asteroids:
+					if i.freeze == True:
+						i.freeze = False
+						break
+
+			else:
+				for i in self.large_asteroids:
+					if i.freeze == True:
+						i.freeze = False
+						break
+
+
 		for i in self.asteroids:
 			i.redraw_asteroid()
+			i.hold()
 
-		#add asteroids unfreezing
+
+	def get_random_size(self):
+		x = random.randint(1, 3)
+		return x
 
 	def setup_bindings(self):
 		self.root.bind('<KeyPress-Up>', partial(self.moveup, True))

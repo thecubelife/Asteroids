@@ -19,33 +19,29 @@ class asteroids:
 		rany = self.get_random_y(height)
 		self.x = ranx
 		self.y = rany
-		rans = self.get_random_size()
-		#rans = 3
-		if rans == 1:
+		if self.size == 1:
 			self.small(width, height, self.x, self.y)
-		elif rans == 2:
+		elif self.size == 2:
 			self.medium(width, height, self.x, self.y)
+		elif self.size == 3:
+			self.large(width, height, self.x, self.y)
 		else:
 			self.large(width, height, self.x, self.y)
 
 	def redraw_asteroid(self):
-		self.freeze = False
 		ranx = self.get_random_x(self.window_width)
 		rany = self.get_random_y(self.window_height)
 		self.x = ranx
 		self.y = rany
-		rans = self.get_random_size()
-		#rans = 3
-		if rans == 1:
+		if self.size == 1:
 			self.small(self.window_width, self.window_height, self.x, self.y)
-		elif rans == 2:
+		elif self.size == 2:
 			self.medium(self.window_width, self.window_height, self.x, self.y)
 		else:
 			self.large(self.window_width, self.window_height, self.x, self.y)
 
 
 	def small(self, width, height, x, y):
-		self.size = 3
 		center_x =  width / 2
 		center_y = height / 2
 		r = 10
@@ -55,38 +51,14 @@ class asteroids:
 		self.y1 = y + r
 
 
-			#quadrant 1		quadrant 2
-			#quadrant 3		quadrant 4
-		
-		if self.x0 <= center_x and self.y0 <= center_y:
-			#quadrant 1
-			self.dirx = 1 * self.get_random_x(5)
-			self.diry = 1 * self.get_random_y(5)
-			#move to outside of view within quadrant
-		elif self.x0 <= center_x and self.y0 >= center_y:
-			#quadrant 3
-			self.dirx = 1 * self.get_random_x(5)
-			self.diry = -1 * self.get_random_y(5)
-			#move to outside of view within quadrant
-		elif self.x0 >= center_x and self.y0 <= center_y:
-			#quadrant 2
-			self.dirx = -1 * self.get_random_x(5)
-			self.diry = 1 * self.get_random_y(5)
-			#move to outside of view within quadrant
-		elif self.x0 >= center_x and self.y0 >= center_y:
-			#quadrant 4
-			self.dirx = -1 * self.get_random_x(5)
-			self.diry = -1 * self.get_random_y(5)
-			#move to outside of view within quadrant
-			
-
+		self.dirx, self.diry = self.get_direction(center_x, center_y)
 
 
 		self.aster = self.canvas.create_oval(self.x0, self.y0, self.x1, self.y1, outline = "#FFFFFF", tags = 'asteroid')
 		
 
+
 	def medium(self, width, height, x, y):
-		self.size = 2
 		center_x =  width / 2
 		center_y = height / 2
 		r = 30
@@ -95,30 +67,7 @@ class asteroids:
 		self.x1 = x + r
 		self.y1 = y + r
 
-			#quadrant 1		quadrant 2
-			#quadrant 3		quadrant 4
-
-
-		if self.x0 <= center_x and self.y0 <= center_y:
-			#quadrant 1
-			self.dirx = 1 * self.get_random_x(5)
-			self.diry = 1 * self.get_random_y(5)
-			#move to outside of view within quadrant
-		elif self.x0 <= center_x and self.y0 >= center_y:
-			#quadrant 3
-			self.dirx = 1 * self.get_random_x(5)
-			self.diry = -1 * self.get_random_y(5)
-			#move to outside of view within quadrant
-		elif self.x0 >= center_x and self.y0 <= center_y:
-			#quadrant 2
-			self.dirx = -1 * self.get_random_x(5)
-			self.diry = 1 * self.get_random_y(5)
-			#move to outside of view within quadrant
-		elif self.x0 >= center_x and self.y0 >= center_y:
-			#quadrant 4
-			self.dirx = -1 * self.get_random_x(5)
-			self.diry = -1 * self.get_random_y(5)
-			#move to outside of view within quadrant
+		self.dirx, self.diry = self.get_direction(center_x, center_y)
 			
 
 
@@ -126,7 +75,6 @@ class asteroids:
 		
 
 	def large(self, width, height, x, y):
-		self.size = 1
 		center_x =  width / 2
 		center_y = height / 2
 		r = 60
@@ -135,35 +83,46 @@ class asteroids:
 		self.x1 = x + r
 		self.y1 = y + r
 
-			#quadrant 1		quadrant 2
-			#quadrant 3		quadrant 4
-
-
-		if self.x0 <= center_x and self.y0 <= center_y:
-			#quadrant 1
-			self.dirx = 1 * self.get_random_x(5)
-			self.diry = 1 * self.get_random_y(5)
-			#move to outside of view within quadrant
-		elif self.x0 <= center_x and self.y0 >= center_y:
-			#quadrant 3
-			self.dirx = 1 * self.get_random_x(5)
-			self.diry = -1 * self.get_random_y(5)
-			#move to outside of view within quadrant
-		elif self.x0 >= center_x and self.y0 <= center_y:
-			#quadrant 2
-			self.dirx = -1 * self.get_random_x(5)
-			self.diry = 1 * self.get_random_y(5)
-			#move to outside of view within quadrant
-		elif self.x0 >= center_x and self.y0 >= center_y:
-			#quadrant 4
-			self.dirx = -1 * self.get_random_x(5)
-			self.diry = -1 * self.get_random_y(5)
-			#move to outside of view within quadrant
+		self.dirx, self.diry = self.get_direction(center_x, center_y)
 
 			
 
 		self.aster = self.canvas.create_oval(self.x0, self.y0, self.x1, self.y1, outline = "#FFFFFF", tags = 'asteroid')
 		
+
+	def get_direction(self, x, y):
+		center_x = x
+		center_y = y
+			#quadrant 1		quadrant 2
+			#quadrant 3		quadrant 4
+		
+		if self.x0 <= center_x and self.y0 <= center_y:
+			#quadrant 1
+			dirx = 1 * self.get_random_speed(5)
+			diry = 1 * self.get_random_speed(5)
+			#move to outside of view within quadrant
+		elif self.x0 <= center_x and self.y0 >= center_y:
+			#quadrant 3
+			dirx = 1 * self.get_random_speed(5)
+			diry = -1 * self.get_random_speed(5)
+			#move to outside of view within quadrant
+		elif self.x0 >= center_x and self.y0 <= center_y:
+			#quadrant 2
+			dirx = -1 * self.get_random_speed(5)
+			diry = 1 * self.get_random_speed(5)
+			#move to outside of view within quadrant
+		elif self.x0 >= center_x and self.y0 >= center_y:
+			#quadrant 4
+			dirx = -1 * self.get_random_speed(5)
+			diry = -1 * self.get_random_speed(5)
+			#move to outside of view within quadrant
+
+		return dirx, diry
+
+
+	def get_random_speed(self, width):
+		x = random.randint(1, width)
+		return x
 
 	def get_random_x(self, width):
 		x  = random.randint(1, width)
@@ -183,17 +142,16 @@ class asteroids:
 		return y
 
 
-	def get_random_size(self):
-		x = random.randint(1, 3)
-		return x
-
 
 	def get_coords(self):
 		return self.x0, self.y0, self.x1, self.y1
 
-	def hold(master, self):
+
+	def hold(self):
 		if self.freeze == False:
 			self.move_asteroid()
+		else:
+			self.freeze_it()
 
 
 	def move_asteroid(self):
@@ -231,11 +189,10 @@ class asteroids:
 				self.count += 1
 
 		
-		self.move_it()
-		self.check_asteroid()
-		self.canvas.after(50, self.move_asteroid)
+			self.move_it()
+			self.check_asteroid()
+			self.canvas.after(50, self.move_asteroid)
 	
-
 
 	def move_it(self):
 		if self.freeze == False:
@@ -259,8 +216,39 @@ class asteroids:
 		if (self.ship.d[0] > self.x0 and self.ship.d[0] < self.x1) and (self.ship.d[1] > self.y0 and self.ship.d[1] < self.y1):
 			self.ship.destroy_me()
 
+
+	def freeze_it(self):
+		self.freeze = True
+
+		self.x0 = self.x0 - self.window_width - 200
+		self.y0 = self.y0 - self.window_height - 200
+		self.x1 = self.x1 - self.window_width - 200
+		self.y1 = self.y1 - self.window_height - 200
+
+		self.dirx = 0
+		self.diry = 0
+
+
+		self.canvas.coords(self.aster, self.x0 - self.window_width - 200, self.y0 - self.window_height - 200, self.x1 - self.window_width - 200, self.y1 - self.window_height - 200)
+
+	def check_onscreen(self):
+		x0, y0, x1, y1 = self.get_coords()
+		if (x0 >= 0 and x0 <= self.window_width) or (x1 >= 0 and x1 <= self.window_width):
+			if (y0 >= 0 and y0 <= self.window_height) or (y1 >= 0 and y1 <= self.window_height):
+				self.freeze = False
+			else:
+				self.freeze = True
+		else:
+			self.freeze = True
+
+
 	def undraw(self, asteroids = None):
 		self.freeze = True
+		x0 = self.x0
+		y0 = self.y0
+		x1 = self.x1
+		y1 = self.y1
+
 
 		self.x0 = self.x0 - self.window_width - 200
 		self.y0 = self.y0 - self.window_height - 200
@@ -271,12 +259,90 @@ class asteroids:
 		self.canvas.coords(self.aster, self.x0 - self.window_width - 200, self.y0 - self.window_height - 200, self.x1 - self.window_width - 200, self.y1 - self.window_height - 200)
 
 
+		self.break_apart(x0, y0, x1, y1)
+
+	def break_apart(self, x0, y0, x1, y1):
+		if self.size == 3:
+			#create two medium asteroids
+			for i in self.master.medium_asteroids:
+				if i.freeze == True:
+					i.freeze = False
+					ox0, oy0, ox1, oy1 = i.get_coords()
+					nx = abs(x0 - ox0)
+					ny = abs(y0 - oy0)
+					
+					i.x0 = i.x0 + nx
+					i.x1 = i.x1 + nx
+					i.y0 = i.y0 + ny
+					i.y1 = i.y1 + ny
+					
+					i.canvas.coords(i.aster, i.x0, i.y0, i.x1, i.y1)
+					i.dirx, i.diry = i.get_direction(self.window_width / 2, self.window_height / 2)
+					i.hold()
+					break
+					#grab first asteroid
+
+			for i in self.master.medium_asteroids:
+				if i.freeze == True:
+					i.freeze = False
+					ox0, oy0, ox1, oy1 = i.get_coords()
+					nx = abs(x1 - ox1)
+					ny = abs(y1 - oy1)
+					
+					i.x0 = i.x0 + nx
+					i.x1 = i.x1 + nx
+					i.y0 = i.y0 + ny
+					i.y1 = i.y1 + ny
+					
+					i.canvas.coords(i.aster, i.x0, i.y0, i.x1, i.y1)
+					i.dirx, i.diry = i.get_direction(self.window_width / 2, self.window_height / 2)
+					i.hold()
+					break
+					#grab second asteroid
 
 
 
+		elif self.size == 2:
+			#create 2 small asteroids
+			for i in self.master.small_asteroids:
+				if i.freeze == True:
+					i.freeze = False
+					ox0, oy0, ox1, oy1 = i.get_coords()
+					nx = abs(x0 - ox0)
+					ny = abs(y0 - oy0)
+					
+					i.x0 = i.x0 + nx
+					i.x1 = i.x1 + nx
+					i.y0 = i.y0 + ny
+					i.y1 = i.y1 + ny
+					
+					i.canvas.coords(i.aster, i.x0, i.y0, i.x1, i.y1)
+					i.dirx, i.diry = i.get_direction(self.window_width / 2, self.window_height / 2)
+					i.hold()
+					break
+					#grab first asteroid
+
+			for i in self.master.small_asteroids:
+				if i.freeze == True:
+					i.freeze = False
+					ox0, oy0, ox1, oy1 = i.get_coords()
+					nx = abs(x1 - ox1)
+					ny = abs(y1 - oy1)
+					
+					i.x0 = i.x0 + nx
+					i.x1 = i.x1 + nx
+					i.y0 = i.y0 + ny
+					i.y1 = i.y1 + ny
+					
+					i.canvas.coords(i.aster, i.x0, i.y0, i.x1, i.y1)
+					i.dirx, i.diry = i.get_direction(self.window_width / 2, self.window_height / 2)
+					i.hold()
+					break
+					#grab second asteroid
 
 
-	def __init__(self, master, canvas, width, height, ship = None):
+
+	def __init__(self, master, canvas, width, height, size = None, ship = None):
 		super(asteroids, self).__init__()
 
 		self.master = master
@@ -286,7 +352,9 @@ class asteroids:
 
 		self.ship = ship
 
-		self.freeze = False
+		self.size = size
+
+		self.freeze = True
 
 		self.count = 0
 

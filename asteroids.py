@@ -19,5 +19,4 @@ app = Window()
 app.root.mainloop()
 
 
-#bug....can do all three inputs at once....but works best when you hold down the forward key 
-#the whole time and add other keys
+#bug still appears where asteroids spawn off screen
