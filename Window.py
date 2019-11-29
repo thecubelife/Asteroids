@@ -109,17 +109,6 @@ class Window:
 		self.a5.freeze = False
 		self.a6.freeze = False
 
-		self.pro1.freeze = False
-		self.pro2.freeze = False
-		self.pro3.freeze = False
-		self.pro4.freeze = False
-		self.pro5.freeze = False
-		self.pro6.freeze = False
-		self.pro7.freeze = False
-		self.pro8.freeze = False
-		self.pro9.freeze = False
-		self.pro10.freeze = False
-
 		self.freeze = False
 
 	def start_of_game(self):
