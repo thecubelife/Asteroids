@@ -279,6 +279,10 @@ class ship:
 	def __init__(self, canvas, width, height, master = None):
 		super(ship, self).__init__()
 
+
+		#this gives the object easily callable variables from anywhere without
+		#needing to pass them...it also always one function to change the variable's value everywhere
+
 		#this sets the canvas the ship is on, the heading or bearing, and the turnspeed of the ship
 		self.master = master
 		self.canvas = canvas

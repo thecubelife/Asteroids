@@ -385,6 +385,10 @@ class Window:
 	def __init__(self, master = None):
 		super(Window, self).__init__()
 
+
+
+		#this gives the object easily callable variables from anywhere without
+		#needing to pass them...it also always one function to change the variable's value everywhere
 		self.freeze = False
 
 		self.root = tk.Tk()

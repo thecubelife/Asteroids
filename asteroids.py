@@ -28,3 +28,8 @@ app.root.mainloop()
 
 
 #bug still appears where asteroids spawn off screen
+
+
+#projectile class has comments
+
+#asteroids class has comments through draw_asteroid
