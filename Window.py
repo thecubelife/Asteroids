@@ -1,6 +1,7 @@
 #Window.py
 #Window Class
 
+#this properly imports tkinter whether you are using python 2 or 3
 try:
 	import tkinter as tk
 except ImportError:
@@ -11,12 +12,14 @@ import random
 #this is used to pass arguments to a button command which could not be done otherwise
 from functools import partial
 
+#this imports all the other classes that create the other objects
 from ship import ship
 from asteroids_class import asteroids
 from projectile import Projectile
 
 
-
+#this is the class that creates the window
+#it also is the parent of every other object
 class Window:
 
 	def config_window(self):
@@ -29,55 +32,14 @@ class Window:
 		self.height = self.root.winfo_screenheight() - (margin * 8)
 		self.root.geometry("{0}x{1}+{2}+{3}".format(self.width, self.height, int(startx), int(starty)))
 
-	def freeze_text(self):
-		self.text = tk.Text(self.root, height = 1)
-		self.text.config(borderwidth = 0, background = "#000000", font = ("Helvetica", 48))
-		self.text.place(relx = 0.39, rely = 0.4)
-
-		self.text.tag_add("game_over", "1.0", "1.9")
-		self.text.tag_config("game_over", background = "#000000", foreground = "red")
-		self.text.config(state = tk.DISABLED)
-
-		
-
-	def idleGame(self):
-
-		self.startgame = tk.Button(self.root, text = "StartGame", height = 2, width = 8)
-		self.startgame.config(bg = "#FFFFFF", command = partial(self.startGame))
-		self.startgame.place(relx = 0.5, rely = 0.5)
-	
-	def restart_of_game(self):
-		#self.Text    delete it
-		self.startgame.config(text = "Start Game", width = 10, command = partial(self.hold))
-		self.startgame.place(relx = 0.5, rely = 0.5)
-
-	def hold(self):
-		
-		self.text.config(state = tk.NORMAL)
-		self.text.place(relx = 2.0, rely = 2.0)
-		self.text.config(state = tk.DISABLED)		
-
-		self.start_Game2()
-
-	def start_Game2(self):
-		self.startgame.config(text = "Pause Game", width = 10,  command = partial(self.pause))
-		self.startgame.place(relx = 0.5, rely = 0.0035)
-		self.restarting_of_game()
-
-	def startGame(self):
-		self.startgame.config(text = "Pause Game", width = 10,  command = partial(self.pause))
-		self.startgame.place(relx = 0.5, rely = 0.0035)
-		self.start_of_game()
-
-	def idleRunning(self):
-		self.startgame.config(text = "Pause Game", width = 10, command = partial(self.pause))
-		self.startgame.place(relx = 0.5, rely = 0.0035)
-		self.unfreeze_all()
-
-	def pause(self):
-		self.startgame.config(text = "Resume", width = 8, command = partial(self.idleRunning))
-		self.startgame.place(relx = 0.5, rely = 0.5)
-		self.freeze_all()
+	def fire_projectile(self, event):
+		#check if they are frozen if so then use...otherwise don't and check next
+		for i in self.projectiles:
+			if self.freeze == False:
+				if i.freeze == True:
+					i.freeze = False
+					i.ship_start()
+					break
 
 	def freeze_all(self):
 		self.player.freeze = True
@@ -101,77 +63,47 @@ class Window:
 
 		self.freeze = True
 
-	def unfreeze_all(self):
-		self.player.freeze = False
+	def freeze_text(self):
+		self.text = tk.Text(self.root, height = 1)
+		self.text.config(borderwidth = 0, background = "#000000", font = ("Helvetica", 48))
+		self.text.place(relx = 0.39, rely = 0.4)
 
-		for i in self.asteroids:
-			x0, y0, x1, y1 = i.get_coords()
-			if (x0 >= 0 and x0 <= self.width) or (x1 >= 0 and x1 <= self.width):
-				i.freeze = False
-				i.hold()
+		self.text.tag_add("game_over", "1.0", "1.9")
+		self.text.tag_config("game_over", background = "#000000", foreground = "red")
+		self.text.config(state = tk.DISABLED)
 
-		self.freeze = False
+	def gameOver(self):
+		self.freeze = True
+		self.text.config(state = tk.NORMAL)
 
-	def start_of_game(self):
-		#want 5 total asteroids for each of the 6...large....medium & small....small & small
-		self.player = ship(self.canvas, self.width, self.height, master = self)
+		self.text.delete("1.0", tk.END)
+		self.text.insert(tk.INSERT, "GAME OVER")
+		self.text.place(relx = 0.39, rely = 0.4)
+
+		self.text.config(state = tk.DISABLED)
+	
+	def get_random_size(self):
+		x = random.randint(1, 3)
+		return x
+
+	def hold(self):
 		
-		self.make_asteroids()
+		self.text.config(state = tk.NORMAL)
+		self.text.place(relx = 2.0, rely = 2.0)
+		self.text.config(state = tk.DISABLED)		
 
-		#get random number which decides which 6 asteroids to start with
-		#loop through a list of different sized asteroids
-		for i in range(6):
-			x = self.get_random_size()
-			if x == 1:
-				for i in self.small_asteroids:
-					if i.freeze == True:
-						i.freeze = False
-						break
+		self.start_Game2()
 
-			elif x == 2:
-				for i in self.medium_asteroids:
-					if i.freeze == True:
-						i.freeze = False
-						break
+	def idleGame(self):
 
-			else:
-				for i in self.large_asteroids:
-					if i.freeze == True:
-						i.freeze = False
-						break
-
-
-
-		self.pro1 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids, self)
-		self.pro2 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids, self)
-		self.pro3 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids, self)
-		self.pro4 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids, self)
-		self.pro5 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids, self)
-		self.pro6 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids, self)
-		self.pro7 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids, self)
-		self.pro8 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids, self)
-		self.pro9 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids, self)
-		self.pro10 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids, self)
-
-
-		self.projectiles = []
-		self.projectiles.append(self.pro1)
-		self.projectiles.append(self.pro2)
-		self.projectiles.append(self.pro3)
-		self.projectiles.append(self.pro4)
-		self.projectiles.append(self.pro5)
-		self.projectiles.append(self.pro6)
-		self.projectiles.append(self.pro7)
-		self.projectiles.append(self.pro8)
-		self.projectiles.append(self.pro9)
-		self.projectiles.append(self.pro10)
-
-
-		self.setup_bindings()
-
-
-		for i in self.asteroids:
-			i.hold()
+		self.startgame = tk.Button(self.root, text = "StartGame", height = 2, width = 8)
+		self.startgame.config(bg = "#FFFFFF", command = partial(self.startGame))
+		self.startgame.place(relx = 0.5, rely = 0.5)
+	
+	def idleRunning(self):
+		self.startgame.config(text = "Pause Game", width = 10, command = partial(self.pause))
+		self.startgame.place(relx = 0.5, rely = 0.0035)
+		self.unfreeze_all()
 
 	def make_asteroids(self):
 		#get random number....random numbers choose the starting asteroids
@@ -272,6 +204,35 @@ class Window:
 		for i in self.small_asteroids:
 			self.asteroids.append(i)
 
+	def make_text(self):
+		self.text = tk.Text(self.root, height = 1)
+		self.text.config(borderwidth = 0, background = "#000000", font = ("Helvetica", 48))
+		self.text.config(foreground = "red")
+		self.text.place(relx = 2.0, rely = 2.0)
+		self.text.config(state = tk.NORMAL)
+
+	def moveup(self, mystate, event):
+		d = 1
+		self.player.move_ship(self.player, self.canvas, mystate, self.upcount, d)
+
+	def pause(self):
+		self.startgame.config(text = "Resume", width = 8, command = partial(self.idleRunning))
+		self.startgame.place(relx = 0.5, rely = 0.5)
+		self.freeze_all()
+
+	def restart(self):
+		#reset everything
+		self.gameOver()
+		self.restart_of_game()
+
+	def restart2(self):
+		self.win_game()
+		self.restart_of_game()
+
+	def restart_of_game(self):
+		#self.Text    delete it
+		self.startgame.config(text = "Start Game", width = 10, command = partial(self.hold))
+		self.startgame.place(relx = 0.5, rely = 0.5)
 
 	def restarting_of_game(self):
 		self.freeze = False
@@ -304,10 +265,16 @@ class Window:
 			i.redraw_asteroid()
 			i.hold()
 
+	def rotateleft(self, turnstate, event):
+		a = 0
+		d = 1		#the direction
+		self.player.rotate_ship(turnstate, self.turncount, direction = d)
+		#player canvas d
 
-	def get_random_size(self):
-		x = random.randint(1, 3)
-		return x
+	def rotateright(self, turnstate, event):
+		a = 0
+		d = -1 		#the direction
+		self.player.rotate_ship(turnstate, self.turncount, direction = d)
 
 	def setup_bindings(self):
 		self.root.bind('<KeyPress-Up>', partial(self.moveup, True))
@@ -321,59 +288,87 @@ class Window:
 
 		self.root.bind('<space>', self.fire_projectile)
 
+	def start_Game2(self):
+		self.startgame.config(text = "Pause Game", width = 10,  command = partial(self.pause))
+		self.startgame.place(relx = 0.5, rely = 0.0035)
+		self.restarting_of_game()
 
-	def moveup(self, mystate, event):
-		d = 1
-		self.player.move_ship(self.player, self.canvas, mystate, self.upcount, d)
+	def start_of_game(self):
+		#want 5 total asteroids for each of the 6...large....medium & small....small & small
+		self.player = ship(self.canvas, self.width, self.height, master = self)
+		
+		self.make_asteroids()
+
+		#get random number which decides which 6 asteroids to start with
+		#loop through a list of different sized asteroids
+		for i in range(6):
+			x = self.get_random_size()
+			if x == 1:
+				for i in self.small_asteroids:
+					if i.freeze == True:
+						i.freeze = False
+						break
+
+			elif x == 2:
+				for i in self.medium_asteroids:
+					if i.freeze == True:
+						i.freeze = False
+						break
+
+			else:
+				for i in self.large_asteroids:
+					if i.freeze == True:
+						i.freeze = False
+						break
 
 
-	def rotateleft(self, turnstate, event):
-		a = 0
-		d = 1		#the direction
-		self.player.rotate_ship(turnstate, self.turncount, direction = d)
-		#player canvas d
 
-	def rotateright(self, turnstate, event):
-		a = 0
-		d = -1 		#the direction
-		self.player.rotate_ship(turnstate, self.turncount, direction = d)
-
-	def fire_projectile(self, event):
-		#check if they are frozen if so then use...otherwise don't and check next
-		for i in self.projectiles:
-			if self.freeze == False:
-				if i.freeze == True:
-					i.freeze = False
-					i.ship_start()
-					break
+		self.pro1 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids, self)
+		self.pro2 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids, self)
+		self.pro3 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids, self)
+		self.pro4 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids, self)
+		self.pro5 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids, self)
+		self.pro6 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids, self)
+		self.pro7 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids, self)
+		self.pro8 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids, self)
+		self.pro9 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids, self)
+		self.pro10 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids, self)
 
 
-	#called after removing the objects from the screen
-	def restart(self):
-		#reset everything
-		self.gameOver()
-		self.restart_of_game()
+		self.projectiles = []
+		self.projectiles.append(self.pro1)
+		self.projectiles.append(self.pro2)
+		self.projectiles.append(self.pro3)
+		self.projectiles.append(self.pro4)
+		self.projectiles.append(self.pro5)
+		self.projectiles.append(self.pro6)
+		self.projectiles.append(self.pro7)
+		self.projectiles.append(self.pro8)
+		self.projectiles.append(self.pro9)
+		self.projectiles.append(self.pro10)
 
-	def restart2(self):
-		self.win_game()
-		self.restart_of_game()
 
-	def make_text(self):
-		self.text = tk.Text(self.root, height = 1)
-		self.text.config(borderwidth = 0, background = "#000000", font = ("Helvetica", 48))
-		self.text.config(foreground = "red")
-		self.text.place(relx = 2.0, rely = 2.0)
-		self.text.config(state = tk.NORMAL)
+		self.setup_bindings()
 
-	def gameOver(self):
-		self.freeze = True
-		self.text.config(state = tk.NORMAL)
 
-		self.text.delete("1.0", tk.END)
-		self.text.insert(tk.INSERT, "GAME OVER")
-		self.text.place(relx = 0.39, rely = 0.4)
+		for i in self.asteroids:
+			i.hold()
 
-		self.text.config(state = tk.DISABLED)
+	def startGame(self):
+		self.startgame.config(text = "Pause Game", width = 10,  command = partial(self.pause))
+		self.startgame.place(relx = 0.5, rely = 0.0035)
+		self.start_of_game()
+
+	def unfreeze_all(self):
+		self.player.freeze = False
+
+		for i in self.asteroids:
+			x0, y0, x1, y1 = i.get_coords()
+			if (x0 >= 0 and x0 <= self.width) or (x1 >= 0 and x1 <= self.width):
+				i.freeze = False
+				i.hold()
+
+		self.freeze = False
 
 	def win_game(self):
 		self.freeze = True
@@ -385,6 +380,8 @@ class Window:
 
 		self.text.config(state = tk.DISABLED)
 
+
+	#this creates the object and sets its parameters
 	def __init__(self, master = None):
 		super(Window, self).__init__()
 

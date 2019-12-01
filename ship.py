@@ -1,6 +1,7 @@
 #ship.py
 #ship class
 
+#this properly imports tkinter whether you are using python 2 or 3
 try:
 	import tkinter as tk
 except ImportError:
@@ -14,138 +15,11 @@ from functools import partial
 
 class ship:
 
-	def draw_ship(self, canvas, width, height):
-		
-		self.points = self.a, self.b, self.c, self.d
-		#this does actually create a triangle
-		self.player_ship = canvas.create_polygon(self.points, fill = "#FFFFFF", tags = 'ship')
-
-
-	def move_ship(master, self, canvas, mystate, upcount, d):
-		self.upcount = upcount
-		if self.freeze == False:
-			if mystate == True:
-				if self.upcount == 0:
-					self.upcount += 1
-					self.move_it(d)
-			else:
-				self.decel(d)
-			
-		
-
-	def move_it(self, d):
-		#figure out how to reset speed and keep it moving until the ship stops
-		#acceleration
-		if self.freeze == False:
-			if self.speed < 1.5:
-				self.speed += (self.acceleration * 1/10) * (d)
-
-			#based off someone else's code...since i don't understand trigonomotry
-			self.a[0] += self.speed * math.cos(self.heading)
-			self.b[0] += self.speed * math.cos(self.heading)
-			self.c[0] += self.speed * math.cos(self.heading)
-			self.d[0] += self.speed * math.cos(self.heading)
-
-			self.a[1] += self.speed * math.sin(self.heading)
-			self.b[1] += self.speed * math.sin(self.heading)
-			self.c[1] += self.speed * math.sin(self.heading)
-			self.d[1] += self.speed * math.sin(self.heading)
-			
-			self.x, self.y = self.get_center()
-
-
-			self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
-
-			self.check_ship()
-
-			
-			if self.upcount != 0:
-				#change this to the amount between repeating keys at the moment it is too fast
-				self.canvas.after(100, self.move_it, d)
-
-
-	
-	def decel(self, d):
-		self.upcount = 0
-		if self.freeze == False:
-			if self.speed > 0:
-				#based off someone else's code...since i don't understand trigonomotry
-				self.a[0] += self.speed * math.cos(self.heading)
-				self.b[0] += self.speed * math.cos(self.heading)
-				self.c[0] += self.speed * math.cos(self.heading)
-				self.d[0] += self.speed * math.cos(self.heading)
-
-				self.a[1] += self.speed * math.sin(self.heading)
-				self.b[1] += self.speed * math.sin(self.heading)
-				self.c[1] += self.speed * math.sin(self.heading)
-				self.d[1] += self.speed * math.sin(self.heading)
-				
-				self.x, self.y = self.get_center()
-
-
-				self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
-
-				self.check_ship()
-
-				if self.speed != 0:
-					self.speed -= (1/40 * self.acceleration *1/10 * (d))
-					self.canvas.after(50, self.decel, d)
-
-
-	def get_center(self):
-		x = 1 / 4 * (self.a[0] + self.b[0] + self.c[0] + self.d[0])
-		y = 1 / 4 * (self.a[1] + self.b[1] + self.c[1] + self.d[1])
-		return x, y
-		
-
-	#Based on another person's code
-	def rotate_ship(self, turnstate, turncount, direction, event = None):
-		self.turncount = turncount
-		if self.freeze == False:
-			if turnstate == True:
-				if self.turncount == 0:
-					self.turncount += 1
-					self.rotate(direction)
-			else:
-				self.stop_turning()
-
-	def stop_turning(self):
-		self.turncount = 0
-
-	def rotate(self, direction, event = None):
-		if self.freeze == False:
-			tspeed = direction * self.turnspeed * math.pi / 180
-			self.heading -= tspeed
-
-			def _rotatec(x, y):
-				x -= self.x			#center of the ship
-				y -= self.y			#center of the ship
-
-				newx = x * math.cos(tspeed) + y * math.sin(tspeed)
-				newy = -x * math.sin(tspeed) + y * math.cos(tspeed)
-				return newx + self.x, newy + self.y
-			
-			self.a[0], self.a[1] = _rotatec(self.a[0], self.a[1])
-			self.b[0], self.b[1] = _rotatec(self.b[0], self.b[1])
-			self.c[0], self.c[1] = _rotatec(self.c[0], self.c[1])
-			self.d[0], self.d[1] = _rotatec(self.d[0], self.d[1])
-
-
-			self.x, self.y = self.get_center()
-			self.change_coords()
-
-			if self.turncount != 0:
-				self.canvas.after(100, self.rotate, direction)
-
-
 	#based on another person's code
 	def change_coords(self):
 		#would have just said self.a, self.b,.....except it keeps coming back as a string instead of a number
 		self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
 
-	
-		#bug in here
-	
 	def check_ship(self):
 		#check if ship is off screen
 		w = self.bound_width
@@ -243,21 +117,31 @@ class ship:
 
 				self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
 
-	def offscreen(self):
+	def decel(self, d):
+		self.upcount = 0
+		if self.freeze == False:
+			if self.speed > 0:
+				#based off someone else's code...since i don't understand trigonomotry
+				self.a[0] += self.speed * math.cos(self.heading)
+				self.b[0] += self.speed * math.cos(self.heading)
+				self.c[0] += self.speed * math.cos(self.heading)
+				self.d[0] += self.speed * math.cos(self.heading)
 
-		self.freeze = True
-		self.a[0] = self.a[0] + self.bound_width + 400
-		self.b[0] = self.b[0] + self.bound_width + 400
-		self.c[0] = self.c[0] + self.bound_width + 400
-		self.d[0] = self.d[0] + self.bound_width + 400
+				self.a[1] += self.speed * math.sin(self.heading)
+				self.b[1] += self.speed * math.sin(self.heading)
+				self.c[1] += self.speed * math.sin(self.heading)
+				self.d[1] += self.speed * math.sin(self.heading)
+				
+				self.x, self.y = self.get_center()
 
-		self.a[1] = self.a[1] + self.bound_width + 400
-		self.b[1] = self.b[1] + self.bound_width + 400
-		self.c[1] = self.c[1] + self.bound_width + 400
-		self.d[1] = self.d[1] + self.bound_width + 400
 
-		self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
+				self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
 
+				self.check_ship()
+
+				if self.speed != 0:
+					self.speed -= (1/40 * self.acceleration *1/10 * (d))
+					self.canvas.after(50, self.decel, d)
 
 	def destroy_me(self):
 
@@ -273,6 +157,72 @@ class ship:
 
 		self.master.restart()
 
+	def draw_ship(self, canvas, width, height):
+		
+		self.points = self.a, self.b, self.c, self.d
+		#this does actually create a triangle
+		self.player_ship = canvas.create_polygon(self.points, fill = "#FFFFFF", tags = 'ship')
+
+	def get_center(self):
+		x = 1 / 4 * (self.a[0] + self.b[0] + self.c[0] + self.d[0])
+		y = 1 / 4 * (self.a[1] + self.b[1] + self.c[1] + self.d[1])
+		return x, y
+
+	def move_it(self, d):
+		#figure out how to reset speed and keep it moving until the ship stops
+		#acceleration
+		if self.freeze == False:
+			if self.speed < 1.5:
+				self.speed += (self.acceleration * 1/10) * (d)
+
+			#based off someone else's code...since i don't understand trigonomotry
+			self.a[0] += self.speed * math.cos(self.heading)
+			self.b[0] += self.speed * math.cos(self.heading)
+			self.c[0] += self.speed * math.cos(self.heading)
+			self.d[0] += self.speed * math.cos(self.heading)
+
+			self.a[1] += self.speed * math.sin(self.heading)
+			self.b[1] += self.speed * math.sin(self.heading)
+			self.c[1] += self.speed * math.sin(self.heading)
+			self.d[1] += self.speed * math.sin(self.heading)
+			
+			self.x, self.y = self.get_center()
+
+
+			self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
+
+			self.check_ship()
+
+			
+			if self.upcount != 0:
+				#change this to the amount between repeating keys at the moment it is too fast
+				self.canvas.after(100, self.move_it, d)
+
+	def move_ship(master, self, canvas, mystate, upcount, d):
+		self.upcount = upcount
+		if self.freeze == False:
+			if mystate == True:
+				if self.upcount == 0:
+					self.upcount += 1
+					self.move_it(d)
+			else:
+				self.decel(d)
+
+	def offscreen(self):
+
+		self.freeze = True
+		self.a[0] = self.a[0] + self.bound_width + 400
+		self.b[0] = self.b[0] + self.bound_width + 400
+		self.c[0] = self.c[0] + self.bound_width + 400
+		self.d[0] = self.d[0] + self.bound_width + 400
+
+		self.a[1] = self.a[1] + self.bound_width + 400
+		self.b[1] = self.b[1] + self.bound_width + 400
+		self.c[1] = self.c[1] + self.bound_width + 400
+		self.d[1] = self.d[1] + self.bound_width + 400
+
+		self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
+
 	def restart_ship(self):
 		self.heading = -math.pi / 2
 		self.freeze = False
@@ -285,6 +235,44 @@ class ship:
 		self.x, self.y = self.get_center()
 
 		self.draw_ship(self.canvas, self.bound_width, self.bound_height)
+
+	def rotate(self, direction, event = None):
+		if self.freeze == False:
+			tspeed = direction * self.turnspeed * math.pi / 180
+			self.heading -= tspeed
+
+			def _rotatec(x, y):
+				x -= self.x			#center of the ship
+				y -= self.y			#center of the ship
+
+				newx = x * math.cos(tspeed) + y * math.sin(tspeed)
+				newy = -x * math.sin(tspeed) + y * math.cos(tspeed)
+				return newx + self.x, newy + self.y
+			
+			self.a[0], self.a[1] = _rotatec(self.a[0], self.a[1])
+			self.b[0], self.b[1] = _rotatec(self.b[0], self.b[1])
+			self.c[0], self.c[1] = _rotatec(self.c[0], self.c[1])
+			self.d[0], self.d[1] = _rotatec(self.d[0], self.d[1])
+
+
+			self.x, self.y = self.get_center()
+			self.change_coords()
+
+			if self.turncount != 0:
+				self.canvas.after(100, self.rotate, direction)
+
+	def rotate_ship(self, turnstate, turncount, direction, event = None):
+		self.turncount = turncount
+		if self.freeze == False:
+			if turnstate == True:
+				if self.turncount == 0:
+					self.turncount += 1
+					self.rotate(direction)
+			else:
+				self.stop_turning()
+
+	def stop_turning(self):
+		self.turncount = 0
 
 
 	#Note to self parameters for classes are passed through __init__ not the class name

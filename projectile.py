@@ -1,6 +1,7 @@
 #projectile.py
 #projectile class
 
+#this properly imports tkinter whether you are using python 2 or 3
 try:
 	import tkinter as tk
 except ImportError:
@@ -13,28 +14,6 @@ from functools import partial
 
 
 class Projectile:
-
-
-	def draw_projectile(self):
-		a = self.width + 200, self.height + 200
-		c = self.width + 200, self.height + 200
-
-		self.tile = self.canvas.create_line(a, c, fill = "#FFFFFF", tags = 'projectile')
-
-
-	def move_it(self):
-		if self.freeze == False:
-			self.ax = self.ax + self.dirx
-			self.ay = self.ay + self.diry
-			self.cx = self.cx + self.dirx
-			self.cy = self.cy + self.diry
-
-			self.canvas.coords(self.tile, self.ax, self.ay, self.cx, self.cy)
-
-			self.check_it()
-
-			self.check_pos()
-
 
 	#to check if it has gone off screen if so then freeze it
 	def check_it(self):
@@ -61,23 +40,11 @@ class Projectile:
 				i.undraw(self.asteroids)
 				self.freeze_me()
 
-	def ship_start(self):
-		if self.freeze == False:
-			self.ax = self.ship.a[0]
-			self.cx = self.ship.c[0]
-			self.ay = self.ship.a[1]
-			self.cy = self.ship.c[1]
-			a = self.ship.a[0], self.ship.a[1]
-			c = self.ship.c[0], self.ship.c[1]
+	def draw_projectile(self):
+		a = self.width + 200, self.height + 200
+		c = self.width + 200, self.height + 200
 
-			self.dirx = -2 * (a[0] - c[0])
-			self.diry = -2 * (a[1] - c[1])
-
-			
-			self.canvas.coords(self.tile, self.ax, self.ay, self.cx, self.cy)
-
-			self.move_it()
-
+		self.tile = self.canvas.create_line(a, c, fill = "#FFFFFF", tags = 'projectile')
 
 	def freeze_me(self):
 		self.freeze = True
@@ -97,6 +64,37 @@ class Projectile:
 
 			else:
 				break
+
+	def move_it(self):
+		if self.freeze == False:
+			self.ax = self.ax + self.dirx
+			self.ay = self.ay + self.diry
+			self.cx = self.cx + self.dirx
+			self.cy = self.cy + self.diry
+
+			self.canvas.coords(self.tile, self.ax, self.ay, self.cx, self.cy)
+
+			self.check_it()
+
+			self.check_pos()
+
+	def ship_start(self):
+		if self.freeze == False:
+			self.ax = self.ship.a[0]
+			self.cx = self.ship.c[0]
+			self.ay = self.ship.a[1]
+			self.cy = self.ship.c[1]
+			a = self.ship.a[0], self.ship.a[1]
+			c = self.ship.c[0], self.ship.c[1]
+
+			self.dirx = -2 * (a[0] - c[0])
+			self.diry = -2 * (a[1] - c[1])
+
+			
+			self.canvas.coords(self.tile, self.ax, self.ay, self.cx, self.cy)
+
+			self.move_it()
+
 
 	def __init__(self, player, canvas, width, height, asteroids, master = None):
 		super(Projectile, self).__init__()
