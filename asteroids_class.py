@@ -168,57 +168,65 @@ class asteroids:
 			self.large(width, height, self.x, self.y)
 
 	def freeze_it(self):
+		#this freezes the asteroid
 		self.freeze = True
 
+		#this moves the coords of the asteroid off screen, but doesn't update the window
 		self.x0 = self.x0 - self.window_width - 200
 		self.y0 = self.y0 - self.window_height - 200
 		self.x1 = self.x1 - self.window_width - 200
 		self.y1 = self.y1 - self.window_height - 200
 
+		#this changes the direction to 0 so that it doesn't move
 		self.dirx = 0
 		self.diry = 0
 
-
+		#this completes the movement by changing its coords and updating the window
 		self.canvas.coords(self.aster, self.x0 - self.window_width - 200, self.y0 - self.window_height - 200, self.x1 - self.window_width - 200, self.y1 - self.window_height - 200)
 
 	def get_coords(self):
+		#this returns the asteroid's coords
 		return self.x0, self.y0, self.x1, self.y1
 
 	def get_direction(self, x, y):
+		#this returns a direction towards the center that is somewhat random
+
+		#this sets the center of the screen to a variable
 		center_x = x
 		center_y = y
+
 			#quadrant 1		quadrant 2
 			#quadrant 3		quadrant 4
-		
+		#the following if statement gets the quadrant of the asteroid and assigns
+		#it a random direction towards the general area of the center
 		if self.x0 <= center_x and self.y0 <= center_y:
 			#quadrant 1
 			dirx = 1 * self.get_random_speed(5)
 			diry = 1 * self.get_random_speed(5)
-			#move to outside of view within quadrant
 		elif self.x0 <= center_x and self.y0 >= center_y:
 			#quadrant 3
 			dirx = 1 * self.get_random_speed(5)
 			diry = -1 * self.get_random_speed(5)
-			#move to outside of view within quadrant
 		elif self.x0 >= center_x and self.y0 <= center_y:
 			#quadrant 2
 			dirx = -1 * self.get_random_speed(5)
 			diry = 1 * self.get_random_speed(5)
-			#move to outside of view within quadrant
 		elif self.x0 >= center_x and self.y0 >= center_y:
 			#quadrant 4
 			dirx = -1 * self.get_random_speed(5)
 			diry = -1 * self.get_random_speed(5)
-			#move to outside of view within quadrant
-
+		#this returns the directions for the asteroid
 		return dirx, diry
 
 	def get_random_speed(self, width):
+		#this gets a random speed using the given maximum
 		x = random.randint(1, width)
 		return x
 
 	def get_random_x(self, width):
+		#this gets a random point on the screen for the asteroid to start
 		x  = random.randint(1, width)
+		#this makes sure the point is not too close to the edge of the screen
 		if x < 40:
 			x = x + 40
 		if x > width - 40:
@@ -226,7 +234,9 @@ class asteroids:
 		return x
 
 	def get_random_y(self, height):
+		#this gets a random point on the screen for the asteroid to start
 		y = random.randint(1, height)
+		#this makes sure the point is not too close to the edge of the screen
 		if y < 40:
 			y = y + 40
 		if y > height - 40:
@@ -234,94 +244,128 @@ class asteroids:
 		return y
 
 	def hold(self):
+		#this makes sure the asteroid is not frozen before calling the move_asteroid
 		if self.freeze == False:
 			self.move_asteroid()
 		else:
+			#this moves the asteroid off screen if it is not already
 			self.freeze_it()
 
 	def large(self, width, height, x, y):
+		#this creates a large asteroid
+
 		center_x =  width / 2
 		center_y = height / 2
+		#this sets the asteroids coords using the radius denoted as "r"
 		r = 60
 		self.x0 = x - r
 		self.y0 = y - r
 		self.x1 = x + r
 		self.y1 = y + r
 
+		#this gets a random direction for the asteroid to go
 		self.dirx, self.diry = self.get_direction(center_x, center_y)
-
 			
-
+		#this puts the asteroid on the screen
 		self.aster = self.canvas.create_oval(self.x0, self.y0, self.x1, self.y1, outline = "#FFFFFF", tags = 'asteroid')
 	
 	def medium(self, width, height, x, y):
+		#this creates a medium asteroid
+
 		center_x =  width / 2
 		center_y = height / 2
+		#this sets the asteroids coords using the radius denoted as "r"
 		r = 30
 		self.x0 = x - r
 		self.y0 = y - r
 		self.x1 = x + r
 		self.y1 = y + r
 
+		#this gets a random direction for the asteroid to go
 		self.dirx, self.diry = self.get_direction(center_x, center_y)
 			
-
-
+		#this puts the asteroid on the screen
 		self.aster = self.canvas.create_oval(self.x0, self.y0, self.x1, self.y1, outline = "#FFFFFF", tags = 'asteroid')
 		
 	def move_asteroid(self):
-		#get starting position pass through if statement to make the asteroid go 
-		#toward the middle of the screen
+		#this moves the asteroid across the screen
+
+		#it first checks if the asteroid is not frozen
 		if self.freeze == False:
-			if self.count == 10:
+			#this checks whether the asteroid has had enough time to move away from the borders
+			#this makes sure an asteroid doesn't keep bouncing against a wall
+			if self.count == 15:
+
+				#the following if statements check if the asteroid has hit a boundary
+				#and if so it redirects it
+
+				#checks it against the left side of the screen
 				if self.x0 <= 0:
 					self.dirx = self.dirx * -1
 					
 				elif self.x1 <= 0:
 					self.dirx = self.dirx * -1
 					
-
+				#this repeats the same as above with the left of the screen
 				if self.x0 >= self.window_width:
 					self.dirx = self.dirx * -1
 					
 				elif self.x1 >= self.window_width:
 					self.dirx = self.dirx * -1
 					
-
+				#checks it against the top of the screen
 				if self.y0 <= 0:
 					self.diry = self.diry * -1
 
 				elif self.y1 <= 0:
 					self.diry = self.diry * -1
 
-				#in here is the problem
+				#this repeats the same as above except with the bottom of the screen
 				if self.y0 >= self.window_height:
 					self.diry = self.diry * -1
 
 				elif self.y1 >= self.window_height:
 					self.diry = self.diry * -1
 			else:
+				#the asteroid has not had enough time to move away from the borders
+				#add another to the count
 				self.count += 1
 
-		
+			#this runs as long as the asteroid is not frozen
+
+			#this physically moves it across the screen
 			self.move_it()
+			#check if the asteroid has hit the ship
 			self.check_asteroid()
+
+			#this repeats the move loop of the asteroid after 50 milliseconds
+			#this doesn't stop up the program like a time.sleep() would
 			self.canvas.after(50, self.move_asteroid)
 	
 	def move_it(self):
+		#this double checks if the asteroid has been frozen 
 		if self.freeze == False:
+
+			#this moves the asteroid the x and y direction across the screen
 			self.x0 = self.x0 + self.dirx
 			self.x1 = self.x1 + self.dirx
 			self.y0 = self.y0 + self.diry
 			self.y1 = self.y1 + self.diry
 
+			#this changes the asteroids coords to the new position
+			#giving it the illusion of movement
 			self.canvas.coords(self.aster, self.x0, self.y0, self.x1, self.y1)
 
 	def redraw_asteroid(self):
+		#this replaces the asteroid on the screen from a restart of the game
+
+		#this gets a random starting point
 		ranx = self.get_random_x(self.window_width)
 		rany = self.get_random_y(self.window_height)
 		self.x = ranx
 		self.y = rany
+
+		#depending in the asteroids size value it creates a large, medium or small asteroid
 		if self.size == 1:
 			self.small(self.window_width, self.window_height, self.x, self.y)
 		elif self.size == 2:
@@ -330,37 +374,41 @@ class asteroids:
 			self.large(self.window_width, self.window_height, self.x, self.y)
 
 	def small(self, width, height, x, y):
+		#this creates a small asteroid
+
 		center_x =  width / 2
 		center_y = height / 2
+		#this sets the asteroids coords using the radius denoted as "r"
 		r = 10
 		self.x0 = x - r
 		self.y0 = y - r
 		self.x1 = x + r
 		self.y1 = y + r
 
-
+		#this gets a random direction for the asteroid to go
 		self.dirx, self.diry = self.get_direction(center_x, center_y)
 
-
+		#this puts the asteroid on the screen
 		self.aster = self.canvas.create_oval(self.x0, self.y0, self.x1, self.y1, outline = "#FFFFFF", tags = 'asteroid')
 	
 	def undraw(self, asteroids = None):
+		#this undraws the asteroid from the screen
 		self.freeze = True
 		x0 = self.x0
 		y0 = self.y0
 		x1 = self.x1
 		y1 = self.y1
 
-
+		#this moves the coords off the screen
 		self.x0 = self.x0 - self.window_width - 200
 		self.y0 = self.y0 - self.window_height - 200
 		self.x1 = self.x1 - self.window_width - 200
 		self.y1 = self.y1 - self.window_height - 200
 
-
+		#this physically changes the coords
 		self.canvas.coords(self.aster, self.x0 - self.window_width - 200, self.y0 - self.window_height - 200, self.x1 - self.window_width - 200, self.y1 - self.window_height - 200)
 
-
+		#this runs the break apart method and uses the points of the asteroid before it was moved
 		self.break_apart(x0, y0, x1, y1)
 
 

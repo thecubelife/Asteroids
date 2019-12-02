@@ -27,9 +27,12 @@ app.root.mainloop()
 
 
 
-#bug still appears where asteroids spawn off screen
-
-
 #projectile class has comments
 
-#asteroids class has comments through draw_asteroid
+#asteroids class has comments
+
+#ship class has comments through decel
+
+
+
+#recheck get_random_x and get_random_y and check that they won't hit the center

@@ -15,7 +15,6 @@ from functools import partial
 
 class ship:
 
-	#based on another person's code
 	def change_coords(self):
 		#would have just said self.a, self.b,.....except it keeps coming back as a string instead of a number
 		self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
@@ -25,9 +24,11 @@ class ship:
 		w = self.bound_width
 		h = self.bound_height
 
+		#this is the extra space the ship is given before being moved to the other side of the screen
 		ih = self.invhei
 		iw = self.invwid
 
+		#this saved me some space
 		ax = self.a[0]
 		ay = self.a[1]
 		bx = self.b[0]
@@ -37,8 +38,10 @@ class ship:
 		dx = self.d[0]
 		dy = self.d[1]
 
+		#checks if the ship is not frozen
 		if self.freeze == False:
-		#height check
+			#height check
+
 			if ay < -ih and by < -ih and cy < -ih and dy < -ih:
 				#up check
 				self.a[1] = h + ih - abs(ay - ih) + (14/6 * ih)
@@ -46,10 +49,12 @@ class ship:
 				self.c[1] = h + ih - abs(cy - ih) + (14/6 * ih)
 				self.d[1] = h + ih - abs(dy - ih) + (14/6 * ih)
 				self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
+			
 			elif ay > h + ih and by > h + ih and cy > h + ih and dy > h + ih:
-				#problem here..ship warps
 				#down check
 
+				#the following if statements check which point of the ship is fathest
+				#from the origin and uses that value to move the ship to the other side of the screen
 				if (ay > by) and (ay > cy) and (ay > dy):
 					self.a[1] = ay - ay - (1/2 * ih)
 					self.b[1] = by - ay - (1/2 * ih)
@@ -75,6 +80,7 @@ class ship:
 					self.c[1] = cy - dy - (1/2 * ih)
 					self.d[1] = dy - dy - (1/2 * ih)
 
+				#this is what physically moves it on the screen
 				self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
 
 			#width check
@@ -87,9 +93,10 @@ class ship:
 				self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
 
 			elif ax > w + iw and bx > w + iw and cx > w + iw and dx > w + iw:
-				#problem here...ship warps
 				#right check
 
+				##the following if statements check which point of the ship is fathest
+				#from the origin and uses that value to move the ship to the other side of the screen
 				if (ax > bx) and (ax > cx) and (ax > dx):
 					self.a[0] = ax - ax - (1/2 * iw)
 					self.b[0] = bx - ax - (1/2 * iw)
@@ -114,14 +121,22 @@ class ship:
 					self.c[0] = cx - dx - (1/2 * iw)
 					self.d[0] = dx - dx - (1/2 * iw)
 
-
+				#this physically moves the coords of the ship
 				self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
 
 	def decel(self, d):
 		self.upcount = 0
+		#this resets the check for whether the key has been released or not
+		
 		if self.freeze == False:
+			#this checks if the ship is frozen or not
 			if self.speed > 0:
-				#based off someone else's code...since i don't understand trigonomotry
+				#while it has a speed greater than zero run this
+
+				#based off someone else's code...since I don't understand trigonomotry
+				
+				#however what i do believe is happening is it is using the heading of the ship
+				#to set the new position
 				self.a[0] += self.speed * math.cos(self.heading)
 				self.b[0] += self.speed * math.cos(self.heading)
 				self.c[0] += self.speed * math.cos(self.heading)
@@ -132,13 +147,17 @@ class ship:
 				self.c[1] += self.speed * math.sin(self.heading)
 				self.d[1] += self.speed * math.sin(self.heading)
 				
+				#this gets the new center which is essential for turning the ship
 				self.x, self.y = self.get_center()
 
-
+				#this physically moves the ship across the screen
 				self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
 
+				#this checks if the ship is off the screen or not
 				self.check_ship()
 
+				#this reduces the speed and if the speed is not zero yet
+				#than it continues this function
 				if self.speed != 0:
 					self.speed -= (1/40 * self.acceleration *1/10 * (d))
 					self.canvas.after(50, self.decel, d)
