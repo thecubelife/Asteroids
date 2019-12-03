@@ -163,6 +163,8 @@ class ship:
 					self.canvas.after(50, self.decel, d)
 
 	def destroy_me(self):
+		#this freezes the ship, projectiles, and asteroids
+		#then it moves the ship off the screen
 
 		self.freeze = True
 		for i in self.master.projectiles:
@@ -171,30 +173,32 @@ class ship:
 			i.undraw()
 		self.offscreen()
 
-		#put them off screen		
-
-
+		#this restarts the game
 		self.master.restart()
 
 	def draw_ship(self, canvas, width, height):
-		
+		#this places all the points within a list
 		self.points = self.a, self.b, self.c, self.d
-		#this does actually create a triangle
+
+		#this places the ship on the screen
 		self.player_ship = canvas.create_polygon(self.points, fill = "#FFFFFF", tags = 'ship')
 
 	def get_center(self):
+		#this gets the center of the ship, which is essential to rotate it correctly
 		x = 1 / 4 * (self.a[0] + self.b[0] + self.c[0] + self.d[0])
 		y = 1 / 4 * (self.a[1] + self.b[1] + self.c[1] + self.d[1])
 		return x, y
 
 	def move_it(self, d):
-		#figure out how to reset speed and keep it moving until the ship stops
-		#acceleration
+		#check if it not frozen
 		if self.freeze == False:
+			#checks if the speed is less than max and if so then it increases it
 			if self.speed < 1.5:
 				self.speed += (self.acceleration * 1/10) * (d)
 
 			#based off someone else's code...since i don't understand trigonomotry
+			#However, from what i can tell it uses the heading and multiplies
+			#the speed by it and then adds that to the coords of the ship
 			self.a[0] += self.speed * math.cos(self.heading)
 			self.b[0] += self.speed * math.cos(self.heading)
 			self.c[0] += self.speed * math.cos(self.heading)
@@ -205,30 +209,39 @@ class ship:
 			self.c[1] += self.speed * math.sin(self.heading)
 			self.d[1] += self.speed * math.sin(self.heading)
 			
+			#this gets the new center of the ship which is essential for rotating it
 			self.x, self.y = self.get_center()
 
-
+			#this physically moves it
 			self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
 
+			#this checks to see if the ship has gone off the screen
 			self.check_ship()
 
-			
+			#this checks if the key is still being pressed and if so then it calls the move_it method
 			if self.upcount != 0:
 				#change this to the amount between repeating keys at the moment it is too fast
 				self.canvas.after(100, self.move_it, d)
 
 	def move_ship(master, self, canvas, mystate, upcount, d):
+		#this variable is used so that i don't start multiple loops doing the same thing
 		self.upcount = upcount
 		if self.freeze == False:
+			#this checks if the ship is not frozen
+
+			#this checks if the key has been pressed or released and calls 
+			#two different functions depending on the state
 			if mystate == True:
 				if self.upcount == 0:
 					self.upcount += 1
+					#this moves the ship
 					self.move_it(d)
 			else:
+				#this slows down the ship
 				self.decel(d)
 
 	def offscreen(self):
-
+		#sets the ship to fozen and moves it off the screen
 		self.freeze = True
 		self.a[0] = self.a[0] + self.bound_width + 400
 		self.b[0] = self.b[0] + self.bound_width + 400
@@ -240,47 +253,65 @@ class ship:
 		self.c[1] = self.c[1] + self.bound_width + 400
 		self.d[1] = self.d[1] + self.bound_width + 400
 
+		#this physically moves the ship
 		self.canvas.coords(self.player_ship, self.a[0], self.a[1], self.b[0], self.b[1], self.c[0], self.c[1], self.d[0], self.d[1])
 
 	def restart_ship(self):
+		#this sets the starting heading
 		self.heading = -math.pi / 2
 		self.freeze = False
 
+		#this sets the starting points for the ship and creates its shape
 		self.a = [self.oX, self.oY - 15]
 		self.b = [self.oX + 10, self.oY - 10]
-		self.c = [self.oX, self.oY - 30]		#this is the nose of the ship at start
+		self.c = [self.oX, self.oY - 30]		
 		self.d = [self.oX - 10, self.oY - 10]
 
+		#this gets the starting center value which is essential for rotating
 		self.x, self.y = self.get_center()
 
+		#this physically draws the ship on the screen
 		self.draw_ship(self.canvas, self.bound_width, self.bound_height)
 
 	def rotate(self, direction, event = None):
+		#this rotates the ship
+		#this is based off of someone else's code
+
 		if self.freeze == False:
+			#checks if the ship is not frozen
+
+			#sets the turn distance based on the direction turn speed and radians
 			tspeed = direction * self.turnspeed * math.pi / 180
 			self.heading -= tspeed
 
 			def _rotatec(x, y):
+				#this is based on someone else's code
 				x -= self.x			#center of the ship
 				y -= self.y			#center of the ship
 
+				#as far as i can tell this gets the new coords of the ship
 				newx = x * math.cos(tspeed) + y * math.sin(tspeed)
 				newy = -x * math.sin(tspeed) + y * math.cos(tspeed)
 				return newx + self.x, newy + self.y
 			
+			#rotates each of the 4 points of the ship
 			self.a[0], self.a[1] = _rotatec(self.a[0], self.a[1])
 			self.b[0], self.b[1] = _rotatec(self.b[0], self.b[1])
 			self.c[0], self.c[1] = _rotatec(self.c[0], self.c[1])
 			self.d[0], self.d[1] = _rotatec(self.d[0], self.d[1])
 
-
+			#gets the new center of the ship
 			self.x, self.y = self.get_center()
+			#this changes the coords of the ship to the new points
 			self.change_coords()
 
+			#this checks if the key is still pressed and if so then it calls itself
 			if self.turncount != 0:
 				self.canvas.after(100, self.rotate, direction)
 
 	def rotate_ship(self, turnstate, turncount, direction, event = None):
+		#this checks if one of the turning keys is being pressed
+		#otherwise it stops the ship rotating
 		self.turncount = turncount
 		if self.freeze == False:
 			if turnstate == True:
@@ -291,10 +322,10 @@ class ship:
 				self.stop_turning()
 
 	def stop_turning(self):
+		#this stops the ships rotate loop
 		self.turncount = 0
 
 
-	#Note to self parameters for classes are passed through __init__ not the class name
 	def __init__(self, canvas, width, height, master = None):
 		super(ship, self).__init__()
 
@@ -314,10 +345,11 @@ class ship:
 
 		self.freeze = False
 
+		#this sets the outside boundary of the screen
 		self.invwid = 30
 		self.invhei = 30
 
-
+		#this sets the middle of the screen and ship points relative to it
 		self.oX = width / 2		#origin
 		self.oY = height / 2	#origin
 		self.a = [self.oX, self.oY - 15]
@@ -328,5 +360,5 @@ class ship:
 		#this gets the starting x and y of the center of the ship
 		self.x, self.y = self.get_center()
 
-
+		#this draws the ship on the screen
 		self.draw_ship(self.canvas, width, height)

@@ -23,6 +23,7 @@ from projectile import Projectile
 class Window:
 
 	def config_window(self):
+		#this sets all the settings for the window itself
 		self.root.title("Asteroids")
 		self.root.config(bg = "#000000")
 		margin = 10
@@ -33,6 +34,7 @@ class Window:
 		self.root.geometry("{0}x{1}+{2}+{3}".format(self.width, self.height, int(startx), int(starty)))
 
 	def fire_projectile(self, event):
+		#this is called by the space bar
 		#check if they are frozen if so then use...otherwise don't and check next
 		for i in self.projectiles:
 			if self.freeze == False:
@@ -42,6 +44,7 @@ class Window:
 					break
 
 	def freeze_all(self):
+		#this freezes everything...primarily used for pausing the game
 		self.player.freeze = True
 
 		for i in self.asteroids:
@@ -63,16 +66,8 @@ class Window:
 
 		self.freeze = True
 
-	def freeze_text(self):
-		self.text = tk.Text(self.root, height = 1)
-		self.text.config(borderwidth = 0, background = "#000000", font = ("Helvetica", 48))
-		self.text.place(relx = 0.39, rely = 0.4)
-
-		self.text.tag_add("game_over", "1.0", "1.9")
-		self.text.tag_config("game_over", background = "#000000", foreground = "red")
-		self.text.config(state = tk.DISABLED)
-
 	def gameOver(self):
+		#this replaces the text with "GAME OVER" and places it near the center of the screen
 		self.freeze = True
 		self.text.config(state = tk.NORMAL)
 
@@ -83,30 +78,40 @@ class Window:
 		self.text.config(state = tk.DISABLED)
 	
 	def get_random_size(self):
+		#gets a random size for the asteroids
 		x = random.randint(1, 3)
 		return x
 
 	def hold(self):
+		#this moves the text off screen when it is not needed
 		
 		self.text.config(state = tk.NORMAL)
 		self.text.place(relx = 2.0, rely = 2.0)
 		self.text.config(state = tk.DISABLED)		
 
+		#this restarts the game
 		self.start_Game2()
 
 	def idleGame(self):
-
+		#this creates a button and then gives it a command to execute when pressed
+		#in this case...startGame
 		self.startgame = tk.Button(self.root, text = "StartGame", height = 2, width = 8)
 		self.startgame.config(bg = "#FFFFFF", command = partial(self.startGame))
 		self.startgame.place(relx = 0.5, rely = 0.5)
 	
 	def idleRunning(self):
+		#this reconfigures the button to say pause game, and reconfigures it to execute
+		#pause()
 		self.startgame.config(text = "Pause Game", width = 10, command = partial(self.pause))
 		self.startgame.place(relx = 0.5, rely = 0.0035)
+
+		#this unfreezes the game, ship, and certain asteroids
 		self.unfreeze_all()
 
 	def make_asteroids(self):
-		#get random number....random numbers choose the starting asteroids
+		#this makes all the asteroids that may be needed
+		#it also appends them to a list for each size
+		#and a list holding all asteroids
 
 
 		#5 large asteroids
@@ -205,6 +210,8 @@ class Window:
 			self.asteroids.append(i)
 
 	def make_text(self):
+		#this makes the text widget initially and moves it off the screen 
+		#until it is needed
 		self.text = tk.Text(self.root, height = 1)
 		self.text.config(borderwidth = 0, background = "#000000", font = ("Helvetica", 48))
 		self.text.config(foreground = "red")
@@ -212,71 +219,93 @@ class Window:
 		self.text.config(state = tk.NORMAL)
 
 	def moveup(self, mystate, event):
+		#this is called by the up arrow and it calls the ships move_ship() method
 		d = 1
 		self.player.move_ship(self.player, self.canvas, mystate, self.upcount, d)
 
 	def pause(self):
+		#this reconfigures the button to say "resume", and sets the command to idleRunning()
 		self.startgame.config(text = "Resume", width = 8, command = partial(self.idleRunning))
 		self.startgame.place(relx = 0.5, rely = 0.5)
+
+		#this freezes everything and stops it from moving
 		self.freeze_all()
 
 	def restart(self):
-		#reset everything
+
+		#this reconfigures the text for game over
 		self.gameOver()
+
+		#this reconfigures the button for a restart
 		self.restart_of_game()
 
 	def restart2(self):
+
+		#this reconfigures the text for win game
 		self.win_game()
+
+		#this reconfigures the button for a restart
 		self.restart_of_game()
 
 	def restart_of_game(self):
-		#self.Text    delete it
+		#this reconfigures the button's text to "start game", and sets the command to hold() 
 		self.startgame.config(text = "Start Game", width = 10, command = partial(self.hold))
 		self.startgame.place(relx = 0.5, rely = 0.5)
 
 	def restarting_of_game(self):
+		#this restarts the game by unfreezing the window and ship and 
+		#choosing 6 random asteroids to start
 		self.freeze = False
 		self.player.restart_ship()
 
 		#get random number which decides which 6 asteroids to start with
 		#loop through a list of different sized asteroids
 		for i in range(6):
+			#this random number decides what size to get
 			x = self.get_random_size()
 			if x == 1:
 				for i in self.small_asteroids:
 					if i.freeze == True:
+						#if it is frozen then unfreeze it and break from the loop for the next asteroid
 						i.freeze = False
 						break
 
 			elif x == 2:
 				for i in self.medium_asteroids:
 					if i.freeze == True:
+						#if it is frozen then unfreeze it and break from the loop for the next asteroid
 						i.freeze = False
 						break
 
 			else:
 				for i in self.large_asteroids:
 					if i.freeze == True:
+						#if it is frozen then unfreeze it and break from the loop for the next asteroid
 						i.freeze = False
 						break
 
 
 		for i in self.asteroids:
+			#gets all the asteroids that are not frozen
+			#redraws them on the screen and starts their movement loops
 			i.redraw_asteroid()
 			i.hold()
 
 	def rotateleft(self, turnstate, event):
+		#called by the left button
 		a = 0
 		d = 1		#the direction
 		self.player.rotate_ship(turnstate, self.turncount, direction = d)
-		#player canvas d
 
 	def rotateright(self, turnstate, event):
+		#called by the right button
 		a = 0
 		d = -1 		#the direction
 		self.player.rotate_ship(turnstate, self.turncount, direction = d)
 
 	def setup_bindings(self):
+		#this sets up all the key event's bindings and gives them commands to execute when called
+
 		self.root.bind('<KeyPress-Up>', partial(self.moveup, True))
 		self.root.bind('<KeyRelease-Up>', partial(self.moveup, False))
 
@@ -289,14 +318,20 @@ class Window:
 		self.root.bind('<space>', self.fire_projectile)
 
 	def start_Game2(self):
+		#this reconfigures the button to say "pause game", and sets the command to pause()
 		self.startgame.config(text = "Pause Game", width = 10,  command = partial(self.pause))
 		self.startgame.place(relx = 0.5, rely = 0.0035)
+
+		#this restarts the game..unfreezing the ship and certain asteroids
 		self.restarting_of_game()
 
 	def start_of_game(self):
-		#want 5 total asteroids for each of the 6...large....medium & small....small & small
+		#this is the start of the game
+
+		#this creates the player object
 		self.player = ship(self.canvas, self.width, self.height, master = self)
 		
+		#this starts the creation of all asteroids
 		self.make_asteroids()
 
 		#get random number which decides which 6 asteroids to start with
@@ -305,6 +340,7 @@ class Window:
 			x = self.get_random_size()
 			if x == 1:
 				for i in self.small_asteroids:
+					#if it is frozen then unfreeze it and break from the loop for the next asteroid
 					if i.freeze == True:
 						i.freeze = False
 						break
@@ -312,17 +348,19 @@ class Window:
 			elif x == 2:
 				for i in self.medium_asteroids:
 					if i.freeze == True:
+						#if it is frozen then unfreeze it and break from the loop for the next asteroid
 						i.freeze = False
 						break
 
 			else:
 				for i in self.large_asteroids:
 					if i.freeze == True:
+						#if it is frozen then unfreeze it and break from the loop for the next asteroid
 						i.freeze = False
 						break
 
 
-
+		#this creates all the projectiles
 		self.pro1 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids, self)
 		self.pro2 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids, self)
 		self.pro3 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids, self)
@@ -334,7 +372,7 @@ class Window:
 		self.pro9 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids, self)
 		self.pro10 = Projectile(self.player, self.canvas, self.width, self.height, self.asteroids, self)
 
-
+		#this creates a list of all the projectiles
 		self.projectiles = []
 		self.projectiles.append(self.pro1)
 		self.projectiles.append(self.pro2)
@@ -347,30 +385,40 @@ class Window:
 		self.projectiles.append(self.pro9)
 		self.projectiles.append(self.pro10)
 
-
+		#this calls the setup_bindings() method
 		self.setup_bindings()
 
-
+		#this starts the asteroids movement loop
 		for i in self.asteroids:
 			i.hold()
 
 	def startGame(self):
+		#this reconfigures the button text to say "pause game", and sets the command to pause()
 		self.startgame.config(text = "Pause Game", width = 10,  command = partial(self.pause))
 		self.startgame.place(relx = 0.5, rely = 0.0035)
+
+		#this starts the game
 		self.start_of_game()
 
 	def unfreeze_all(self):
+		#this unfreezes everything needed
+
+		#this unfreezes the player
 		self.player.freeze = False
 
+		#this unfreezes only the asteroids on the screen and restarts their movement loop
 		for i in self.asteroids:
 			x0, y0, x1, y1 = i.get_coords()
 			if (x0 >= 0 and x0 <= self.width) or (x1 >= 0 and x1 <= self.width):
 				i.freeze = False
 				i.hold()
-
+		#this unfreezes the window
 		self.freeze = False
 
 	def win_game(self):
+		#this sets the "YOU WIN" text and moves it near the middle of the screen
+		
+		#this freezes the window
 		self.freeze = True
 		self.text.config(state = tk.NORMAL)
 
@@ -381,7 +429,6 @@ class Window:
 		self.text.config(state = tk.DISABLED)
 
 
-	#this creates the object and sets its parameters
 	def __init__(self, master = None):
 		super(Window, self).__init__()
 
@@ -391,18 +438,25 @@ class Window:
 		#needing to pass them...it also always one function to change the variable's value everywhere
 		self.freeze = False
 
+		#this creates the window itself
 		self.root = tk.Tk()
 
 		self.upcount = 0
 		self.turncount = 0
 		self.firecount = 0
 
+		#this configures the window to look correct
 		self.config_window()
 
+		#this creates the canvas which everything is drawn onto
 		self.canvas = tk.Canvas(self.root, height = self.height, width = self.width, bg = "#000000")
 
+		#this makes the canvas take up the whole screen
 		self.canvas.pack()
 
+		#this makes the text widget after the canvas widget so that the text is on top
+		#within here it also moves it off the screen as well
 		self.make_text()
 
+		#this calls the idleGame() method which creates the start button
 		self.idleGame()

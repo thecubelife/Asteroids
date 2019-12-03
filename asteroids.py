@@ -23,16 +23,4 @@ app = Window()
 #after everything runs and it is waiting for input from the user
 app.root.mainloop()
 
-
-
-
-
-#projectile class has comments
-
-#asteroids class has comments
-
-#ship class has comments through decel
-
-
-
-#recheck get_random_x and get_random_y and check that they won't hit the center
+#1,405 lines of code for this awesome game..this includes comments and white space
