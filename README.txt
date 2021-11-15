@@ -1,4 +1,5 @@
-This is a remake of the original game Aasteroids by Stephen Chase Robinson
+This is a remake of the original game Asteroids by Stephen Chase Robinson
+for my Fall 2019 Intro to Programming Project
 
 To run this file you will need:
 
